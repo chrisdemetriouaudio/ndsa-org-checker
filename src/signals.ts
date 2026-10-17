@@ -47,7 +47,7 @@ export function computeSignals(org: Org, history: CheckResult[], today: string, 
   evidence({
     key: 'answers', label: 'Website answers', weight: 15, strength: 'weak',
     level: !n ? 'none' : down >= STRIKES ? 'red' : down ? 'amber' : 'green',
-    detail: !n ? 'Not checked yet' : down ? `Website down on ${down} of the last ${n} checks` : 'Website answers every day',
+    detail: !n ? 'Not checked yet' : down ? `Website down on ${down} of the last ${n} checks` : 'Website answered at every check',
   });
 
   const twice = (pick: (h: CheckResult) => string[]) =>

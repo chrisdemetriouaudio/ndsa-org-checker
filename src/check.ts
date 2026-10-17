@@ -130,8 +130,19 @@ async function readCapped(res: Response): Promise<string> {
 
 const headers = { 'user-agent': USER_AGENT, accept: 'text/html,application/xhtml+xml' };
 
-/** One polite visit to an organisation's homepage. Never throws. */
-export async function checkSite(url: string, date: string): Promise<CheckResult> {
+/** robots.txt answers, kept for a week per site so it is not fetched on every visit. */
+export type RobotsCache = Record<string, { date: string; disallowAll: boolean }>;
+const ROBOTS_DAYS = 7;
+const daysSince = (from: string, to: string) => (Date.parse(to) - Date.parse(from)) / 86_400_000;
+
+/**
+ * One polite visit to an organisation's homepage. Never throws.
+ *  - robots.txt is read at most once a week per site (cached in `robots`).
+ *  - When the last visit gave an ETag / Last-Modified, the page is only sent if it changed (304 = unchanged,
+ *    and the last visit's findings are kept).
+ *  - "Too many requests" and "busy, try later" answers count as alive; there is no retry the same day.
+ */
+export async function checkSite(url: string, date: string, opts: { robots?: RobotsCache; previous?: CheckResult } = {}): Promise<CheckResult> {
   const result: CheckResult = {
     date, reachable: false, httpStatus: null, finalUrl: null, ms: 0, error: null,
     robotsBlocked: false, closedPhrases: [], parkedPhrases: [], movedTo: null, title: null,
@@ -149,23 +160,49 @@ export async function checkSite(url: string, date: string): Promise<CheckResult>
     return result;
   }
 
-  try {
-    const robots = await fetch(`${origin}/robots.txt`, { headers, signal: AbortSignal.timeout(ROBOTS_TIMEOUT_MS) });
-    if (robots.ok) result.robotsBlocked = robotsDisallowsAll(await readCapped(robots));
-  } catch {
-    // No robots.txt is fine.
+  const cached = opts.robots?.[hostname];
+  if (cached && daysSince(cached.date, date) < ROBOTS_DAYS) {
+    result.robotsBlocked = cached.disallowAll;
+  } else {
+    try {
+      const robots = await fetch(`${origin}/robots.txt`, { headers, signal: AbortSignal.timeout(ROBOTS_TIMEOUT_MS) });
+      if (robots.ok) result.robotsBlocked = robotsDisallowsAll(await readCapped(robots));
+      else await robots.body?.cancel();
+    } catch {
+      // No robots.txt is fine.
+    }
+    if (opts.robots) opts.robots[hostname] = { date, disallowAll: result.robotsBlocked };
   }
+
+  const prev = opts.previous;
+  const conditional: Record<string, string> = {};
+  if (prev?.etag) conditional['if-none-match'] = prev.etag;
+  if (prev?.lastModified) conditional['if-modified-since'] = prev.lastModified;
 
   try {
     const res = await fetch(url, {
       method: result.robotsBlocked ? 'HEAD' : 'GET',
-      headers,
+      headers: { ...headers, ...conditional },
       redirect: 'follow',
       signal: AbortSignal.timeout(PAGE_TIMEOUT_MS),
     });
     result.httpStatus = res.status;
     result.finalUrl = res.url || url;
-    result.reachable = res.ok || BLOCKED_BUT_ALIVE.has(res.status);
+    result.etag = res.headers.get('etag');
+    result.lastModified = res.headers.get('last-modified');
+    if (res.status === 304 && prev) {
+      // Unchanged since the last visit: keep what that visit found.
+      await res.body?.cancel();
+      Object.assign(result, {
+        reachable: true, finalUrl: prev.finalUrl ?? url, title: prev.title, movedTo: prev.movedTo,
+        closedPhrases: [...prev.closedPhrases], parkedPhrases: [...prev.parkedPhrases],
+        etag: result.etag ?? prev.etag ?? null, lastModified: result.lastModified ?? prev.lastModified ?? null, notModified: true,
+      });
+      result.ms = Date.now() - started;
+      return result;
+    }
+    const busy = res.status === 503 && res.headers.has('retry-after');
+    result.reachable = res.ok || BLOCKED_BUT_ALIVE.has(res.status) || busy;
     result.movedTo = movedTo(url, result.finalUrl);
     if (result.movedTo && isMarketplace(result.movedTo)) result.parkedPhrases.push('redirects to a domain marketplace');
     if (!result.robotsBlocked && res.ok) {
@@ -174,7 +211,7 @@ export async function checkSite(url: string, date: string): Promise<CheckResult>
       const found = findPhrases(pageText(html));
       result.closedPhrases = found.closed;
       result.parkedPhrases.push(...found.parked);
-    }
+    } else await res.body?.cancel();
   } catch (err) {
     result.error = classifyError(err);
   }

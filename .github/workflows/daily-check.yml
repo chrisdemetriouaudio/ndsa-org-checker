@@ -1,5 +1,9 @@
 name: Daily check
 
+# The one morning run (free, GitHub Actions):
+#  1. find new organisations in the four nations' charity registers (clear new ones are added),
+#  2. refresh the register snapshot for listed charities (same download, fetched once),
+#  3. visit the websites that are due (healthy every 3 days, others daily), one request at a time per site.
 on:
   schedule:
     - cron: '17 6 * * *' # about 7am UK time
@@ -18,6 +22,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -25,19 +30,18 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Download the charity register (free daily file, no key)
-        run: npm run register
-        continue-on-error: true # website checks still run if the download fails
-      - run: npm run checks
+      - name: Find, refresh and check
+        run: npm run daily
+        continue-on-error: true # a failed step is reported in the log; results so far are still saved
 
       - name: Save results (data, live PMO notes, directory page)
         run: |
-          touch data/register.json
           git config user.name "ndsa-org-checker"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/state.json data/register.json "ndsa-PMO/30 Live" "ndsa-PMO/00 Start here/00 Dashboard.md" site
+          touch data/register.json data/candidate-decisions.json
+          git add data "ndsa-PMO/30 Live" "ndsa-PMO/00 Start here/00 Dashboard.md" site
           if ! git diff --cached --quiet; then
-            git commit -m "chore(check): daily check $(date -u +%F)"
+            git commit -m "chore(check): daily run $(date -u +%F)"
             git pull --rebase
             git push
           fi
@@ -48,11 +52,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           n=$(gh issue list --state open --search 'in:title "Services to review"' --json number -q '.[0].number')
-          if [ -z "$n" ]; then
-            gh issue create --title "Services to review" --body-file out/new-flags.md
-          else
-            gh issue comment "$n" --body-file out/new-flags.md
-          fi
+          if [ -z "$n" ]; then gh issue create --title "Services to review" --body-file out/new-flags.md; else gh issue comment "$n" --body-file out/new-flags.md; fi
+
+      - name: Post new organisations to the "New organisations found" issue
+        if: hashFiles('out/discover-alert.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh issue list --state open --search 'in:title "New organisations found"' --json number -q '.[0].number')
+          if [ -z "$n" ]; then gh issue create --title "New organisations found" --body-file out/discover-alert.md; else gh issue comment "$n" --body-file out/discover-alert.md; fi
 
       - uses: actions/upload-pages-artifact@v4
         with:

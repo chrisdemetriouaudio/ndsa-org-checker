@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
-import { createWriteStream } from 'node:fs';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { createWriteStream, mkdtempSync, rmSync } from 'node:fs';
+import { readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { createInterface } from 'node:readline';
@@ -40,19 +40,34 @@ export function parseRegisterLine(line: string): (RegisterEntry & { extractDate:
   };
 }
 
-/** Downloads a zip and hands each line of the file inside to `onLine`, without unzipping to disk. */
-export async function forEachZipLine(url: string, onLine: (line: string) => void): Promise<void> {
-  const dir = await mkdtemp(join(tmpdir(), 'ndsa-'));
-  const zip = join(dir, 'download.zip');
-  try {
-    const res = await fetch(url);
-    if (!res.ok || !res.body) throw new Error(`Download failed (${url}): HTTP ${res.status}`);
-    await pipeline(Readable.fromWeb(res.body as never), createWriteStream(zip));
-    const unzip = spawn('unzip', ['-p', zip], { stdio: ['ignore', 'pipe', 'inherit'] });
-    for await (const line of createInterface({ input: unzip.stdout })) onLine(line);
-  } finally {
-    await rm(dir, { recursive: true, force: true });
+// Each file is downloaded at most once per run, however many steps read it (finding new organisations,
+// refreshing the register snapshot). Files live in a temporary folder that is removed when the run ends.
+const downloads = new Map<string, Promise<string>>();
+let tmp: string | null = null;
+process.on('exit', () => { if (tmp) rmSync(tmp, { recursive: true, force: true }); });
+
+export function downloadOnce(url: string): Promise<string> {
+  let file = downloads.get(url);
+  if (!file) {
+    file = (async () => {
+      tmp ??= mkdtempSync(join(tmpdir(), 'ndsa-'));
+      const path = join(tmp, `file-${downloads.size}`);
+      const res = await fetch(url, { headers: { 'user-agent': 'ndsa-org-checker/0.1 (+https://github.com/chrisdemetriouaudio/ndsa-org-checker)' } });
+      if (!res.ok || !res.body) throw new Error(`Download failed (${url}): HTTP ${res.status}`);
+      await pipeline(Readable.fromWeb(res.body as never), createWriteStream(path));
+      return path;
+    })();
+    file.catch(() => downloads.delete(url)); // a failed download may be retried by a later step
+    downloads.set(url, file);
   }
+  return file;
+}
+
+/** Hands each line of the file inside a (downloaded-once) zip to `onLine`, without unzipping to disk. */
+export async function forEachZipLine(url: string, onLine: (line: string) => void): Promise<void> {
+  const zip = await downloadOnce(url);
+  const unzip = spawn('unzip', ['-p', zip], { stdio: ['ignore', 'pipe', 'inherit'] });
+  for await (const line of createInterface({ input: unzip.stdout })) onLine(line);
 }
 
 /** Downloads the register and keeps the main charities `keep` accepts. Streams: unzipped it is about 500 MB. */
@@ -70,7 +85,7 @@ export async function downloadRegister(keep: (entry: RegisterEntry) => boolean):
 }
 
 /** Refreshes data/register.json for every charity number on our list. */
-async function main() {
+export async function refreshRegister() {
   const root = join(dirname(fileURLToPath(import.meta.url)), '..');
   const orgs = JSON.parse(await readFile(join(root, 'data/orgs.json'), 'utf8')) as Org[];
   const wanted = new Set(orgs.map((o) => o.charityNumber).filter(Boolean));
@@ -81,4 +96,4 @@ async function main() {
   if (missing.length) console.log(`Not found: ${missing.join(', ')}`);
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) await main();
+if (process.argv[1] === fileURLToPath(import.meta.url)) await refreshRegister();

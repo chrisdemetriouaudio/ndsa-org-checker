@@ -35,6 +35,9 @@ export interface CheckResult {
   parkedPhrases: string[];
   movedTo: string | null; // a different domain the site now redirects to
   title: string | null;
+  etag?: string | null; // for "has it changed?" on the next visit
+  lastModified?: string | null;
+  notModified?: boolean; // the page had not changed since the last visit
 }
 
 export interface OrgState {
@@ -51,6 +54,7 @@ export interface OrgState {
 export interface State {
   updated: string | null;
   orgs: Record<string, OrgState>;
+  robots?: Record<string, { date: string; disallowAll: boolean }>; // robots.txt answers, kept a week
 }
 
 export const HISTORY_LIMIT = 30;

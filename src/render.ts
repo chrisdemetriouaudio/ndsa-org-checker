@@ -199,7 +199,7 @@ export function renderSite(orgs: Org[], state: State): string {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ND Support Directory</title>
-<meta name="description" content="Neurodivergent support organisations in the UK, checked every day.">
+<meta name="description" content="Neurodivergent support organisations in the UK, checked every few days.">
 <style>
 :root{--bg:#fbfaf7;--card:#fff;--ink:#1d1d1b;--quiet:#5c5b57;--line:#e3e0d8;--accent:#2f5d8a;--note:#fff4d6;--green:#2e7d4f;--amber:#a86a00;--red:#b3261e;--green-bg:#e6f4ea;--amber-bg:#fff4d6;--red-bg:#fde7e5}
 @media (prefers-color-scheme:dark){:root{--bg:#161615;--card:#1f1f1d;--ink:#eeece6;--quiet:#a9a69e;--line:#34332f;--accent:#8db8e3;--note:#3a3120;--green:#7fd19b;--amber:#f2c25b;--red:#f28b82;--green-bg:#1d3324;--amber-bg:#3a3120;--red-bg:#3d2220}}
@@ -223,7 +223,7 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <body>
 <main>
 <h1>ND Support Directory</h1>
-<p class="lead">${shown.length} UK organisations supporting neurodivergent people. Every website is checked daily. Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
+<p class="lead">${shown.length} UK organisations supporting neurodivergent people. Websites are checked every 1 to 3 days, and daily if anything looks wrong. Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
 <label for="q" class="lead">Search by name, area or need</label>
 <input id="q" type="search" placeholder="For example: ADHD, Scotland, dyslexia">
 <ul id="list">

@@ -17,7 +17,7 @@ import { checkSite } from './check.ts';
 import { matchConditions } from './conditions.ts';
 import { dateWords } from './dates.ts';
 import { normaliseUrl, serialiseOrgs, validateNew } from './neworg.ts';
-import { forEachZipLine } from './register.ts';
+import { downloadOnce, forEachZipLine } from './register.ts';
 import type { Org } from './types.ts';
 
 export { NATIONS, type Candidate, type Decision, type Nation } from './candidates.ts';
@@ -126,9 +126,7 @@ async function fromScotland(): Promise<Candidate[]> {
 }
 
 async function fromNorthernIreland(): Promise<Candidate[]> {
-  const res = await fetch(CCNI_CSV);
-  if (!res.ok) throw new Error(`Northern Ireland register download failed: HTTP ${res.status}`);
-  return parseCsv(await res.text()).flatMap((r) => {
+  return parseCsv(await readFile(await downloadOnce(CCNI_CSV), 'utf8')).flatMap((r) => {
     if (/removed/i.test(r['Status'])) return [];
     const name = tidy(r['Charity name']);
     // "Who the charity helps" is a tick-box list; many groups tick a dozen boxes. Only a short list (3 or fewer)
@@ -233,7 +231,8 @@ function alertText(today: string, added: Candidate[], review: Candidate[], verdi
   ].join('\n');
 }
 
-async function main() {
+/** Finds candidates, adds clear new ones, and writes the review list. Returns the ids it added. */
+export async function discover(): Promise<string[]> {
   const root = join(dirname(fileURLToPath(import.meta.url)), '..');
   const path = (p: string) => join(root, p);
   const read = async <T>(p: string, fallback: T) => readFile(path(p), 'utf8').then((t) => JSON.parse(t) as T, () => fallback);
@@ -263,12 +262,13 @@ async function main() {
   const { add, review, note } = pickAutoAdds(fresh, verdicts);
 
   const added: Candidate[] = [];
+  const addedIds: string[] = [];
   if (add.length) {
     const orgs = [...listed];
     const taken = new Set(orgs.map((o) => o.id));
     for (const c of add) {
       const v = validateNew(candidateToInput(c), orgs, taken);
-      if (v.org) { orgs.push(v.org); added.push(c); }
+      if (v.org) { orgs.push(v.org); added.push(c); addedIds.push(v.org.id); }
     }
     for (const c of added) decided[c.key] = { decision: 'added', by: 'daily discovery (automatic)', date: today };
     await writeFile(path('data/orgs.json'), serialiseOrgs(orgs));
@@ -287,6 +287,7 @@ async function main() {
   for (const n of NATIONS) console.log(`${n}: ${candidates.filter((c) => c.nations.includes(n)).length}`);
   console.log(`${candidates.length} candidates. New today: ${fresh.length} (added ${added.length}, for review ${reviewLeft.length}).${failed.length ? ` Failed: ${failed.join(', ')}` : ''}`);
   if (failed.length) process.exitCode = 1;
+  return addedIds;
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) await main();
+if (process.argv[1] === fileURLToPath(import.meta.url)) await discover();

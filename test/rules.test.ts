@@ -176,3 +176,18 @@ test('score colour follows the score like a temperature', () => {
   assert.equal(scoreHue(100), 130);
   assert.ok(scoreHue(85) > scoreHue(70) && scoreHue(70) > scoreHue(40));
 });
+
+import { isDue } from '../src/status.ts';
+
+test('healthy, steady sites are visited every 3 days; anything else daily', () => {
+  const green = [{ kind: 'evidence', level: 'green' }];
+  const steady = { status: 'Looks active' as const, since: '2026-09-01', lastChecked: '2026-10-16', history: Array(20).fill(0), signals: green };
+  assert.equal(isDue(steady, '2026-10-17'), false);
+  assert.equal(isDue({ ...steady, lastChecked: '2026-10-14' }, '2026-10-17'), true);
+  assert.equal(isDue(undefined, '2026-10-17'), true);
+  assert.equal(isDue({ ...steady, status: 'Needs a check' }, '2026-10-17'), true);
+  assert.equal(isDue({ ...steady, signals: [{ kind: 'evidence', level: 'amber' }] }, '2026-10-17'), true);
+  assert.equal(isDue({ ...steady, history: Array(5).fill(0) }, '2026-10-17'), true); // new: daily for 2 weeks
+  assert.equal(isDue({ ...steady, since: '2026-10-10' }, '2026-10-17'), true); // status changed recently
+  assert.equal(isDue({ ...steady, signals: [{ kind: 'proof', level: 'none' }] }, '2026-10-17'), false);
+});

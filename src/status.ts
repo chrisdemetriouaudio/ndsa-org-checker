@@ -38,3 +38,20 @@ export function decideStatus(org: Org, history: CheckResult[], today: string, re
   const checked = signals.some((x) => x.kind === 'evidence' && x.level !== 'none');
   return { status: 'Looks active', reasons: checked ? [] : ['Not checked yet'], proven: false, signals, score: s };
 }
+
+const daysBetween = (a: string, b: string) => (Date.parse(b) - Date.parse(a)) / 86_400_000;
+const HEALTHY_EVERY_DAYS = 3;
+const SETTLING_DAYS = 14;
+
+/**
+ * Whether an organisation's website should be visited today. Healthy, steady ones every 3 days; daily when
+ * anything is amber or red, when it is new (its first 2 weeks), or when its status changed in the last 2 weeks.
+ */
+export function isDue(prev: { status: Status; since: string; lastChecked: string | null; history: unknown[]; signals?: { kind: string; level: string }[] } | undefined, today: string): boolean {
+  if (!prev?.lastChecked) return true;
+  if (prev.status !== 'Looks active' && prev.status !== 'Confirmed') return true;
+  if (prev.signals?.some((x) => x.kind === 'evidence' && (x.level === 'amber' || x.level === 'red'))) return true;
+  if (prev.history.length < SETTLING_DAYS) return true;
+  if (daysBetween(prev.since, today) < SETTLING_DAYS) return true;
+  return daysBetween(prev.lastChecked, today) >= HEALTHY_EVERY_DAYS;
+}
