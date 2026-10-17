@@ -27,6 +27,7 @@ export interface Org {
   lon?: number;
   coverage?: Coverage; // works locally, or across a whole nation
   nations?: Nation[]; // which nations it covers
+  serves?: string[]; // council areas or regions it serves, in the register's words
   notes?: string;
   review?: Review;
 }
@@ -65,5 +66,5 @@ export interface State {
   robots?: Record<string, { date: string; disallowAll: boolean }>; // robots.txt answers, kept a week
 }
 
-export const HISTORY_LIMIT = 30;
+export const HISTORY_LIMIT = 14; // enough for the 7-check window and the 2-week 'new' rule
 export const FLAGGED: Status[] = ['Needs a check', 'Likely closed'];

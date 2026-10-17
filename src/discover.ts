@@ -13,15 +13,16 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inferAudiences } from './audience.ts';
+import { triage, type Verdict } from './triage.ts';
 import { addMapPoints } from './geo.ts';
 import { ccewCoverage, ccniCoverage, oscrCoverage, postcodeIn, ukPostcode, type Coverage } from './place.ts';
-import { candidateToInput, isClear, MAX_AUTO_ADD, NATIONS, pickAutoAdds, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
+import { candidateToInput, NATIONS, planActions, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
 import { checkSite } from './check.ts';
 import { matchConditions } from './conditions.ts';
 import { dateWords } from './dates.ts';
 import { normaliseUrl, serialiseOrgs, validateNew } from './neworg.ts';
 import { downloadOnce, forEachZipLine } from './register.ts';
-import type { Org } from './types.ts';
+import type { CheckResult, Org, State } from './types.ts';
 
 export { NATIONS, type Candidate, type Decision, type Nation } from './candidates.ts';
 
@@ -82,7 +83,7 @@ const host = (url: string | null) => (url ? new URL(url).hostname.replace(/^www\
 /** Listed organisations, so register rows about them can fill in missing details (who they are for). */
 interface Listed { byNumber: Map<string, string>; byHost: Map<string, string> }
 /** What a register says about a listed organisation: free text and category labels. */
-type About = Map<string, { text: string; categories: string; postcode?: string | null; coverage?: Coverage; nations?: Nation[] }>;
+type About = Map<string, { text: string; categories: string; postcode?: string | null; coverage?: Coverage; nations?: Nation[]; serves?: string[] }>;
 
 async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candidate[]> {
   const found = new Map<string, Candidate>();
@@ -102,7 +103,7 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     postcodes.set(number, ukPostcode(r.charity_contact_postcode));
     found.set(number, {
       key: `ccew:${number}`, source: 'ccew', number, name, website: site(r.charity_contact_web),
-      nations: [], area: '', form: tidy(r.charity_type) || 'Registered charity', audiences: [], ...m,
+      nations: [], area: '', form: tidy(r.charity_type) || 'Registered charity', audiences: [], about: activities.slice(0, 400), ...m,
     });
   });
   const areas = new Map<string, { description: string; welsh: boolean; type: string }[]>();
@@ -130,6 +131,7 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     c.audiences = inferAudiences(text.get(number) ?? '', (who.get(number) ?? []).join(', '));
     c.postcode = postcodes.get(number) ?? null;
     c.coverage = ccewCoverage(list.map((a) => a.description));
+    c.serves = list.filter((a) => a.type !== 'Country').map((a) => a.description).slice(0, 30);
   }
   for (const [number, id] of listed.byNumber) {
     if (!text.has(number)) continue;
@@ -137,6 +139,7 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     about.set(id, {
       text: text.get(number)!, categories: (who.get(number) ?? []).join(', '), postcode: postcodes.get(number) ?? null,
       coverage: ccewCoverage(list.map((a) => a.description)), nations: ccewNations(list),
+      serves: list.filter((a) => a.type !== 'Country').map((a) => a.description).slice(0, 30),
     });
   }
   return [...found.values()];
@@ -153,14 +156,16 @@ async function fromScotland(listed: Listed, about: About): Promise<Candidate[]> 
     const listedId = website ? listed.byHost.get(host(website)!) : undefined;
     const postcode = ukPostcode(r['Postcode']);
     const coverage = oscrCoverage(tidy(r['Geographical Spread']));
-    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']), postcode, coverage, nations: ['Scotland'] });
+    const place = tidy(r['Main Operating Location']);
+    const serves = coverage === 'national' ? ['Throughout Scotland'] : place && !/outwith/i.test(place) ? [place] : [];
+    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']), postcode, coverage, nations: ['Scotland'], serves });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
       key: `oscr:${r['Charity Number']}`, source: 'oscr' as const, number: r['Charity Number'], name, website,
       nations: ['Scotland' as Nation], area: tidy(r['Main Operating Location']) || tidy(r['Geographical Spread']) || 'Scotland',
       form: tidy(r['Constitutional Form']).replace(/\s*\(.*\)$/, '') || 'Scottish charity',
-      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), postcode, coverage, ...m,
+      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), postcode, coverage, serves, about: description.slice(0, 400), ...m,
     }];
   });
 }
@@ -178,13 +183,14 @@ async function fromNorthernIreland(listed: Listed, about: About): Promise<Candid
     const listedId = website ? listed.byHost.get(host(website)!) : undefined;
     const postcode = postcodeIn(r['Public address']);
     const coverage = ccniCoverage(`${name} · ${tidy(r['What the charity does'])}`);
-    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps, postcode, coverage, nations: ['Northern Ireland'] });
+    const serves = coverage === 'national' ? ['Throughout Northern Ireland'] : [];
+    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps, postcode, coverage, nations: ['Northern Ireland'], serves });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
       key: `ccni:${r['Reg charity number']}`, source: 'ccni' as const, number: r['Reg charity number'], name, website,
       nations: ['Northern Ireland' as Nation], area: 'Northern Ireland', form: tidy(r['Type of governing document']) || 'NI charity',
-      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), postcode, coverage, ...m,
+      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), postcode, coverage, serves, about: description.slice(0, 400), ...m,
     }];
   });
 }
@@ -248,15 +254,16 @@ function summary(candidates: Candidate[], failed: string[], today: string, added
 }
 
 /** Visits each clear new candidate's website once; only a clean answer counts. */
-async function checkSites(list: Candidate[], today: string): Promise<Map<string, SiteVerdict>> {
+async function checkSites(list: Candidate[], today: string, results?: Map<string, CheckResult>): Promise<Map<string, SiteVerdict>> {
   const verdicts = new Map<string, SiteVerdict>();
   const queue = [...list];
-  await Promise.all(Array.from({ length: 4 }, async () => {
+  await Promise.all(Array.from({ length: 8 }, async () => {
     for (let c = queue.shift(); c; c = queue.shift()) {
       const r = await checkSite(c.website!, today);
       const why = !r.reachable ? `website did not answer (${r.error ?? r.httpStatus})` : r.closedPhrases.length ? `website says "${r.closedPhrases[0]}"`
         : r.parkedPhrases.length ? 'website looks parked or for sale' : r.movedTo ? `website now goes to ${r.movedTo}` : '';
       verdicts.set(c.key, { ok: !why, why: why || 'website answered cleanly' });
+      results?.set(c.key, r);
     }
   }));
   return verdicts;
@@ -268,8 +275,7 @@ function alertText(today: string, added: Candidate[], review: Candidate[], verdi
     ...(note ? [`🔴 ${note}`, ''] : []),
     ...(added.length ? [`Added to the directory automatically (${added.length}):`, ...added.map((c) => `- ✅ **${c.name}** (${c.nations.join(', ')}): ${c.conditions.join(', ')}. ${c.website}`), ''] : []),
     ...(review.length ? [`Waiting for review on the admin page (${review.length}):`, ...review.slice(0, 40).map((c) => {
-      const v = verdicts.get(c.key);
-      const why = !c.inName ? 'mentions a condition, not named for it' : !c.website ? 'no website on the register' : v && !v.ok ? v.why : 'needs a look';
+      const why = c.triage?.reasons.at(-1) ?? 'needs a look';
       return `- 👉 **${c.name}** (${c.nations.join(', ')}): ${why}.`;
     }), ...(review.length > 40 ? [`- …and ${review.length - 40} more.`] : []), ''] : []),
     'Review: https://ndsa.labs.chrisdemetriou.com/admin/candidates',
@@ -317,6 +323,7 @@ export async function discover(): Promise<string[]> {
     if (!org.postcode && info.postcode) org.postcode = info.postcode;
     if (!org.coverage && info.coverage) org.coverage = info.coverage;
     if (!org.nations?.length && info.nations?.length) org.nations = info.nations;
+    if (!org.serves?.length && info.serves?.length) org.serves = info.serves;
     if (JSON.stringify(org) !== before) filled++;
   }
   try {
@@ -332,30 +339,55 @@ export async function discover(): Promise<string[]> {
   let candidates = shortlist(parts.flat(), listed, decided);
   // Baseline = the first run. Only candidates first seen after it are shown as NEW.
   const baseline = previousFile?.baseline ?? previousFile?.updated ?? today;
-  for (const c of candidates) c.firstSeen = previous.get(c.key)?.firstSeen ?? (previousFile ? today : baseline);
+  // A person's (or Claude's) reading of a description outranks the rules.
+  const overrides = await read<Record<string, { verdict: Verdict; by: string; date: string; reason?: string }>>('data/triage-overrides.json', {});
+  for (const c of candidates) {
+    c.firstSeen = previous.get(c.key)?.firstSeen ?? (previousFile ? today : baseline);
+    const t = triage({ name: c.name, description: c.about ?? c.snippet, inName: c.inName, conditions: c.conditions, website: c.website });
+    const o = overrides[c.key];
+    c.triage = o ? {
+      ...t,
+      verdict: o.verdict === 'add' && !c.website ? 'no-website' : o.verdict,
+      reasons: [...t.reasons, `${o.verdict === 'add' ? 'kept' : 'turned down'} after reading the description (${o.by}, ${dateWords(o.date)})${o.reason ? `: ${o.reason}` : ''}`],
+    } : t;
+  }
 
   // New = not in yesterday's list. The very first run has no yesterday, so nothing counts as new.
   const fresh = previousFile ? candidates.filter((c) => !previous.has(c.key)) : [];
-  const clear = fresh.filter(isClear);
-  const verdicts = clear.length && clear.length <= MAX_AUTO_ADD ? await checkSites(clear, today) : new Map<string, SiteVerdict>();
-  const { add, review, note } = pickAutoAdds(fresh, verdicts);
+  const freshKeys = new Set(fresh.map((c) => c.key));
+  const { reject, check, note } = planActions(candidates, freshKeys);
+  for (const c of reject) decided[c.key] = { decision: 'rejected', by: 'automatic triage', date: today, reason: c.triage!.reasons.join('; ') };
 
+  const siteResults = new Map<string, CheckResult>();
+  const verdicts = check.length ? await checkSites(check, today, siteResults) : new Map<string, SiteVerdict>();
   const added: Candidate[] = [];
   const addedIds: string[] = [];
-  if (add.length) {
-    const orgs = [...listed];
-    const taken = new Set(orgs.map((o) => o.id));
-    for (const c of add) {
-      const v = validateNew(candidateToInput(c), orgs, taken);
-      if (v.org) { orgs.push(v.org); added.push(c); addedIds.push(v.org.id); }
+  const firstChecks = new Map<string, CheckResult>(); // new organisation id -> the visit that just passed
+  const orgs = [...listed];
+  const taken = new Set(orgs.map((o) => o.id));
+  for (const c of check) {
+    const site = verdicts.get(c.key);
+    if (!site?.ok) {
+      // The website did not pass today: a person looks, rather than adding a dead link.
+      c.triage = { ...c.triage!, verdict: 'review', reasons: [...c.triage!.reasons, `website check: ${site?.why ?? 'not checked'}`] };
+      continue;
     }
-    for (const c of added) decided[c.key] = { decision: 'added', by: 'daily discovery (automatic)', date: today };
-    await writeFile(path('data/orgs.json'), serialiseOrgs(orgs));
-    await writeFile(path('data/candidate-decisions.json'), `${JSON.stringify(decided, null, 2)}\n`);
-    const addedKeys = new Set(added.map((c) => c.key));
-    candidates = candidates.filter((c) => !addedKeys.has(c.key));
+    const v = validateNew(candidateToInput(c), orgs, taken);
+    if (v.org) { orgs.push(v.org); added.push(c); addedIds.push(v.org.id); firstChecks.set(v.org.id, siteResults.get(c.key)!); decided[c.key] = { decision: 'added', by: 'automatic triage', date: today, reason: c.triage!.reasons.join('; ') }; }
   }
-  const reviewLeft = review.filter((c) => !added.some((a) => a.key === c.key));
+  if (added.length) {
+    await writeFile(path('data/orgs.json'), serialiseOrgs(orgs));
+    // Keep today's visit as each new organisation's first check, so the morning run does not visit it again today.
+    const state = await read<State>('data/state.json', { updated: null, orgs: {} });
+    for (const [id, r] of firstChecks) {
+      if (!state.orgs[id]) state.orgs[id] = { status: 'Looks active', reasons: [], since: today, lastChecked: today, proven: false, score: null, signals: [], history: [r] };
+    }
+    await writeFile(path('data/state.json'), `${JSON.stringify(state, null, 2)}\n`);
+  }
+  if (added.length || reject.length) await writeFile(path('data/candidate-decisions.json'), `${JSON.stringify(decided, null, 2)}\n`);
+  const gone = new Set([...reject, ...added].map((c) => c.key));
+  candidates = candidates.filter((c) => !gone.has(c.key));
+  const reviewLeft = candidates.filter((c) => freshKeys.has(c.key) && c.triage?.verdict === 'review');
 
   await writeFile(path('data/candidates.json'), `{"updated":"${today}","baseline":"${baseline}","candidates":[\n${candidates.map((c) => JSON.stringify(c)).join(',\n')}\n]}\n`);
   await writeFile(path('ndsa-PMO/30 Live/Candidates.md'), summary(candidates, failed, today, added, reviewLeft, note));
@@ -364,7 +396,9 @@ export async function discover(): Promise<string[]> {
     await writeFile(path('out/discover-alert.md'), alertText(today, added, reviewLeft, verdicts, note));
   }
   for (const n of NATIONS) console.log(`${n}: ${candidates.filter((c) => c.nations.includes(n)).length}`);
-  console.log(`${candidates.length} candidates. New today: ${fresh.length} (added ${added.length}, for review ${reviewLeft.length}).${failed.length ? ` Failed: ${failed.join(', ')}` : ''}`);
+  const left: Record<string, number> = {};
+  for (const c of candidates) left[c.triage!.verdict] = (left[c.triage!.verdict] ?? 0) + 1;
+  console.log(`Added ${added.length}, turned down ${reject.length}. Left: ${JSON.stringify(left)}. New today: ${fresh.length}.${failed.length ? ` Failed: ${failed.join(', ')}` : ''}`);
   if (failed.length) process.exitCode = 1;
   return addedIds;
 }

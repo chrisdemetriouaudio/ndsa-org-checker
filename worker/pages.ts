@@ -262,10 +262,11 @@ export function candidatesPage(n: string, admin: Admin, decided: string[], repo:
   const body = `
 <div class="top"><div><h1>Candidates</h1><p class="quiet" style="margin:0">Organisations found in the charity registers · signed in as ${esc(admin.name)}</p></div>
 <div><a href="/admin">Back to admin</a></div></div>
-<div class="card"><p style="margin:0">These were found by matching the conditions in each charity's name and description. <strong>Check each one</strong> before adding it. Tick, then choose <strong>Add to the directory</strong> or <strong>Not relevant</strong>. Either way it leaves this list for good.</p></div>
+<div class="card"><p style="margin:0">Clear ones are added or turned down automatically every morning. <strong>These are the ones the rules could not decide.</strong> Tick, then choose <strong>Add to the directory</strong> or <strong>Not relevant</strong>. Either way it leaves this list for good.</p></div>
 <div class="card">
 <div class="row"><div><label for="f-nation">Nation</label><select id="f-nation"><option value="">All nations</option><option>England</option><option>Wales</option><option>Scotland</option><option>Northern Ireland</option></select></div>
 <div><label for="f-cond">Condition</label><select id="f-cond"><option value="">All conditions</option></select></div></div>
+<div class="row"><div><label for="f-verdict">Show</label><select id="f-verdict"><option value="review">Needs a person</option><option value="no-website">Would be added, but no website</option><option value="">All waiting</option></select></div><div></div></div>
 <div class="row"><div><label for="f-aud">Who for</label><select id="f-aud"><option value="">Everyone</option>${AUDIENCES.map((a) => `<option value="${a}">${esc(AUDIENCE_LABEL[a])}</option>`).join('')}</select></div><div></div></div>
 <div class="row"><div><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Name, place or words"></div>
 <div><label>&nbsp;</label><label style="font-weight:400;display:flex;gap:8px;align-items:center"><input type="checkbox" id="f-named" style="width:auto"> Only ones named for a condition</label>
@@ -274,7 +275,7 @@ export function candidatesPage(n: string, admin: Admin, decided: string[], repo:
 <p id="count" class="quiet">Loading…</p>
 <div class="inline" style="margin-bottom:12px"><button id="add">Add to the directory</button><button id="reject" class="danger">Not relevant</button><span id="picked" class="quiet" style="align-self:center"></span></div>
 <div id="msg" hidden></div>
-<div class="table-wrap"><table><thead><tr><th></th><th>Organisation</th><th>Nation</th><th>Conditions</th><th>Why it was found</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th></th><th>Organisation</th><th>Nation</th><th>Conditions</th><th>What it does, and why it is here</th></tr></thead><tbody id="rows"></tbody></table></div>
 <div class="inline" style="margin-top:12px"><button id="prev" class="plain">Previous</button><span id="page" class="quiet" style="align-self:center"></span><button id="next" class="plain">Next</button></div>`;
 
   return layout('Candidates · ND Support Directory', body, n, `${POST_JS}
@@ -293,8 +294,8 @@ const $ = (id) => document.getElementById(id);
 const el = (tag, text, attrs) => { const e = document.createElement(tag); if (text != null) e.textContent = text; for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v); return e; };
 
 function filter() {
-  const aud = $('f-aud').value, nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked, fresh = $('f-new').checked;
-  shown = all.filter((c) => (!aud || (c.audiences || []).includes(aud)) && (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName) && (!fresh || isNew(c))
+  const verdict = $('f-verdict').value, aud = $('f-aud').value, nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked, fresh = $('f-new').checked;
+  shown = all.filter((c) => (!verdict || (c.triage && c.triage.verdict === verdict)) && (!aud || (c.audiences || []).includes(aud)) && (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName) && (!fresh || isNew(c))
     && (!q || (c.name + ' ' + c.area + ' ' + c.snippet).toLowerCase().includes(q)));
   page = 0; draw();
 }
@@ -310,7 +311,8 @@ function draw() {
     const name = el('td'); if (isNew(c)) { const b = el('strong', 'NEW '); b.style.color = 'var(--good)'; name.append(b); } const a = el('a', c.name, { href: REGISTER[c.source](c.number), target: '_blank', rel: 'noopener' }); name.append(a, el('br'));
     name.append(c.website ? el('a', c.website.replace(/^https?:\\/\\//, ''), { href: c.website, target: '_blank', rel: 'noopener' }) : el('span', 'No website on the register', { class: 'quiet' }));
     name.append(el('br'), el('span', c.form + ' · ' + c.area, { class: 'quiet' }));
-    tr.append(el('td'), name, el('td', c.nations.join(', ')), el('td', c.conditions.join(', ') + ((c.audiences || []).length ? ' · for ' + c.audiences.join(', ') : '')), el('td', (c.inName ? 'Named for it. ' : '') + c.snippet));
+    const why = el('td', c.about || c.snippet); if (c.triage) { why.append(el('br'), el('span', 'Score ' + c.triage.score + ': ' + c.triage.reasons.join('; '), { class: 'quiet' })); }
+    tr.append(el('td'), name, el('td', c.nations.join(', ')), el('td', c.conditions.join(', ') + ((c.audiences || []).length ? ' · for ' + c.audiences.join(', ') : '')), why);
     tr.firstChild.append(box);
     body.append(tr);
   }
@@ -340,7 +342,7 @@ $('add').onclick = () => decide('add');
 $('reject').onclick = () => decide('reject');
 $('prev').onclick = () => { page--; draw(); scrollTo(0, 0); };
 $('next').onclick = () => { page++; draw(); scrollTo(0, 0); };
-for (const id of ['f-aud', 'f-nation', 'f-cond', 'f-named', 'f-new']) $(id).onchange = filter;
+for (const id of ['f-verdict', 'f-aud', 'f-nation', 'f-cond', 'f-named', 'f-new']) $(id).onchange = filter;
 $('f-q').oninput = filter;
 fetch('https://raw.githubusercontent.com/${repo}/main/data/candidates.json', { cache: 'no-store' })
   .then((r) => r.json())

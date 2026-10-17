@@ -3,7 +3,7 @@
  * GitHub API with a fine-grained token limited to this one repo (contents + actions: read and write).
  */
 import { serialiseOrgs } from '../src/neworg.ts';
-import type { Org, State } from '../src/types.ts';
+import type { Org } from '../src/types.ts';
 import { SafeError, type Env } from './auth.ts';
 
 const API = 'https://api.github.com';
@@ -24,14 +24,6 @@ const encode = (text: string) => {
   for (const b of new TextEncoder().encode(text)) s += String.fromCharCode(b);
   return btoa(s);
 };
-
-/** Public read through the raw file host (cached about a minute at the edge). */
-export async function readPublic(env: Env): Promise<{ orgs: Org[]; state: State }> {
-  const raw = (path: string) => fetch(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/${path}`, { cf: { cacheTtl: 60 } } as RequestInit)
-    .then((r) => { if (!r.ok) throw new Error(`Could not read ${path}: HTTP ${r.status}`); return r.json(); });
-  const [orgs, state] = await Promise.all([raw('data/orgs.json'), raw('data/state.json')]);
-  return { orgs: orgs as Org[], state: state as State };
-}
 
 /** Fresh read through the API, with the file's version (sha) for a safe update. */
 export async function readFile(env: Env, path: string): Promise<{ text: string; sha: string }> {

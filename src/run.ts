@@ -86,6 +86,9 @@ export async function runChecks({ renderOnly = false, only }: RunOptions = {}) {
   if (!renderOnly && !only) state.updated = now; // "last check" means the full daily run
 
   await write(path('data/state.json'), `${JSON.stringify(state, null, 2)}\n`);
+  // A small copy without the check history, for the admin page (the full state is several MB).
+  const summary = { updated: state.updated, orgs: Object.fromEntries(Object.entries(state.orgs).map(([id, s]) => [id, { ...s, history: [], signals: s.signals.map((x) => ({ ...x, detail: x.level === 'green' ? '' : x.detail })) }])) };
+  await write(path('data/summary.json'), `${JSON.stringify(summary)}\n`);
   await write(path('ndsa-PMO/30 Live/Live status.md'), renderLivePage(orgs, state));
   await write(path('site/index.html'), renderSite(orgs, state));
 

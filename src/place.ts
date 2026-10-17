@@ -37,3 +37,30 @@ export const oscrCoverage = (spread: string): Coverage =>
 /** Northern Ireland has no coverage field: nationwide only when the description says so. */
 export const ccniCoverage = (text: string): Coverage =>
   /\b(across|throughout|all (?:of|parts of)) northern ireland\b|\bNI[- ]wide\b|\bregional (?:charity|organisation|service)\b/i.test(text) ? 'national' : 'local';
+
+/** Council and area names compared loosely: "Manchester City" = "Manchester", "City of Edinburgh" = "Edinburgh". */
+export function areaKey(name: string): string {
+  return name.toLowerCase().replace(/&/g, 'and')
+    .replace(/^(the )?(city and county of|city of|county of|royal borough of|london borough of|borough of)\s+/, '')
+    .replace(/\s+(city|county|borough|council|city council|county council|district)$/, '')
+    .replace(/[^a-z]+/g, ' ').trim();
+}
+
+/** Where the visitor is, as postcodes.io names it. */
+export interface Here { district?: string | null; county?: string | null; region?: string | null; country: string }
+
+/**
+ * Whether an organisation's listed service areas cover the visitor: their council, their county,
+ * "Throughout London" for London, or "Throughout <their nation>". Returns the matching area, or null.
+ */
+export function servesHere(serves: string[] | undefined, here: Here): string | null {
+  if (!serves?.length) return null;
+  const mine = new Set([here.district, here.county].filter(Boolean).map((x) => areaKey(x!)));
+  for (const s of serves) {
+    const k = areaKey(s);
+    if (mine.has(k)) return s;
+    const throughout = /^throughout (.+)$/.exec(k)?.[1];
+    if (throughout && (throughout === areaKey(here.region ?? '') || throughout.split(' and ').includes(here.country.toLowerCase()))) return s;
+  }
+  return null;
+}

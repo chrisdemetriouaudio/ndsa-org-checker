@@ -24,3 +24,22 @@ test('local or nationwide, from each register', () => {
   assert.equal(ccniCoverage('We support families across Northern Ireland'), 'national');
   assert.equal(ccniCoverage('A youth club in east Belfast'), 'local');
 });
+
+import { areaKey, servesHere } from '../src/place.ts';
+
+test('council names from the registers and from postcodes match once tidied', () => {
+  assert.equal(areaKey('Manchester City'), areaKey('Manchester'));
+  assert.equal(areaKey('City of Edinburgh'), areaKey('Edinburgh'));
+  assert.equal(areaKey('Perth And Kinross'), areaKey('Perth and Kinross'));
+  assert.equal(areaKey('London Borough of Camden'), areaKey('Camden'));
+});
+
+test('an organisation serves you when its areas include your council, county, region or nation', () => {
+  const bury = { district: 'Bury', county: null, region: 'North West', country: 'England' };
+  assert.equal(servesHere(['Rochdale', 'Bury', 'Oldham'], bury), 'Bury');
+  assert.equal(servesHere(['Salford City'], bury), null);
+  assert.equal(servesHere(['Throughout England And Wales'], bury), 'Throughout England And Wales');
+  assert.equal(servesHere(['Throughout London'], bury), null);
+  assert.equal(servesHere(['Throughout London'], { district: 'Camden', region: 'London', country: 'England' }), 'Throughout London');
+  assert.equal(servesHere(['Hampshire'], { district: 'Winchester', county: 'Hampshire', region: 'South East', country: 'England' }), 'Hampshire');
+});

@@ -1,14 +1,13 @@
 import { cleanAudiences } from '../src/audience.ts';
-import { ukPostcode } from '../src/place.ts';
+import { areaKey, ukPostcode } from '../src/place.ts';
 import { candidateToInput, type Candidate, type Decision } from '../src/candidates.ts';
 import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
-import { renderSite } from '../src/render.ts';
 import type { State } from '../src/types.ts';
 import {
   audit, consumeLink, currentAdmin, endSession, nonce, passkeyRegister, passkeyRegistrationOptions, passkeySignIn,
   passkeySignInOptions, requestLink, SafeError, startSession, type Admin, type Env,
 } from './auth.ts';
-import { readFile, readFileIfAny, readPublic, startCheck, updateJson, updateOrgs } from './github.ts';
+import { readFile, readFileIfAny, startCheck, updateJson, updateOrgs } from './github.ts';
 import { adminPage, candidatesPage, linkPage, messagePage, passkeySetupPage, signInPage } from './pages.ts';
 
 const MAX_BODY = 64 * 1024;
@@ -51,16 +50,18 @@ async function readJson(req: Request): Promise<Record<string, unknown>> {
 const today = () => new Date().toISOString().slice(0, 10);
 const asList = (v: unknown) => (Array.isArray(v) ? v.map(String) : typeof v === 'string' && v ? [v] : []);
 
+/** The public page is built by the daily run (site/index.html); the Worker only adds this request's nonce. */
 async function directory(env: Env, n: string): Promise<Response> {
-  const { orgs, state } = await readPublic(env);
-  const page = renderSite(orgs, state)
+  const res = await fetch(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/site/index.html`, { cf: { cacheTtl: 60 } } as RequestInit);
+  if (!res.ok) throw new Error(`Could not read the directory page: HTTP ${res.status}`);
+  const page = (await res.text())
     .replace('<script>', `<script nonce="${n}">`)
     .replace('</footer>', ' · <a href="/admin">Admin sign in</a></footer>');
   return html(page, n, { 'cache-control': 'public, max-age=60' });
 }
 
 async function adminHome(env: Env, admin: Admin, n: string): Promise<Response> {
-  const [orgsFile, stateFile] = await Promise.all([readFile(env, 'data/orgs.json'), readFile(env, 'data/state.json')]);
+  const [orgsFile, stateFile] = await Promise.all([readFile(env, 'data/orgs.json'), readFile(env, 'data/summary.json')]);
   return html(adminPage(n, admin, JSON.parse(orgsFile.text), JSON.parse(stateFile.text) as State), n);
 }
 
@@ -168,16 +169,23 @@ async function decideCandidates(env: Env, admin: Admin, body: Record<string, unk
 }
 
 /** A UK postcode or district ("SO23 9AA" or "SO23") to a map point, via postcodes.io. Nothing is stored or logged. */
-async function lookupPostcode(raw: string): Promise<{ lat: number; lon: number; country: string; label: string } | null> {
+async function lookupPostcode(raw: string): Promise<{ lat: number; lon: number; country: string; label: string; district: string; county: string | null; region: string | null; keys: { district: string; county: string | null; region: string | null } } | null> {
   const full = ukPostcode(raw);
   const district = raw.toUpperCase().replace(/\s/g, '');
   if (!full && !/^[A-Z]{1,2}\d[A-Z\d]?$/.test(district)) return null;
   const res = await fetch(full ? `https://api.postcodes.io/postcodes/${encodeURIComponent(full)}` : `https://api.postcodes.io/outcodes/${district}`);
   if (!res.ok) return null;
-  const r = ((await res.json()) as { result?: { latitude: number | null; longitude: number | null; country: string | string[] } }).result;
+  const r = ((await res.json()) as { result?: { latitude: number | null; longitude: number | null; country: string | string[]; admin_district?: string | string[] | null; admin_county?: string | string[] | null; region?: string | string[] | null } }).result;
   if (r?.latitude == null || r.longitude == null) return null;
-  const country = Array.isArray(r.country) ? r.country[0] : r.country;
-  return { lat: r.latitude, lon: r.longitude, country, label: full ?? district };
+  const first = (v: string | string[] | null | undefined) => (Array.isArray(v) ? v[0] : v) ?? null;
+  const country = first(r.country) ?? 'UK';
+  const council = first(r.admin_district) ?? full ?? district;
+  const county = first(r.admin_county);
+  const region = first(r.region);
+  return {
+    lat: r.latitude, lon: r.longitude, country, label: full ?? district, district: council, county, region,
+    keys: { district: areaKey(council), county: county ? areaKey(county) : null, region: region ? areaKey(region) : null },
+  };
 }
 
 /** Edits who an organisation is for, its base postcode and whether it works locally or across the nation. */

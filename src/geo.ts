@@ -8,7 +8,7 @@ const API = 'https://api.postcodes.io';
 const BATCH = 100;
 const round = (n: number) => Math.round(n * 1000) / 1000; // about 100 m: plenty for "miles away"
 
-type Point = { lat: number; lon: number };
+type Point = { lat: number; lon: number; council?: string };
 
 async function lookupBatch(postcodes: string[]): Promise<Map<string, Point>> {
   const res = await fetch(`${API}/postcodes`, {
@@ -17,10 +17,10 @@ async function lookupBatch(postcodes: string[]): Promise<Map<string, Point>> {
     body: JSON.stringify({ postcodes }),
   });
   if (!res.ok) throw new Error(`postcodes.io: HTTP ${res.status}`);
-  const j = (await res.json()) as { result: { query: string; result: { latitude: number | null; longitude: number | null } | null }[] };
+  const j = (await res.json()) as { result: { query: string; result: { latitude: number | null; longitude: number | null; admin_district?: string | null } | null }[] };
   const out = new Map<string, Point>();
   for (const r of j.result) {
-    if (r.result?.latitude != null && r.result.longitude != null) out.set(r.query, { lat: round(r.result.latitude), lon: round(r.result.longitude) });
+    if (r.result?.latitude != null && r.result.longitude != null) out.set(r.query, { lat: round(r.result.latitude), lon: round(r.result.longitude), council: r.result.admin_district ?? undefined });
   }
   return out;
 }
@@ -47,7 +47,12 @@ export async function addMapPoints(orgs: Org[]): Promise<number> {
   let filled = 0;
   for (const o of orgs) {
     const p = o.postcode ? points.get(o.postcode) : undefined;
-    if (p && o.lat == null) { o.lat = p.lat; o.lon = p.lon; filled++; }
+    if (p && o.lat == null) {
+      o.lat = p.lat; o.lon = p.lon;
+      // A local organisation with no service areas on its register serves at least its own council.
+      if (!o.serves?.length && o.coverage !== 'national' && p.council) o.serves = [p.council];
+      filled++;
+    }
   }
   return filled;
 }
