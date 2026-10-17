@@ -47,7 +47,7 @@ updated: 2026-10-17
 > | [Child Autism UK](https://www.childautism.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Contact (for families with disabled children)](https://contact.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Dyslexia Action](https://www.dyslexiaaction.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
-> | [Dyslexia Scotland](https://dyslexiascotland.org.uk) | 🟢 Looks active | Scotland | 200 | 17 Oct 2026 |
+> | [Dyslexia Scotland](https://dyslexiascotland.org.uk) | 🟢 Looks active | Scotland | 403 | 17 Oct 2026 |
 > | [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Genius Within](https://www.geniuswithin.org) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Helen Arkell Dyslexia Charity](https://www.helenarkell.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
