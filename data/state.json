@@ -266,9 +266,9 @@
       ]
     },
     "autism-alliance": {
-      "status": "Likely closed",
+      "status": "Closed",
       "reasons": [
-        "Proof: Removed from the charity register on 5 Jul 2023"
+        "Closed by Chris on 17 Oct 2026: Removed from the charity register on 5 Jul 2023"
       ],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
@@ -280,8 +280,8 @@
           "label": "Web address",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "Web address exists",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -289,8 +289,8 @@
           "label": "Website answers",
           "weight": 15,
           "strength": "weak",
-          "level": "green",
-          "detail": "Website answers every day",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -298,8 +298,8 @@
           "label": "No closing notice",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "No closing wording on the homepage",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -307,8 +307,8 @@
           "label": "Not for sale",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "Domain is not parked or for sale",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -316,8 +316,8 @@
           "label": "Same address",
           "weight": 5,
           "strength": "weak",
-          "level": "green",
-          "detail": "Website stays at its own address",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -2825,9 +2825,9 @@
       ]
     },
     "dyslexia-action": {
-      "status": "Likely closed",
+      "status": "Closed",
       "reasons": [
-        "Proof: Removed from the charity register on 16 Aug 2023"
+        "Closed by Chris on 17 Oct 2026: Removed from the charity register on 16 Aug 2023 (the name now belongs to a training business)"
       ],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
@@ -2839,8 +2839,8 @@
           "label": "Web address",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "Web address exists",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -2848,8 +2848,8 @@
           "label": "Website answers",
           "weight": 15,
           "strength": "weak",
-          "level": "green",
-          "detail": "Website answers every day",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -2857,8 +2857,8 @@
           "label": "No closing notice",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "No closing wording on the homepage",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -2866,8 +2866,8 @@
           "label": "Not for sale",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "Domain is not parked or for sale",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -2875,8 +2875,8 @@
           "label": "Same address",
           "weight": 5,
           "strength": "weak",
-          "level": "green",
-          "detail": "Website stays at its own address",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {

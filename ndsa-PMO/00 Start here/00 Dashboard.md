@@ -14,15 +14,15 @@ updated: 2026-10-17
 <!-- live:start -->
 > [!info] Live (updated by the daily check)
 > **Last check:** 17 Oct 2026.
-> **To review:** 4. See [[Live status]].
-> **Fine:** 40 · **Closed:** 0 · **Average score:** 93 out of 100
+> **To review:** 2. See [[Live status]].
+> **Fine:** 40 · **Closed:** 2 · **Average score:** 93 out of 100
 <!-- live:end -->
 
 ## 👉 Your actions
 
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
 - [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
-- [ ] **Decide the 4 flagged services** in [[Live status]] (2 proven closed, 2 likely). Tell Claude "still running" or "close".
+- [ ] **Decide ADHD Foundation and Dyspraxia Foundation** when ready. Both stay flagged in [[Live status]].
 
 ## 🛠️ For Claude
 
@@ -41,6 +41,7 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Closed Autism Alliance UK and Dyslexia Action:** both removed from the register (17 Oct 2026).
 > - [x] **Charity register connected:** free daily download, no API key (17 Oct 2026).
 > - [x] **Updated the 4 moved organisations** to their new names and addresses (17 Oct 2026).
 > - [x] **Opened the vault in Obsidian** and allowed the Git plugin (17 Oct 2026).

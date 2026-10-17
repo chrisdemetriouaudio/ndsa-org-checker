@@ -1,3 +1,4 @@
+import { dateWords } from './dates.ts';
 import { computeSignals, score, type Signal } from './signals.ts';
 import type { Register } from './register.ts';
 import type { CheckResult, Org, Status } from './types.ts';
@@ -18,7 +19,7 @@ export function decideStatus(org: Org, history: CheckResult[], today: string, re
   const review = org.review;
 
   if (review?.status === 'Closed') {
-    const why = `Closed by ${review.by} on ${review.date}${review.note ? `: ${review.note}` : ''}`;
+    const why = `Closed by ${review.by} on ${dateWords(review.date)}${review.note ? `: ${review.note}` : ''}`;
     return { status: 'Closed', reasons: [why], proven: true, signals, score: 0 };
   }
 

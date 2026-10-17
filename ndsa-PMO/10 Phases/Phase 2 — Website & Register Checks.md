@@ -14,7 +14,7 @@ updated: 2026-10-17
 
 ## 👉 Your actions
 
-- [ ] **Decide the 4 flagged services** in [[Live status]].
+- [ ] **Decide ADHD Foundation and Dyspraxia Foundation** (left flagged on purpose, 17 Oct 2026).
 
 ## 🛠️ For Claude
 
@@ -24,6 +24,7 @@ updated: 2026-10-17
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Closed Autism Alliance UK and Dyslexia Action** on register proof (17 Oct 2026).
 > - [x] **Charity register connected** through the free daily download; no API key needed (17 Oct 2026).
 > - [x] **34 of 44 organisations matched** to their charity numbers; the other 10 show why they have none.
 > - [x] **Register found 4 problems:** 2 removed (proven closed), 1 in administration, 1 insolvent.

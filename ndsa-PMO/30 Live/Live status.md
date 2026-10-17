@@ -7,8 +7,8 @@ updated: 2026-10-17
 
 > [!info] At a glance
 > **Last check:** 17 Oct 2026, 44 services.
-> **To review:** 4 (4 likely closed, 0 need a check).
-> **Fine:** 40 look active, 0 confirmed. **Closed:** 0.
+> **To review:** 2 (2 likely closed, 0 need a check).
+> **Fine:** 40 look active, 0 confirmed. **Closed:** 2.
 > This page rewrites itself after every daily check. Edits made here are lost.
 
 > [!info]- How to read the ticks and the score (tap to open)
@@ -27,15 +27,11 @@ updated: 2026-10-17
 
 ## 👉 To review
 
-- 🔴 **Close Autism Alliance UK:** proven closed by an official record. Score 0.
-- 🔴 **Close Dyslexia Action:** proven closed by an official record. Score 0.
 - 🔴 **Check ADHD Foundation:** likely closed since 17 Oct 2026. Score 40.
 - 🔴 **Check Dyspraxia Foundation:** likely closed since 17 Oct 2026. Score 40.
 
 | Service | Score | Web address | Website answers | No closing notice | Not for sale | Same address | Charity register | Confirmed by them | Why |
 | --- | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
-| [Autism Alliance UK](https://autism-alliance.org.uk) | 0 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Removed from the charity register on 5 Jul 2023 |
-| [Dyslexia Action](https://www.dyslexiaaction.org.uk) | 0 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Removed from the charity register on 16 Aug 2023 |
 | [ADHD Foundation](https://www.adhdfoundation.org.uk) | 40 | ✅ | 🟡 | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1120898 is in administration (register of 17 Oct 2026) |
 | [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1058352 is marked insolvent (register of 17 Oct 2026) |
 
@@ -86,3 +82,7 @@ To decide: tell Claude "**[name] is still running**" or "**close [name]**". It g
 > | [SOS!SEN](https://www.sossen.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
 > | [Spectrum Gaming](https://spectrumgaming.net) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
 > | [Tourettes Action](https://www.tourettes-action.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+
+> [!note]- 2 closed (archived, not deleted)
+> - **Autism Alliance UK:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 5 Jul 2023
+> - **Dyslexia Action:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 16 Aug 2023 (the name now belongs to a training business)

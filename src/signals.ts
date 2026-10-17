@@ -80,7 +80,7 @@ export function computeSignals(org: Org, history: CheckResult[], today: string, 
   proof({
     key: 'confirmed', label: 'Confirmed by them', weight: 25,
     level: confirmedRecently ? 'green' : 'none',
-    detail: confirmedRecently ? `Confirmed by ${review!.by} on ${review!.date}` : 'Not asked yet (verification e-mails come in phase 4)',
+    detail: confirmedRecently ? `Confirmed by ${review!.by} on ${dateWords(review!.date)}` : 'Not asked yet (verification e-mails come in phase 4)',
   });
 
   return signals;
