@@ -222,6 +222,7 @@ main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;ma
 input{width:100%;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);margin:0 0 16px}
 footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 .who{font-size:.9rem;margin:4px 0 0}
+#more{margin-top:16px}.linkish{font:inherit;background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0}
 .aud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}.aud span{color:var(--quiet);margin-right:4px}
 .aud button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
 .aud button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
@@ -240,15 +241,21 @@ ${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false"
 <ul id="list">
 ${cards}
 </ul>
+<p id="more" class="lead" hidden><span></span> <button type="button" class="linkish">Show them too</button></p>
 <footer>Prototype. Services that look closed are hidden until a person checks them. <a href="${REPO}">How this works</a>.<br>
 Sources include the Charity Commission for England and Wales, the Charity Commission for Northern Ireland and the Scottish Charity Register: © Crown Copyright and database right ${new Date().getFullYear()}. Contains information from the Scottish Charity Register supplied by the Office of the Scottish Charity Regulator and licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>.</footer>
 </main>
 <script>
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];
-let aud='';
-const apply=()=>{const t=q.value.trim().toLowerCase();for(const li of items){const a=li.dataset.aud;li.hidden=(t&&!li.textContent.toLowerCase().includes(t))||(aud&&a&&!a.split(' ').includes(aud));}};
+let aud='',showUnstated=false;
+const more=document.getElementById('more');
+const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;
+for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
+const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;li.hidden=!(textOk&&audOk);}
+more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
+more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
 q.addEventListener('input',apply);
-for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
+for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
 </script>
 </body>
 </html>
