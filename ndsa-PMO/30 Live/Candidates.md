@@ -9,7 +9,13 @@ updated: 2026-10-17
 > **Found:** 2052 possible organisations on 17 Oct 2026, from the charity registers of all 4 nations.
 > **Named for a condition:** 455. The rest mention one in their description.
 > **Not added yet.** An admin reviews them on the admin page before anything goes on the directory.
-> This page rewrites itself each time discovery runs.
+> This page rewrites itself each time discovery runs (every morning).
+
+## 🆕 New on 17 Oct 2026
+
+- Nothing was added automatically.
+
+- No new ones waiting for review.
 
 ## 🗺️ By nation and condition
 

@@ -1,4 +1,5 @@
-import { applyReview, MAX_PER_ADD, parseLines, tidyName, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
+import { candidateToInput, type Candidate, type Decision } from '../src/candidates.ts';
+import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
 import { renderSite } from '../src/render.ts';
 import type { State } from '../src/types.ts';
 import {
@@ -118,13 +119,8 @@ async function startCheckSafely(env: Env, ids: string[]): Promise<boolean> {
   }
 }
 
-type Decisions = Record<string, { decision: 'added' | 'rejected'; by: string; date: string }>;
+type Decisions = Record<string, Decision>;
 const DECISIONS = 'data/candidate-decisions.json';
-const REGISTER_NOTE: Record<string, string> = {
-  oscr: 'A Scottish charity (Scottish register check not built yet)',
-  ccni: 'A Northern Ireland charity (Northern Ireland register check not built yet)',
-};
-
 async function candidatesHome(env: Env, admin: Admin, n: string): Promise<Response> {
   const file = await readFileIfAny(env, DECISIONS);
   const decided = file ? Object.keys(JSON.parse(file.text) as Decisions) : [];
@@ -149,16 +145,7 @@ async function decideCandidates(env: Env, admin: Admin, body: Record<string, unk
       const taken = new Set(orgs.map((o) => o.id));
       const next = [...orgs];
       for (const i of valid) {
-        const source = String(i.key).split(':')[0];
-        const input: NewOrgInput = {
-          name: tidyName(String(i.name ?? '')),
-          url: String(i.website ?? ''),
-          area: String(i.area ?? '') || (Array.isArray(i.nations) ? i.nations.join(', ') : ''),
-          kind: 'Registered charity',
-          focus: Array.isArray(i.conditions) ? i.conditions.map(String) : [],
-          charityNumber: source === 'ccew' ? String(i.number ?? '') : '',
-          registerNote: REGISTER_NOTE[source],
-        };
+        const input = candidateToInput({ ...(i as unknown as Candidate), source: String(i.key).split(':')[0] as Candidate['source'] });
         const v = validateNew(input, next, taken);
         if (v.org) { next.push(v.org); added.push({ key: String(i.key), id: v.org.id }); } else problems.push(`${input.name.slice(0, 50)}: ${v.problems.join(' ')}`);
       }

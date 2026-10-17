@@ -1,14 +1,16 @@
 name: Discover candidates
 
-# Weekly: reads the charity registers of all four nations and refreshes the review list.
-# Nothing found here goes on the directory until an admin adds it.
+# Every morning: reads the charity registers of all four nations and refreshes the review list.
+# NEW clear ones (named for a condition, website passes) are added automatically, at most 20 a day;
+# everything else waits for a person. One alert lists what happened.
 on:
   schedule:
-    - cron: '41 5 * * 1' # Mondays, before the daily check
+    - cron: '41 5 * * *' # every morning, before the daily check
   workflow_dispatch:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: daily-check
@@ -29,9 +31,21 @@ jobs:
         run: |
           git config user.name "ndsa-org-checker"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/candidates.json "ndsa-PMO/30 Live/Candidates.md"
+          git add data/candidates.json data/orgs.json data/candidate-decisions.json "ndsa-PMO/30 Live/Candidates.md" 2>/dev/null || git add data/candidates.json data/orgs.json "ndsa-PMO/30 Live/Candidates.md"
           if ! git diff --cached --quiet; then
-            git commit -m "chore(discover): weekly candidates $(date -u +%F)"
+            git commit -m "chore(discover): daily candidates $(date -u +%F)"
             git pull --rebase
             git push
+          fi
+
+      - name: Alert about new organisations ("New organisations found" issue)
+        if: hashFiles('out/discover-alert.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh issue list --state open --search 'in:title "New organisations found"' --json number -q '.[0].number')
+          if [ -z "$n" ]; then
+            gh issue create --title "New organisations found" --body-file out/discover-alert.md
+          else
+            gh issue comment "$n" --body-file out/discover-alert.md
           fi

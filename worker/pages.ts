@@ -247,7 +247,8 @@ export function candidatesPage(n: string, admin: Admin, decided: string[], repo:
 <div class="row"><div><label for="f-nation">Nation</label><select id="f-nation"><option value="">All nations</option><option>England</option><option>Wales</option><option>Scotland</option><option>Northern Ireland</option></select></div>
 <div><label for="f-cond">Condition</label><select id="f-cond"><option value="">All conditions</option></select></div></div>
 <div class="row"><div><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Name, place or words"></div>
-<div><label>&nbsp;</label><label style="font-weight:400;display:flex;gap:8px;align-items:center"><input type="checkbox" id="f-named" style="width:auto"> Only ones named for a condition</label></div></div>
+<div><label>&nbsp;</label><label style="font-weight:400;display:flex;gap:8px;align-items:center"><input type="checkbox" id="f-named" style="width:auto"> Only ones named for a condition</label>
+<label style="font-weight:400;display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" id="f-new" style="width:auto"> New only (found in the last 14 days)</label></div></div>
 </div>
 <p id="count" class="quiet">Loading…</p>
 <div class="inline" style="margin-bottom:12px"><button id="add">Add to the directory</button><button id="reject" class="danger">Not relevant</button><span id="picked" class="quiet" style="align-self:center"></span></div>
@@ -263,14 +264,16 @@ const REGISTER = {
   oscr: (n) => 'https://www.oscr.org.uk/about-charities/search-the-register/charity-details?number=' + n,
   ccni: (n) => 'https://www.charitycommissionni.org.uk/charity-details/?regId=' + n,
 };
-let all = [], shown = [], page = 0;
+let all = [], shown = [], page = 0, baseline = '';
+const NEW_DAYS = 14;
+const isNew = (c) => c.firstSeen && c.firstSeen > baseline && (Date.now() - Date.parse(c.firstSeen)) / 864e5 <= NEW_DAYS;
 const picked = new Map();
 const $ = (id) => document.getElementById(id);
 const el = (tag, text, attrs) => { const e = document.createElement(tag); if (text != null) e.textContent = text; for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v); return e; };
 
 function filter() {
-  const nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked;
-  shown = all.filter((c) => (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName)
+  const nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked, fresh = $('f-new').checked;
+  shown = all.filter((c) => (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName) && (!fresh || isNew(c))
     && (!q || (c.name + ' ' + c.area + ' ' + c.snippet).toLowerCase().includes(q)));
   page = 0; draw();
 }
@@ -283,7 +286,7 @@ function draw() {
     const box = el('input', null, { type: 'checkbox', 'aria-label': 'Choose ' + c.name });
     box.style.width = 'auto'; box.checked = picked.has(c.key);
     box.onchange = () => { if (box.checked) { if (picked.size >= MAX) { box.checked = false; return say($('msg'), 'Choose at most ' + MAX + ' at a time.', false); } picked.set(c.key, c); } else picked.delete(c.key); count(); };
-    const name = el('td'); const a = el('a', c.name, { href: REGISTER[c.source](c.number), target: '_blank', rel: 'noopener' }); name.append(a, el('br'));
+    const name = el('td'); if (isNew(c)) { const b = el('strong', 'NEW '); b.style.color = 'var(--good)'; name.append(b); } const a = el('a', c.name, { href: REGISTER[c.source](c.number), target: '_blank', rel: 'noopener' }); name.append(a, el('br'));
     name.append(c.website ? el('a', c.website.replace(/^https?:\\/\\//, ''), { href: c.website, target: '_blank', rel: 'noopener' }) : el('span', 'No website on the register', { class: 'quiet' }));
     name.append(el('br'), el('span', c.form + ' · ' + c.area, { class: 'quiet' }));
     tr.append(el('td'), name, el('td', c.nations.join(', ')), el('td', c.conditions.join(', ')), el('td', (c.inName ? 'Named for it. ' : '') + c.snippet));
@@ -316,12 +319,13 @@ $('add').onclick = () => decide('add');
 $('reject').onclick = () => decide('reject');
 $('prev').onclick = () => { page--; draw(); scrollTo(0, 0); };
 $('next').onclick = () => { page++; draw(); scrollTo(0, 0); };
-for (const id of ['f-nation', 'f-cond', 'f-named']) $(id).onchange = filter;
+for (const id of ['f-nation', 'f-cond', 'f-named', 'f-new']) $(id).onchange = filter;
 $('f-q').oninput = filter;
 fetch('https://raw.githubusercontent.com/${repo}/main/data/candidates.json', { cache: 'no-store' })
   .then((r) => r.json())
   .then((data) => {
-    all = data.candidates.filter((c) => !DECIDED.has(c.key));
+    baseline = data.baseline || data.updated || '';
+    all = data.candidates.filter((c) => !DECIDED.has(c.key)).sort((a, b) => Number(isNew(b)) - Number(isNew(a)));
     for (const cond of [...new Set(all.flatMap((c) => c.conditions))].sort()) $('f-cond').append(el('option', cond));
     filter();
   })
