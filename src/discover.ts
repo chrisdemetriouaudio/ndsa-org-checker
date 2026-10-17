@@ -12,6 +12,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inferAudiences } from './audience.ts';
 import { candidateToInput, isClear, MAX_AUTO_ADD, NATIONS, pickAutoAdds, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
 import { checkSite } from './check.ts';
 import { matchConditions } from './conditions.ts';
@@ -74,20 +75,30 @@ export function ccewNations(areas: { description: string; welsh: boolean; type: 
 const ENTITIES: Record<string, string> = { amp: '&', quot: '"', apos: "'", '#39': "'", lt: '<', gt: '>', nbsp: ' ' };
 const tidy = (s: unknown) => String(s ?? '').replace(/&(amp|quot|apos|#39|lt|gt|nbsp);/g, (_, e: string) => ENTITIES[e]).replace(/\s+/g, ' ').trim();
 const site = (s: unknown) => (tidy(s) ? normaliseUrl(tidy(s)) : null);
+const host = (url: string | null) => (url ? new URL(url).hostname.replace(/^www\./, '') : null);
 
-async function fromEnglandAndWales(): Promise<Candidate[]> {
+/** Listed organisations, so register rows about them can fill in missing details (who they are for). */
+interface Listed { byNumber: Map<string, string>; byHost: Map<string, string> }
+/** What a register says about a listed organisation: free text and category labels. */
+type About = Map<string, { text: string; categories: string }>;
+
+async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candidate[]> {
   const found = new Map<string, Candidate>();
+  const text = new Map<string, string>(); // number -> activities, for found and listed charities
   await forEachZipLine(`${CCEW}/publicextract.charity.zip`, (line) => {
     if (!line.includes('"linked_charity_number":0') || !line.includes('"Registered"')) return;
     const r = jsonLine(line);
     if (!r || r.charity_registration_status !== 'Registered') return;
-    const name = tidy(r.charity_name);
-    const m = matchConditions(name, tidy(r.charity_activities));
-    if (!m) return;
     const number = String(r.registered_charity_number);
+    const name = tidy(r.charity_name);
+    const activities = tidy(r.charity_activities);
+    if (listed.byNumber.has(number)) text.set(number, `${name} · ${activities}`);
+    const m = matchConditions(name, activities);
+    if (!m) return;
+    text.set(number, `${name} · ${activities}`);
     found.set(number, {
       key: `ccew:${number}`, source: 'ccew', number, name, website: site(r.charity_contact_web),
-      nations: [], area: '', form: tidy(r.charity_type) || 'Registered charity', ...m,
+      nations: [], area: '', form: tidy(r.charity_type) || 'Registered charity', audiences: [], ...m,
     });
   });
   const areas = new Map<string, { description: string; welsh: boolean; type: string }[]>();
@@ -100,50 +111,69 @@ async function fromEnglandAndWales(): Promise<Candidate[]> {
     list.push({ description: tidy(r.geographic_area_description), welsh: r.welsh_ind === true, type: tidy(r.geographic_area_type) });
     areas.set(number, list);
   });
+  const who = new Map<string, string[]>(); // the register's "who it helps" categories
+  await forEachZipLine(`${CCEW}/publicextract.charity_classification.zip`, (line) => {
+    if (!line.includes('"Who"') || !line.includes('"linked_charity_number":0')) return;
+    const r = jsonLine(line);
+    const number = r && String(r.registered_charity_number);
+    if (!r || !number || !text.has(number) || r.classification_type !== 'Who') return;
+    who.set(number, [...(who.get(number) ?? []), tidy(r.classification_description)]);
+  });
   for (const [number, c] of found) {
     const list = areas.get(number) ?? [];
     c.nations = ccewNations(list);
     c.area = list.filter((a) => a.type !== 'Country').map((a) => a.description).slice(0, 4).join(', ') || 'England and Wales';
+    c.audiences = inferAudiences(text.get(number) ?? '', (who.get(number) ?? []).join(', '));
+  }
+  for (const [number, id] of listed.byNumber) {
+    if (text.has(number)) about.set(id, { text: text.get(number)!, categories: (who.get(number) ?? []).join(', ') });
   }
   return [...found.values()];
 }
 
-async function fromScotland(): Promise<Candidate[]> {
+async function fromScotland(listed: Listed, about: About): Promise<Candidate[]> {
   let text = '';
   await forEachZipLine(OSCR_ZIP, (line) => { text += `${line}\n`; });
   return parseCsv(text).flatMap((r) => {
     if (!['Active', 'Not Submitted'].includes(r['Charity Status'])) return [];
     const name = tidy(r['Charity Name']);
     const description = [r['Known As'], r['Objectives'], r['Activities'], r['What the charity is set up to do and how it does this']].map(tidy).join(' · ');
+    const website = site(r['Website']);
+    const listedId = website ? listed.byHost.get(host(website)!) : undefined;
+    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']) });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
-      key: `oscr:${r['Charity Number']}`, source: 'oscr' as const, number: r['Charity Number'], name, website: site(r['Website']),
+      key: `oscr:${r['Charity Number']}`, source: 'oscr' as const, number: r['Charity Number'], name, website,
       nations: ['Scotland' as Nation], area: tidy(r['Main Operating Location']) || tidy(r['Geographical Spread']) || 'Scotland',
-      form: tidy(r['Constitutional Form']).replace(/\s*\(.*\)$/, '') || 'Scottish charity', ...m,
+      form: tidy(r['Constitutional Form']).replace(/\s*\(.*\)$/, '') || 'Scottish charity',
+      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), ...m,
     }];
   });
 }
 
-async function fromNorthernIreland(): Promise<Candidate[]> {
+async function fromNorthernIreland(listed: Listed, about: About): Promise<Candidate[]> {
   return parseCsv(await readFile(await downloadOnce(CCNI_CSV), 'utf8')).flatMap((r) => {
     if (/removed/i.test(r['Status'])) return [];
     const name = tidy(r['Charity name']);
     // "Who the charity helps" is a tick-box list; many groups tick a dozen boxes. Only a short list (3 or fewer)
-    // says the charity is focused on those people.
+    // says the charity is focused on those people, so only a short list counts towards matching a condition.
     const helps = tidy(r['Who the charity helps']);
     const focused = helps && helps.split(',').length <= 3 ? helps : '';
     const description = [r['Other name'], r['What the charity does'], focused].map(tidy).join(' · ');
+    const website = site(r['Website']);
+    const listedId = website ? listed.byHost.get(host(website)!) : undefined;
+    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
-      key: `ccni:${r['Reg charity number']}`, source: 'ccni' as const, number: r['Reg charity number'], name, website: site(r['Website']),
-      nations: ['Northern Ireland' as Nation], area: 'Northern Ireland', form: tidy(r['Type of governing document']) || 'NI charity', ...m,
+      key: `ccni:${r['Reg charity number']}`, source: 'ccni' as const, number: r['Reg charity number'], name, website,
+      nations: ['Northern Ireland' as Nation], area: 'Northern Ireland', form: tidy(r['Type of governing document']) || 'NI charity',
+      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), ...m,
     }];
   });
 }
 
-const host = (url: string | null) => (url ? new URL(url).hostname.replace(/^www\./, '') : null);
 
 /** Drops ones already listed or already decided, and the same organisation registered in two nations. */
 export function shortlist(all: Candidate[], listed: Org[], decided: Record<string, Decision>): Candidate[] {
@@ -245,11 +275,29 @@ export async function discover(): Promise<string[]> {
   // If a register cannot be read today, keep yesterday's list for it, so its charities do not look "new" tomorrow.
   const failed: string[] = [];
   const keep = (source: Candidate['source']) => [...previous.values()].filter((c) => c.source === source);
+  const index: Listed = {
+    byNumber: new Map(listed.filter((o) => o.charityNumber).map((o) => [o.charityNumber!, o.id])),
+    byHost: new Map(listed.map((o) => [host(o.url)!, o.id])),
+  };
+  const about: About = new Map();
   const parts = await Promise.all([
-    fromEnglandAndWales().catch((e) => { failed.push('England and Wales'); console.error(e); return keep('ccew'); }),
-    fromScotland().catch((e) => { failed.push('Scotland'); console.error(e); return keep('oscr'); }),
-    fromNorthernIreland().catch((e) => { failed.push('Northern Ireland'); console.error(e); return keep('ccni'); }),
+    fromEnglandAndWales(index, about).catch((e) => { failed.push('England and Wales'); console.error(e); return keep('ccew'); }),
+    fromScotland(index, about).catch((e) => { failed.push('Scotland'); console.error(e); return keep('oscr'); }),
+    fromNorthernIreland(index, about).catch((e) => { failed.push('Northern Ireland'); console.error(e); return keep('ccni'); }),
   ]);
+
+  // Fill in who listed organisations are for, where they have nothing yet and a register says.
+  let filled = 0;
+  for (const org of listed) {
+    const info = about.get(org.id);
+    if (org.audiences?.length || !info) continue;
+    const found = inferAudiences(info.text, info.categories);
+    if (found.length) { org.audiences = found; filled++; }
+  }
+  if (filled) {
+    await writeFile(path('data/orgs.json'), serialiseOrgs(listed));
+    console.log(`Filled in who it is for: ${filled} listed organisations.`);
+  }
   let candidates = shortlist(parts.flat(), listed, decided);
   // Baseline = the first run. Only candidates first seen after it are shown as NEW.
   const baseline = previousFile?.baseline ?? previousFile?.updated ?? today;

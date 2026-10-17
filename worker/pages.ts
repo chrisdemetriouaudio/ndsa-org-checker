@@ -1,3 +1,4 @@
+import { AUDIENCE_LABEL, AUDIENCES } from '../src/audience.ts';
 import { AREAS, FOCUS, KINDS, MAX_PER_ADD } from '../src/neworg.ts';
 import { dateWords, scoreHue, TICK } from '../src/render.ts';
 import { FLAGGED, type Org, type OrgState, type State } from '../src/types.ts';
@@ -143,6 +144,15 @@ function focusBoxes(prefix: string) {
   return `<div class="checks">${FOCUS.map((f, i) => `<label><input type="checkbox" name="focus" value="${esc(f)}" id="${prefix}${i}"> ${esc(f)}</label>`).join('')}</div>`;
 }
 
+function audienceBoxes(prefix: string, chosen: string[] = []) {
+  return `<div class="checks">${AUDIENCES.map((a) => `<label><input type="checkbox" name="audiences" value="${a}" id="${prefix}${a}"${chosen.includes(a) ? ' checked' : ''}> ${esc(AUDIENCE_LABEL[a])}</label>`).join('')}</div>`;
+}
+
+function whoForControl(org: Org) {
+  return `<details><summary>Who for</summary><form data-api="/admin/api/audiences" class="inline" style="flex-direction:column">
+<input type="hidden" name="id" value="${esc(org.id)}">${audienceBoxes(`w-${esc(org.id)}-`, org.audiences ?? [])}<button class="plain">Save</button></form></details>`;
+}
+
 function removeControl(org: Org) {
   return `<details><summary>Remove</summary><form data-api="/admin/api/review" class="inline">
 <input type="hidden" name="id" value="${esc(org.id)}"><input type="hidden" name="action" value="remove">
@@ -175,6 +185,7 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: State): s
 <div><label for="a-kind">Type</label><select id="a-kind" name="kind">${options(KINDS, 'Not sure')}</select></div></div>
 <label for="a-num">Charity number (England and Wales, optional)</label><input id="a-num" name="charityNumber" inputmode="numeric" placeholder="Leave blank if unsure">
 <label>Who it supports</label>${focusBoxes('a-f')}
+<label>Who it is for (tick all that apply; none = ages not stated)</label>${audienceBoxes('a-a')}
 <p><button>Add and check now</button></p><div class="out" hidden></div></form>
 
 <details class="card"><summary><strong>Add several at once</strong> (up to ${MAX_PER_ADD})</summary>
@@ -184,6 +195,7 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: State): s
 <p class="quiet">Area and charity number are optional. Pasting two columns from a spreadsheet works too.</p>
 <label for="m-kind">Type (for all of them)</label><select id="m-kind" name="kind">${options(KINDS, 'Not sure')}</select>
 <label>Who they support (for all of them)</label>${focusBoxes('m-f')}
+<label>Who they are for (for all of them)</label>${audienceBoxes('m-a')}
 <p><button>Add all and check now</button></p><div class="out" hidden></div></form></details>
 
 ${pending.length ? `<h2>Being checked now</h2><div class="card">${pending.map((o) => `<div>⏳ <strong>${esc(o.name)}</strong> <span class="quiet">${esc(o.url)}</span></div>`).join('')}
@@ -200,10 +212,10 @@ ${removeControl(o)}</div>`;
 
 <h2>All organisations (${live.length})</h2>
 <p class="quiet">Hover over a tick to see what it measured. ${header.length ? `Ticks, in order: ${header.map(esc).join(' · ')}.` : ''}</p>
-<div class="table-wrap"><table><thead><tr><th>Organisation</th><th>Score</th><th>Status</th><th>Ticks</th><th>Checked</th><th></th></tr></thead><tbody>
+<div class="table-wrap"><table><thead><tr><th>Organisation</th><th>Score</th><th>Status</th><th>Ticks</th><th>For</th><th>Checked</th><th></th></tr></thead><tbody>
 ${live.map((o) => {
     const s = state.orgs[o.id];
-    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${ticks(s)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
+    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${ticks(s)}</td><td>${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}${whoForControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
   }).join('')}
 </tbody></table></div>
 
@@ -217,8 +229,9 @@ for (const form of document.querySelectorAll('form[data-api]')) {
   form.onsubmit = async (ev) => {
     ev.preventDefault();
     const fd = new FormData(form);
-    const body = Object.fromEntries([...fd.entries()].filter(([k]) => k !== 'focus'));
+    const body = Object.fromEntries([...fd.entries()].filter(([k]) => k !== 'focus' && k !== 'audiences'));
     body.focus = fd.getAll('focus');
+    body.audiences = fd.getAll('audiences');
     const out = form.querySelector('.out') || form.parentElement.querySelector('.out') || document.createElement('div');
     const button = form.querySelector('button'); button.disabled = true;
     try {
@@ -246,6 +259,7 @@ export function candidatesPage(n: string, admin: Admin, decided: string[], repo:
 <div class="card">
 <div class="row"><div><label for="f-nation">Nation</label><select id="f-nation"><option value="">All nations</option><option>England</option><option>Wales</option><option>Scotland</option><option>Northern Ireland</option></select></div>
 <div><label for="f-cond">Condition</label><select id="f-cond"><option value="">All conditions</option></select></div></div>
+<div class="row"><div><label for="f-aud">Who for</label><select id="f-aud"><option value="">Everyone</option>${AUDIENCES.map((a) => `<option value="${a}">${esc(AUDIENCE_LABEL[a])}</option>`).join('')}</select></div><div></div></div>
 <div class="row"><div><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Name, place or words"></div>
 <div><label>&nbsp;</label><label style="font-weight:400;display:flex;gap:8px;align-items:center"><input type="checkbox" id="f-named" style="width:auto"> Only ones named for a condition</label>
 <label style="font-weight:400;display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" id="f-new" style="width:auto"> New only (found in the last 14 days)</label></div></div>
@@ -272,8 +286,8 @@ const $ = (id) => document.getElementById(id);
 const el = (tag, text, attrs) => { const e = document.createElement(tag); if (text != null) e.textContent = text; for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v); return e; };
 
 function filter() {
-  const nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked, fresh = $('f-new').checked;
-  shown = all.filter((c) => (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName) && (!fresh || isNew(c))
+  const aud = $('f-aud').value, nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked, fresh = $('f-new').checked;
+  shown = all.filter((c) => (!aud || (c.audiences || []).includes(aud)) && (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName) && (!fresh || isNew(c))
     && (!q || (c.name + ' ' + c.area + ' ' + c.snippet).toLowerCase().includes(q)));
   page = 0; draw();
 }
@@ -289,7 +303,7 @@ function draw() {
     const name = el('td'); if (isNew(c)) { const b = el('strong', 'NEW '); b.style.color = 'var(--good)'; name.append(b); } const a = el('a', c.name, { href: REGISTER[c.source](c.number), target: '_blank', rel: 'noopener' }); name.append(a, el('br'));
     name.append(c.website ? el('a', c.website.replace(/^https?:\\/\\//, ''), { href: c.website, target: '_blank', rel: 'noopener' }) : el('span', 'No website on the register', { class: 'quiet' }));
     name.append(el('br'), el('span', c.form + ' · ' + c.area, { class: 'quiet' }));
-    tr.append(el('td'), name, el('td', c.nations.join(', ')), el('td', c.conditions.join(', ')), el('td', (c.inName ? 'Named for it. ' : '') + c.snippet));
+    tr.append(el('td'), name, el('td', c.nations.join(', ')), el('td', c.conditions.join(', ') + ((c.audiences || []).length ? ' · for ' + c.audiences.join(', ') : '')), el('td', (c.inName ? 'Named for it. ' : '') + c.snippet));
     tr.firstChild.append(box);
     body.append(tr);
   }
@@ -319,7 +333,7 @@ $('add').onclick = () => decide('add');
 $('reject').onclick = () => decide('reject');
 $('prev').onclick = () => { page--; draw(); scrollTo(0, 0); };
 $('next').onclick = () => { page++; draw(); scrollTo(0, 0); };
-for (const id of ['f-nation', 'f-cond', 'f-named', 'f-new']) $(id).onchange = filter;
+for (const id of ['f-aud', 'f-nation', 'f-cond', 'f-named', 'f-new']) $(id).onchange = filter;
 $('f-q').oninput = filter;
 fetch('https://raw.githubusercontent.com/${repo}/main/data/candidates.json', { cache: 'no-store' })
   .then((r) => r.json())

@@ -1,3 +1,4 @@
+import { cleanAudiences } from '../src/audience.ts';
 import { candidateToInput, type Candidate, type Decision } from '../src/candidates.ts';
 import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
 import { renderSite } from '../src/render.ts';
@@ -63,7 +64,7 @@ async function adminHome(env: Env, admin: Admin, n: string): Promise<Response> {
 }
 
 async function addOrgs(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {
-  const shared = { kind: String(body.kind ?? ''), focus: asList(body.focus) };
+  const shared = { kind: String(body.kind ?? ''), focus: asList(body.focus), audiences: asList(body.audiences) };
   const inputs: NewOrgInput[] = typeof body.lines === 'string'
     ? parseLines(body.lines).map((i) => ({ ...shared, ...i }))
     : [{ ...shared, name: String(body.name ?? ''), url: String(body.url ?? ''), area: String(body.area ?? ''), charityNumber: String(body.charityNumber ?? '') }];
@@ -165,6 +166,27 @@ async function decideCandidates(env: Env, admin: Admin, body: Record<string, unk
   return json({ done: decidedKeys, problems });
 }
 
+/** Sets who an organisation is for (children / adults / families; none = not stated). */
+async function setAudiences(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {
+  const id = String(body.id ?? '');
+  const audiences = cleanAudiences(asList(body.audiences));
+  let found = false;
+  await updateOrgs(env, `Who ${id} is for: ${audiences.join(', ') || 'not stated'} (by ${admin.name}, admin page)`, (orgs) => {
+    found = orgs.some((o) => o.id === id);
+    if (!found) return null;
+    return orgs.map((o) => {
+      if (o.id !== id) return o;
+      const copy = { ...o };
+      if (audiences.length) copy.audiences = audiences; else delete copy.audiences;
+      return copy;
+    });
+  });
+  if (!found) return json({ error: 'That organisation is not on the list.' }, 400);
+  await audit(env, admin.email, 'audiences', `${id}: ${audiences.join(',')}`);
+  await startCheckSafely(env, []);
+  return json({ ok: true });
+}
+
 async function handle(req: Request, env: Env): Promise<Response> {
   const url = new URL(req.url);
   const n = nonce();
@@ -234,6 +256,7 @@ async function handle(req: Request, env: Env): Promise<Response> {
   if (path === '/admin/api/add') return addOrgs(env, admin, body);
   if (path === '/admin/api/review') return review(env, admin, body);
   if (path === '/admin/api/candidates') return decideCandidates(env, admin, body);
+  if (path === '/admin/api/audiences') return setAudiences(env, admin, body);
   return json({ error: 'Not found.' }, 404);
 }
 

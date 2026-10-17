@@ -1,3 +1,4 @@
+import { AUDIENCE_LABEL, AUDIENCES } from './audience.ts';
 import { dateWords } from './dates.ts';
 import type { Level, Signal } from './signals.ts';
 
@@ -184,9 +185,11 @@ export function renderSite(orgs: Org[], state: State): string {
     const checking = s.status === 'Needs a check' ? '<p class="note">We are re-checking this service.</p>' : '';
     const freshness = s.status === 'Confirmed' ? `Confirmed by the organisation` : `Last checked ${dateWords(s.lastChecked)}`;
     const hue = s.score === null ? null : scoreHue(s.score);
-    return `<li class="card">
+    const who = org.audiences?.length ? org.audiences.map((a) => AUDIENCE_LABEL[a]).join(' · ') : 'Ages not stated';
+    return `<li class="card" data-aud="${esc((org.audiences ?? []).join(' '))}">
   <div class="top"><h2><a href="${esc(org.url)}">${esc(org.name)}</a></h2><span class="score" ${hue === null ? '' : `style="--h:${hue}"`} title="How sure we are it is still running">${s.score ?? '—'}<small>/100</small></span></div>
   <p class="meta">${esc(org.kind)} · ${esc(org.area)}</p>
+  <p class="who">For: ${esc(who)}</p>
   <p class="tags">${org.focus.map((f) => `<span>${esc(f)}</span>`).join('')}</p>
   ${siteChecks(s)}
   ${checking}<p class="fresh">${freshness} · <a href="${report}">Report a problem</a></p>
@@ -218,6 +221,10 @@ main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;ma
 .note{background:var(--note);border-radius:6px;padding:4px 10px;margin:8px 0 0;font-size:.9rem}
 input{width:100%;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);margin:0 0 16px}
 footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
+.who{font-size:.9rem;margin:4px 0 0}
+.aud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}.aud span{color:var(--quiet);margin-right:4px}
+.aud button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.aud button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 </style>
 </head>
 <body>
@@ -226,6 +233,10 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <p class="lead">${shown.length} UK organisations supporting neurodivergent people. Websites are checked every 1 to 3 days, and daily if anything looks wrong. Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
 <label for="q" class="lead">Search by name, area or need</label>
 <input id="q" type="search" placeholder="For example: ADHD, Scotland, dyslexia">
+<div class="aud" role="group" aria-label="Who is it for?"><span>Who is it for?</span>
+<button type="button" data-a="" aria-pressed="true">Everyone</button>
+${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false">${AUDIENCE_LABEL[a]}</button>`).join('\n')}
+</div>
 <ul id="list">
 ${cards}
 </ul>
@@ -234,7 +245,10 @@ Sources include the Charity Commission for England and Wales, the Charity Commis
 </main>
 <script>
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];
-q.addEventListener('input',()=>{const t=q.value.trim().toLowerCase();for(const li of items)li.hidden=t&&!li.textContent.toLowerCase().includes(t);});
+let aud='';
+const apply=()=>{const t=q.value.trim().toLowerCase();for(const li of items){const a=li.dataset.aud;li.hidden=(t&&!li.textContent.toLowerCase().includes(t))||(aud&&a&&!a.split(' ').includes(aud));}};
+q.addEventListener('input',apply);
+for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
 </script>
 </body>
 </html>

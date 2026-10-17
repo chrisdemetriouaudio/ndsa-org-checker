@@ -1,3 +1,4 @@
+import { cleanAudiences } from './audience.ts';
 import type { Org, Review } from './types.ts';
 
 /** What an admin types in for one organisation. */
@@ -9,6 +10,7 @@ export interface NewOrgInput {
   focus?: string[];
   charityNumber?: string;
   registerNote?: string;
+  audiences?: string[];
 }
 
 export const AREAS = ['UK', 'England', 'Scotland', 'Wales', 'Northern Ireland'];
@@ -80,6 +82,8 @@ export function validateNew(input: NewOrgInput, existing: Org[], takenIds: Set<s
     focus: focus.length ? focus : ['neurodiversity'],
   };
   if (number) org.charityNumber = number;
+  const audiences = cleanAudiences(input.audiences);
+  if (audiences.length) org.audiences = audiences;
   const note = clean(input.registerNote, 120);
   if (note) org.registerNote = note;
   return { org, problems: [] };

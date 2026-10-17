@@ -1,3 +1,4 @@
+import type { Audience } from './audience.ts';
 import type { Signal } from './signals.ts';
 
 export type Status = 'Confirmed' | 'Looks active' | 'Needs a check' | 'Likely closed' | 'Closed';
@@ -19,6 +20,7 @@ export interface Org {
   focus: string[];
   charityNumber?: string | null; // England and Wales register
   registerNote?: string; // why there is no charity number
+  audiences?: Audience[]; // children / adults / families; empty or missing = not stated
   notes?: string;
   review?: Review;
 }
