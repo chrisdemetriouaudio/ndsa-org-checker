@@ -14,16 +14,16 @@ updated: 2026-10-17
 <!-- live:start -->
 > [!info] Live (updated by the daily check)
 > **Last check:** 17 Oct 2026.
-> **To review:** 4. See [[Live status]].
-> **Fine:** 40 · **Closed:** 0
+> **To review:** 0. See [[Live status]].
+> **Fine:** 44 · **Closed:** 0
 <!-- live:end -->
 
 ## 👉 Your actions
 
-- [ ] **Open this folder as a vault in Obsidian:** `ndsa-org-checker/ndsa-PMO`.
-- [ ] **Allow the Obsidian Git plugin** when Obsidian asks. It brings in the daily updates.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
-- [ ] **Decide the flagged services** in [[Live status]]. Tell Claude "still running" or "close".
+- [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
+- [ ] **Look at ADHD Foundation on 19 Oct 2026:** its website was down on 17 Oct 2026.
+- [ ] **Decide new flags** in [[Live status]] when they appear. Tell Claude "still running" or "close".
 
 ## 🛠️ For Claude
 
@@ -38,6 +38,12 @@ updated: 2026-10-17
 - [ ] **Get a free Charity Commission API key:** sign up at the Charity Commission API portal.
 
 More ideas: [[Backlog & Parked]].
+
+## ✅ Done
+
+> [!success]- Finished (tap to open)
+> - [x] **Updated the 4 moved organisations** to their new names and addresses (17 Oct 2026).
+> - [x] **Opened the vault in Obsidian** and allowed the Git plugin (17 Oct 2026).
 
 ## 🚦 Phases
 
