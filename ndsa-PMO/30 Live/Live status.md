@@ -6,9 +6,9 @@ updated: 2026-10-17
 # 📡 Live status
 
 > [!info] At a glance
-> **Last check:** 17 Oct 2026, 44 services.
+> **Last check:** 17 Oct 2026, 45 services.
 > **To review:** 2 (2 likely closed, 0 need a check).
-> **Fine:** 40 look active, 0 confirmed. **Closed:** 2.
+> **Fine:** 41 look active, 0 confirmed. **Closed:** 2.
 > This page rewrites itself after every daily check. Edits made here are lost.
 
 > [!info]- How to read the ticks and the score (tap to open)
@@ -40,7 +40,7 @@ To decide: use the **admin page** (https://ndsa.labs.chrisdemetriou.com/admin): 
 
 ## ✅ Fine
 
-> [!success]- 40 services look fine (lowest score first)
+> [!success]- 41 services look fine (lowest score first)
 > | Service | Score | Web address | Website answers | No closing notice | Not for sale | Same address | Charity register | Confirmed by them | Last checked |
 > | --- | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 > | [AADD-UK](https://aadduk.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
@@ -74,6 +74,7 @@ To decide: use the **admin page** (https://ndsa.labs.chrisdemetriou.com/admin): 
 > | [Mencap](https://www.mencap.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
 > | [National Autistic Society](https://www.autism.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
 > | [National Autistic Taskforce](https://nationalautistictaskforce.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Neuro Diverse Self Advocacy (NDSA)](https://ndsa.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
 > | [Neurodivergence Wales (National Neurodivergence Team)](https://neurodivergencewales.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
 > | [Neurodiversity in Business](https://neurodiversity.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
 > | [Neuroinclusive Education Network](https://www.nen.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
