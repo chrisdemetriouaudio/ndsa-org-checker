@@ -10,6 +10,13 @@ updated: 2026-10-17
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 17 Oct 2026 · Admin front door with passkeys
+> - **Decided:** the directory stays public. Only admins (e-mail on the list + passkey) add or remove organisations.
+> - **Decided:** no public suggestion forms. A Cloudflare Worker (free) is the front door; the list stays in GitHub.
+> - **Decided:** "remove" archives with a reason, never deletes, so it can be restored.
+> - **Address:** ndsa.labs.chrisdemetriou.com. Passkeys are tied to it, so it should not change.
+> - **Why:** keeps the list trustworthy, with sign-in that cannot be phished.
+
 > [!question]- 17 Oct 2026 · Free register download, and what counts as proof
 > - **Decided:** use the Charity Commission's free daily download, not the API (no key, one file a day).
 > - **Decided:** removed or dissolved = proven closed (score 0). Insolvent or in administration = likely closed (score 40 at most).

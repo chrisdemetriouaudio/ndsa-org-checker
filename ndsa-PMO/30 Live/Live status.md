@@ -36,7 +36,7 @@ updated: 2026-10-17
 | [ADHD Foundation](https://www.adhdfoundation.org.uk) | 🔴 40 | ✅ | 🟡 | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1120898 is in administration (register of 17 Oct 2026) |
 | [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 🔴 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1058352 is marked insolvent (register of 17 Oct 2026) |
 
-To decide: tell Claude "**[name] is still running**" or "**close [name]**". It goes into `data/orgs.json`.
+To decide: use the **admin page** (https://ndsa.labs.chrisdemetriou.com/admin): "It is still running" or "Remove".
 
 ## ✅ Fine
 

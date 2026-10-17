@@ -10,7 +10,15 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · 2 organisations closed · live
+> [!success]+ 🚀 17 Oct 2026 · Admin front door · live
+> - **Directory:** now also at ndsa.labs.chrisdemetriou.com (public).
+> - **Admin page:** ndsa.labs.chrisdemetriou.com/admin. E-mail on the admin list, then a passkey.
+> - **Admins can:** add one or several organisations, remove (archive), restore, and clear flags.
+> - **Instant check:** new entries are checked straight away, not the next morning.
+> - **Also:** score colours follow the score like a temperature.
+> - **Waiting for:** admin e-mail addresses, a Resend key and a GitHub token.
+
+> [!success]- 🚀 17 Oct 2026 · 2 organisations closed · live
 > - **Closed by Chris:** Autism Alliance UK and Dyslexia Action. Both were removed from the charity register.
 > - **Archived, not deleted:** they sit in the Closed box in [[Live status]] and are hidden from the directory.
 > - **Left flagged on purpose:** ADHD Foundation (in administration) and Dyspraxia Foundation (insolvent).

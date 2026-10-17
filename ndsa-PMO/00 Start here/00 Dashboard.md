@@ -8,6 +8,7 @@ updated: 2026-10-17
 > [!info] At a glance
 > **What:** daily checks that UK neurodivergent (ND) support organisations are still running.
 > **Status:** 🛠️ Prototype. 44 organisations checked every morning, free tools only.
+> **Admin page:** add, remove and review organisations at ndsa.labs.chrisdemetriou.com/admin (passkey).
 > **Rule:** checks suggest a status. A person decides every closure.
 > New here? Read [[How this vault works]] (1 minute).
 
@@ -20,9 +21,12 @@ updated: 2026-10-17
 
 ## 👉 Your actions
 
+- [ ] **Send Claude the admin e-mail addresses** (with each person's name).
+- [ ] **Add the Resend key to the Worker:** see [[Phase 6 — Admin Front Door]] for the one command.
+- [ ] **Add a GitHub token to the Worker:** see [[Phase 6 — Admin Front Door]] for the steps.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
 - [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
-- [ ] **Decide ADHD Foundation and Dyspraxia Foundation** when ready. Both stay flagged in [[Live status]].
+- [ ] **Decide ADHD Foundation and Dyspraxia Foundation** on the admin page when ready.
 
 ## 🛠️ For Claude
 
@@ -41,6 +45,8 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Admin front door built and live** at ndsa.labs.chrisdemetriou.com (17 Oct 2026).
+> - [x] **Score colours follow the score** like a temperature (17 Oct 2026).
 > - [x] **Closed Autism Alliance UK and Dyslexia Action:** both removed from the register (17 Oct 2026).
 > - [x] **Charity register connected:** free daily download, no API key (17 Oct 2026).
 > - [x] **Updated the 4 moved organisations** to their new names and addresses (17 Oct 2026).
@@ -55,11 +61,13 @@ More ideas: [[Backlog & Parked]].
 | [[Phase 3 — AI Reading & Review Page]] | AI reads each homepage; one-click review | 💭 Later |
 | [[Phase 4 — Verification Emails & Reports]] | Twice-yearly emails; "report a problem" | 💭 Later (report link done) |
 | [[Phase 5 — Pilot]] | Larger list with a partner charity | 💭 Later |
+| [[Phase 6 — Admin Front Door]] | Passkey admin page: add, remove, review | ⏳ Live, waiting for 2 keys |
 
 ## 🔗 Links
 
 - **Live status (updates itself):** [[Live status]]
-- **Public directory:** https://chrisdemetriouaudio.github.io/ndsa-org-checker/
+- **Public directory:** https://ndsa.labs.chrisdemetriou.com (also https://chrisdemetriouaudio.github.io/ndsa-org-checker/)
+- **Admin page:** https://ndsa.labs.chrisdemetriou.com/admin
 - **Code:** https://github.com/chrisdemetriouaudio/ndsa-org-checker (local: `/Volumes/01 PROJECTS/Claude/ndsa-org-checker`)
 - **Daily check runs:** https://github.com/chrisdemetriouaudio/ndsa-org-checker/actions
 - **Flag alerts:** the "Services to review" issue on GitHub. Watch the repo to get them by e-mail.

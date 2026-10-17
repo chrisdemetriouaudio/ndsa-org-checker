@@ -115,7 +115,7 @@ export function renderLivePage(orgs: Org[], state: State): string {
     for (const { org, s } of flagged) {
       out.push(`| [${cell(org.name)}](${org.url}) | ${scoreText(s)} | ${ticks(s)} | ${cell(s.reasons.join('. '))} |`);
     }
-    out.push('', 'To decide: tell Claude "**[name] is still running**" or "**close [name]**". It goes into `data/orgs.json`.');
+    out.push('', 'To decide: use the **admin page** (https://ndsa.labs.chrisdemetriou.com/admin): "It is still running" or "Remove".');
   }
 
   out.push('', '## ✅ Fine', '', `> [!success]- ${fine.length} services look fine (lowest score first)`);

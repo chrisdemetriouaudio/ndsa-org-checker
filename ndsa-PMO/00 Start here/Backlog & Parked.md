@@ -16,7 +16,9 @@ updated: 2026-10-17
 - [ ] **Check Scotland and Northern Ireland registers** (OSCR and CCNI downloads, both free).
 - [ ] **Check domain expiry dates** through the free .uk registry lookup (RDAP).
 - [ ] **AI reads each homepage monthly:** try Cloudflare Workers AI's free daily allowance first.
-- [ ] **Review page:** accept or reject each flag in one click, instead of telling Claude.
+- [ ] **Test the score against the register:** run website checks on removed and active charities; count catches and false alarms.
+- [ ] **Evidence links on every tick** (register entry, page, phrase found).
+- [ ] **Track admin decisions against suggestions** (target: agree 9 times in 10).
 - [ ] **Twice-yearly verification e-mail** to each organisation, with one-click replies.
 - [ ] **Weekly e-mail digest to Wade** instead of GitHub issue alerts.
 - [ ] **Grow the list** from the charity register download (search: autism, ADHD, dyslexia). The download is already in place.
@@ -29,4 +31,5 @@ updated: 2026-10-17
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Review page:** done as the admin page (17 Oct 2026).
 > - [x] **"Report a problem" link** on every directory listing (opens a GitHub issue, 17 Oct 2026).
