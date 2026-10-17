@@ -475,7 +475,7 @@ const chat=document.getElementById('chat'),choices=document.getElementById('choi
 const CONDS=["autism","ADHD","dyslexia","developmental language disorder","learning disability","Tourette syndrome"];
 const say=(who,text)=>{const p=document.createElement('p');p.className='bubble '+who;p.textContent=text;chat.append(p);};
 const ask=(question,options)=>{say('bot',question);choices.replaceChildren(...options.map(([label,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
-const setAud=(a)=>{aud=a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x.dataset.a===a));};
+const setAud=(a)=>{aud=a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x.dataset.a===a));apply();};
 const show=()=>{apply();const n=items.filter(li=>!li.hidden).length;
 say('bot',n?'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.':'Nothing matches all of that yet. Try a wider distance, or "Anyone".');
 const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);
@@ -483,7 +483,7 @@ if(n)document.getElementById('list').scrollIntoView({behavior:'smooth',block:'st
 const where=()=>ask('Where should it be?',[['Near a postcode',()=>{say('bot','Type your postcode in the "Near you" box below, choose how far, then press Search.');near.hidden=false;document.getElementById('pc').focus();const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);apply();}],['Anywhere in the UK',()=>{here=null;show();}]]);
 const forWho=()=>ask('Who is the support for?',[['A child or young person',()=>{setAud('children');where();}],['An adult',()=>{setAud('adults');where();}],['My family, or me as a carer',()=>{setAud('families');where();}],['Anyone',()=>{setAud('');where();}]]);
 const start=()=>{chat.replaceChildren();cond='';setAud('');here=null;clear.hidden=true;nearMsg.hidden=true;apply();
-ask('What would you like support with?',[...CONDS.map(c=>[c.charAt(0).toUpperCase()+c.slice(1),()=>{cond=c;forWho();}]),['Not sure, or anything neurodivergent',()=>{cond='';forWho();}]]);};
+ask('What would you like support with?',[...CONDS.map(c=>[c.charAt(0).toUpperCase()+c.slice(1),()=>{cond=c;apply();forWho();}]),['Not sure, or anything neurodivergent',()=>{cond='';apply();forWho();}]]);};
 start();
 q.addEventListener('input',apply);
 for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});

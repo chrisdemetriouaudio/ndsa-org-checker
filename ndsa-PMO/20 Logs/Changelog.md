@@ -10,7 +10,11 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Near you, who for, and a gentler daily run · live
+> [!success]+ 🚀 18 Oct 2026 · Button finder · live
+> - **"Not sure where to start?"** 3 questions with buttons: what for, who for, where. No typing except an optional postcode.
+> - **Uses the same filters** as the rest of the page; the list updates after each answer.
+
+> [!success]- 🚀 18 Oct 2026 · Near you, who for, and a gentler daily run · live
 > - **Near you:** postcode + 5 to 100 miles; nearest first; nationwide ones under "Also covering your area".
 > - **Who is it for?** Children and young people · Adults · Families and carers.
 > - **One morning run:** finds new organisations, refreshes the register, checks websites. Each register file is downloaded once.

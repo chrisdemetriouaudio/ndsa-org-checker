@@ -8,7 +8,7 @@ updated: 2026-10-18
 
 > [!info] At a glance
 > **What:** help families find the right organisation fast: who it is for, how near, and a simple button finder.
-> **Status:** 🛠️ Filters live (18 Oct 2026). Button finder next.
+> **Status:** ✅ Live (18 Oct 2026): who for, near you, and the button finder.
 > **Back to:** [[00 Dashboard]]
 
 ## 👉 Your actions
@@ -19,11 +19,12 @@ updated: 2026-10-18
 
 ## 🛠️ For Claude
 
-- [ ] **Button finder:** "I'm looking for support for [condition] for [a child / an adult / my family] near [postcode]".
+- Nothing right now.
 
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Button finder:** 3 questions, buttons only: what for, who for, where. The list updates after each answer (18 Oct 2026).
 > - [x] **Who is it for?** Children and young people · Adults · Families and carers, from the registers' own categories and exact phrases (17 Oct 2026).
 > - [x] **"Ages not stated"** organisations are left out of a group, with a "Show them too" line.
 > - [x] **Near you:** postcode (or just its first half) + 5 / 10 / 20 / 30 / 50 / 100 miles; nearest first (18 Oct 2026).
