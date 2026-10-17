@@ -2,7 +2,7 @@ import { cleanAudiences } from '../src/audience.ts';
 import { areaKey, ukPostcode } from '../src/place.ts';
 import { candidateToInput, type Candidate, type Decision } from '../src/candidates.ts';
 import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
-import type { State } from '../src/types.ts';
+import type { Summary } from '../src/types.ts';
 import {
   audit, consumeLink, currentAdmin, endSession, nonce, passkeyRegister, passkeyRegistrationOptions, passkeySignIn,
   passkeySignInOptions, requestLink, SafeError, startSession, type Admin, type Env,
@@ -62,7 +62,7 @@ async function directory(env: Env, n: string): Promise<Response> {
 
 async function adminHome(env: Env, admin: Admin, n: string): Promise<Response> {
   const [orgsFile, stateFile] = await Promise.all([readFile(env, 'data/orgs.json'), readFile(env, 'data/summary.json')]);
-  return html(adminPage(n, admin, JSON.parse(orgsFile.text), JSON.parse(stateFile.text) as State), n);
+  return html(adminPage(n, admin, JSON.parse(orgsFile.text), JSON.parse(stateFile.text) as Summary), n);
 }
 
 async function addOrgs(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {

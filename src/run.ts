@@ -5,7 +5,7 @@ import { checkSite, type RobotsCache } from './check.ts';
 import { renderDashboardBlock, renderLivePage, renderNewFlags, renderSite, replaceBetweenMarkers } from './render.ts';
 import type { Register } from './registerTypes.ts';
 import { decideStatus, isDue } from './status.ts';
-import { FLAGGED, HISTORY_LIMIT, type CheckResult, type Org, type State } from './types.ts';
+import { FLAGGED, HISTORY_LIMIT, type CheckResult, type Org, type State, type Summary } from './types.ts';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const path = (...p: string[]) => join(root, ...p);
@@ -87,7 +87,16 @@ export async function runChecks({ renderOnly = false, only }: RunOptions = {}) {
 
   await write(path('data/state.json'), `${JSON.stringify(state, null, 2)}\n`);
   // A small copy without the check history, for the admin page (the full state is several MB).
-  const summary = { updated: state.updated, orgs: Object.fromEntries(Object.entries(state.orgs).map(([id, s]) => [id, { ...s, history: [], signals: s.signals.map((x) => ({ ...x, detail: x.level === 'green' ? '' : x.detail })) }])) };
+  const first = Object.values(state.orgs).find((s) => s.signals?.length);
+  const summary: Summary = {
+    updated: state.updated,
+    labels: first?.signals.map((x) => x.label) ?? [],
+    orgs: Object.fromEntries(Object.entries(state.orgs).map(([id, s]) => [id, {
+      status: s.status, score: s.score, reasons: s.reasons, proven: s.proven, lastChecked: s.lastChecked,
+      ticks: (s.signals ?? []).map((x) => x.level[0]).join(''),
+      notes: (s.signals ?? []).map((x) => (x.level === 'green' ? '' : x.detail)),
+    }])),
+  };
   await write(path('data/summary.json'), `${JSON.stringify(summary)}\n`);
   await write(path('ndsa-PMO/30 Live/Live status.md'), renderLivePage(orgs, state));
   await write(path('site/index.html'), renderSite(orgs, state));

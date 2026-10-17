@@ -1,7 +1,7 @@
 import { AUDIENCE_LABEL, AUDIENCES } from '../src/audience.ts';
 import { AREAS, FOCUS, KINDS, MAX_PER_ADD } from '../src/neworg.ts';
 import { dateWords, scoreHue, TICK } from '../src/render.ts';
-import { FLAGGED, type Org, type OrgState, type State } from '../src/types.ts';
+import { FLAGGED, type Org, type Summary } from '../src/types.ts';
 import type { Admin } from './auth.ts';
 
 export const esc = (t: unknown) => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -133,8 +133,10 @@ run('use', 'use-msg', usePasskey, 'Signing in');
 run('add', 'add-msg', addPasskey, 'Adding the passkey');`);
 }
 
-const scoreBadge = (s?: OrgState) => (s?.score == null ? '<span class="quiet">—</span>' : `<span class="score" style="--h:${scoreHue(s.score)}">${s.score}</span>`);
-const ticks = (s?: OrgState) => (s?.signals ?? []).map((x) => `<span title="${esc(`${x.label}: ${x.detail}`)}">${TICK[x.level]}</span>`).join('');
+type Row = Summary['orgs'][string];
+const LEVEL: Record<string, 'green' | 'amber' | 'red' | 'none'> = { g: 'green', a: 'amber', r: 'red', n: 'none' };
+const scoreBadge = (s?: Row) => (s?.score == null ? '<span class="quiet">—</span>' : `<span class="score" style="--h:${scoreHue(s.score)}">${s.score}</span>`);
+const tickRow = (s: Row | undefined, labels: string[]) => [...(s?.ticks ?? '')].map((c, i) => `<span title="${esc(`${labels[i] ?? ''}${s!.notes[i] ? `: ${s!.notes[i]}` : ''}`)}">${TICK[LEVEL[c] ?? 'none']}</span>`).join('');
 
 function options(list: string[], selected?: string) {
   return list.map((v) => `<option${v === selected ? ' selected' : ''}>${esc(v)}</option>`).join('');
@@ -164,7 +166,7 @@ function removeControl(org: Org) {
 <input name="reason" placeholder="Why? For example: closed in 2025" required aria-label="Reason for removing ${esc(org.name)}"><button class="danger">Remove</button></form></details>`;
 }
 
-export function adminPage(n: string, admin: Admin, orgs: Org[], state: State): string {
+export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary): string {
   const rows = [...orgs].sort((a, b) => a.name.localeCompare(b.name));
   const pending = rows.filter((o) => !state.orgs[o.id] && o.review?.status !== 'Closed');
   const flagged = rows.filter((o) => state.orgs[o.id] && FLAGGED.includes(state.orgs[o.id].status));
@@ -172,7 +174,7 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: State): s
   const live = rows.filter((o) => o.review?.status !== 'Closed' && state.orgs[o.id]);
   const scores = live.map((o) => state.orgs[o.id].score).filter((x): x is number => x !== null);
   const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
-  const header = state.orgs[rows[0]?.id]?.signals?.map((x) => x.label) ?? [];
+  const header = state.labels;
 
   const body = `
 <div class="top"><div><h1>Admin</h1><p class="quiet" style="margin:0">ND Support Directory · signed in as ${esc(admin.name)}</p></div>
@@ -222,7 +224,7 @@ ${removeControl(o)}</div>`;
 <div class="table-wrap"><table><thead><tr><th>Organisation</th><th>Score</th><th>Status</th><th>Ticks</th><th>For</th><th>Checked</th><th></th></tr></thead><tbody>
 ${live.map((o) => {
     const s = state.orgs[o.id];
-    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${ticks(s)}</td><td>${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}<br><span class="quiet">${o.coverage === 'local' ? `Local · ${esc(o.postcode ?? 'no postcode')}` : 'Across the nation'}</span>${detailsControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
+    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${tickRow(s, state.labels)}</td><td>${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}<br><span class="quiet">${o.coverage === 'local' ? `Local · ${esc(o.postcode ?? 'no postcode')}` : 'Across the nation'}</span>${detailsControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
   }).join('')}
 </tbody></table></div>
 

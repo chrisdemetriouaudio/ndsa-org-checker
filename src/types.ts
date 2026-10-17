@@ -66,5 +66,16 @@ export interface State {
   robots?: Record<string, { date: string; disallowAll: boolean }>; // robots.txt answers, kept a week
 }
 
+/** The admin page's small copy of the state: tick labels once, each organisation's ticks as one letter each. */
+export interface Summary {
+  updated: string | null;
+  labels: string[]; // tick labels, in order
+  orgs: Record<string, {
+    status: Status; score: number | null; reasons: string[]; proven: boolean; lastChecked: string | null;
+    ticks: string; // one letter per tick: g green, a amber, r red, n not checked
+    notes: string[]; // what each tick measured ('' when green)
+  }>;
+}
+
 export const HISTORY_LIMIT = 14; // enough for the 7-check window and the 2-week 'new' rule
 export const FLAGGED: Status[] = ['Needs a check', 'Likely closed'];
