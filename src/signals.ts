@@ -1,5 +1,5 @@
 import { dateWords } from './dates.ts';
-import type { Register } from './register.ts';
+import type { Register } from './registerTypes.ts';
 import type { CheckResult, Org } from './types.ts';
 
 export type Level = 'green' | 'amber' | 'red' | 'none';

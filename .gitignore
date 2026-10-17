@@ -4,3 +4,6 @@ node_modules/
 .env
 **/.obsidian/workspace*.json
 out/
+.dev.vars
+.wrangler/
+worker/worker-configuration.d.ts.bak

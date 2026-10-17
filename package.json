@@ -10,12 +10,20 @@
     "register": "node src/register.ts",
     "checks": "node src/run.ts",
     "render": "node src/run.ts --render-only",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.worker.json",
     "test": "node --test \"test/**/*.test.ts\"",
-    "check": "npm run typecheck && npm test"
+    "check": "npm run typecheck && npm test",
+    "worker:types": "wrangler types worker/worker-configuration.d.ts",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "CI=true wrangler d1 migrations apply ndsa-admin-db --remote && wrangler deploy",
+    "admin": "node scripts/admin.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "wrangler": "^4.151.1"
+  },
+  "dependencies": {
+    "@simplewebauthn/server": "^14.0.3"
   }
 }

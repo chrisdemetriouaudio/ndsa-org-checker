@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": ["ES2023"],
+    "types": ["./worker/worker-configuration.d.ts"]
+  },
+  "include": ["worker", "src/neworg.ts", "src/render.ts", "src/signals.ts", "src/dates.ts", "src/types.ts", "src/registerTypes.ts"]
+}

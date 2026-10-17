@@ -1,6 +1,6 @@
 import { dateWords } from './dates.ts';
 import { computeSignals, score, type Signal } from './signals.ts';
-import type { Register } from './register.ts';
+import type { Register } from './registerTypes.ts';
 import type { CheckResult, Org, Status } from './types.ts';
 
 export interface Decision {

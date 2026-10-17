@@ -1,0 +1,71 @@
+name: Check new entries
+
+# Started by the admin page: checks just the new organisations straight away (ids),
+# or only re-renders the pages after a remove / restore / "still running" (no ids).
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: Comma-separated organisation ids to check now (blank = re-render only)
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: Check the new entries (or just re-render)
+        env:
+          IDS: ${{ inputs.ids }}
+        run: |
+          if ! [[ "$IDS" =~ ^[a-z0-9,-]*$ ]]; then echo "Bad ids: $IDS"; exit 1; fi
+          if [ -n "$IDS" ]; then
+            npm run register || echo "Register download failed; website checks still run."
+            node src/run.ts --only="$IDS"
+          else
+            node src/run.ts --render-only
+          fi
+
+      - name: Save results
+        env:
+          IDS: ${{ inputs.ids }}
+        run: |
+          git config user.name "ndsa-org-checker"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          touch data/register.json
+          git add data/state.json data/register.json "ndsa-PMO/30 Live" "ndsa-PMO/00 Start here/00 Dashboard.md" site
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(check): ${IDS:+check new entries $IDS}${IDS:-re-render after an admin change}"
+            git pull --rebase
+            git push
+          fi
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  publish:
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

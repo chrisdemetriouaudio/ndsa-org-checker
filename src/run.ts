@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkSite } from './check.ts';
 import { renderDashboardBlock, renderLivePage, renderNewFlags, renderSite, replaceBetweenMarkers } from './render.ts';
-import type { Register } from './register.ts';
+import type { Register } from './registerTypes.ts';
 import { decideStatus } from './status.ts';
 import { FLAGGED, HISTORY_LIMIT, type Org, type State } from './types.ts';
 
@@ -33,6 +33,9 @@ async function pool<T>(items: T[], limit: number, fn: (item: T) => Promise<void>
 
 async function main() {
   const renderOnly = process.argv.includes('--render-only');
+  // --only=a,b visits just those organisations (new entries); everyone else is only re-rendered.
+  const onlyArg = process.argv.find((a) => a.startsWith('--only='));
+  const only = onlyArg ? new Set(onlyArg.slice(7).split(',').filter(Boolean)) : null;
   const orgs = await readJson<Org[]>(path('data/orgs.json'), []);
   const state = await readJson<State>(path('data/state.json'), { updated: null, orgs: {} });
   const register = await readJson<Register>(path('data/register.json'), { extractDate: null, entries: {} });
@@ -43,7 +46,7 @@ async function main() {
   await pool(orgs, CONCURRENCY, async (org) => {
     const prev = state.orgs[org.id];
     let history = prev?.history ?? [];
-    if (!renderOnly && org.review?.status !== 'Closed') {
+    if (!renderOnly && org.review?.status !== 'Closed' && (!only || only.has(org.id))) {
       const result = await checkSite(org.url, today);
       history = [...history.filter((h) => h.date !== today), result].slice(-HISTORY_LIMIT);
       const mark = result.reachable ? 'ok ' : 'DOWN';
@@ -66,7 +69,7 @@ async function main() {
 
   // Forget organisations removed from the list.
   for (const id of Object.keys(state.orgs)) if (!orgs.some((o) => o.id === id)) delete state.orgs[id];
-  if (!renderOnly) state.updated = now;
+  if (!renderOnly && !only) state.updated = now; // "last check" means the full daily run
 
   await write(path('data/state.json'), `${JSON.stringify(state, null, 2)}\n`);
   await write(path('ndsa-PMO/30 Live/Live status.md'), renderLivePage(orgs, state));
