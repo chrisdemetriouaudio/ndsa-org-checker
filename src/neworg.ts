@@ -8,11 +8,12 @@ export interface NewOrgInput {
   kind?: string;
   focus?: string[];
   charityNumber?: string;
+  registerNote?: string;
 }
 
 export const AREAS = ['UK', 'England', 'Scotland', 'Wales', 'Northern Ireland'];
 export const KINDS = [
-  'National charity', 'Regional charity', 'Local charity', 'User-led organisation',
+  'Registered charity', 'National charity', 'Regional charity', 'Local charity', 'User-led organisation',
   'Community interest company', 'Community group', 'NHS or government service', 'Not sure',
 ];
 export const FOCUS = [
@@ -79,6 +80,8 @@ export function validateNew(input: NewOrgInput, existing: Org[], takenIds: Set<s
     focus: focus.length ? focus : ['neurodiversity'],
   };
   if (number) org.charityNumber = number;
+  const note = clean(input.registerNote, 120);
+  if (note) org.registerNote = note;
   return { org, problems: [] };
 }
 
@@ -111,6 +114,21 @@ export function applyReview(orgs: Org[], id: string, action: ReviewAction, by: s
   });
   if (action === 'remove' && !note) return { orgs, problem: 'Say why it is being removed.' };
   return { orgs: next };
+}
+
+const ACRONYMS = new Set(['ADHD', 'OCD', 'DLD', 'DCD', 'UK', 'NI', 'CIO', 'SCIO', 'CIC', 'PMLD', 'SEN', 'SEND', 'ABI', 'TBI', 'NHS', 'YMCA', 'ADD', 'LD']);
+const SMALL = new Set(['and', 'of', 'the', 'for', 'in', 'with', 'on', 'at', 'to', 'a', 'an', 'by', 'or']);
+
+/** Register names are often ALL CAPITALS: "BRENT MENCAP" → "Brent Mencap", keeping ADHD, UK, CIO and the like. */
+export function tidyName(name: string): string {
+  const letters = name.replace(/[^A-Za-z]/g, '');
+  if (letters.length < 4 || letters !== letters.toUpperCase()) return name;
+  return name.toLowerCase().split(/(\s+|-|\/|\()/).map((w, i) => {
+    const up = w.toUpperCase();
+    if (ACRONYMS.has(up.replace(/[^A-Z]/g, '')) && up.replace(/[^A-Z]/g, '').length === w.replace(/[^a-z]/gi, '').length) return up;
+    if (i > 0 && SMALL.has(w)) return w;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join('').replace(/\bLtd\b/i, 'Ltd').replace(/'S\b/g, "'s");
 }
 
 /** orgs.json in the repo's one-entry-per-line style. */

@@ -165,6 +165,8 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: State): s
 
 <div class="card"><strong>At a glance:</strong> ${live.length} listed · ${flagged.length} to review · ${pending.length} being checked · ${closed.length} removed · average score ${avg ?? '—'}. Last daily check: ${dateWords(state.updated)}.</div>
 
+<div class="card"><strong>Found in the charity registers:</strong> organisations that may belong here, waiting for a person to check. <a href="/admin/candidates">Review candidates</a></div>
+
 <h2>Add an organisation</h2>
 <form data-api="/admin/api/add" data-kind="one" class="card">
 <div class="row"><div><label for="a-name">Name</label><input id="a-name" name="name" required maxlength="120"></div>
@@ -230,4 +232,98 @@ for (const form of document.querySelectorAll('form[data-api]')) {
   };
 }
 ${pending.length ? "setTimeout(() => location.reload(), 20000);" : ''}`);
+}
+
+/**
+ * Review list for discovered candidates. The (public) candidates file is loaded by the browser straight from
+ * GitHub, so the Worker stays within its small free-tier CPU budget; register text is only ever set as text.
+ */
+export function candidatesPage(n: string, admin: Admin, decided: string[], repo: string): string {
+  const body = `
+<div class="top"><div><h1>Candidates</h1><p class="quiet" style="margin:0">Organisations found in the charity registers · signed in as ${esc(admin.name)}</p></div>
+<div><a href="/admin">Back to admin</a></div></div>
+<div class="card"><p style="margin:0">These were found by matching the conditions in each charity's name and description. <strong>Check each one</strong> before adding it. Tick, then choose <strong>Add to the directory</strong> or <strong>Not relevant</strong>. Either way it leaves this list for good.</p></div>
+<div class="card">
+<div class="row"><div><label for="f-nation">Nation</label><select id="f-nation"><option value="">All nations</option><option>England</option><option>Wales</option><option>Scotland</option><option>Northern Ireland</option></select></div>
+<div><label for="f-cond">Condition</label><select id="f-cond"><option value="">All conditions</option></select></div></div>
+<div class="row"><div><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Name, place or words"></div>
+<div><label>&nbsp;</label><label style="font-weight:400;display:flex;gap:8px;align-items:center"><input type="checkbox" id="f-named" style="width:auto"> Only ones named for a condition</label></div></div>
+</div>
+<p id="count" class="quiet">Loading…</p>
+<div class="inline" style="margin-bottom:12px"><button id="add">Add to the directory</button><button id="reject" class="danger">Not relevant</button><span id="picked" class="quiet" style="align-self:center"></span></div>
+<div id="msg" hidden></div>
+<div class="table-wrap"><table><thead><tr><th></th><th>Organisation</th><th>Nation</th><th>Conditions</th><th>Why it was found</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="inline" style="margin-top:12px"><button id="prev" class="plain">Previous</button><span id="page" class="quiet" style="align-self:center"></span><button id="next" class="plain">Next</button></div>`;
+
+  return layout('Candidates · ND Support Directory', body, n, `${POST_JS}
+const DECIDED = new Set(${JSON.stringify(decided)});
+const PER_PAGE = 50, MAX = ${MAX_PER_ADD};
+const REGISTER = {
+  ccew: (n) => 'https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/' + n,
+  oscr: (n) => 'https://www.oscr.org.uk/about-charities/search-the-register/charity-details?number=' + n,
+  ccni: (n) => 'https://www.charitycommissionni.org.uk/charity-details/?regId=' + n,
+};
+let all = [], shown = [], page = 0;
+const picked = new Map();
+const $ = (id) => document.getElementById(id);
+const el = (tag, text, attrs) => { const e = document.createElement(tag); if (text != null) e.textContent = text; for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v); return e; };
+
+function filter() {
+  const nation = $('f-nation').value, cond = $('f-cond').value, q = $('f-q').value.trim().toLowerCase(), named = $('f-named').checked;
+  shown = all.filter((c) => (!nation || c.nations.includes(nation)) && (!cond || c.conditions.includes(cond)) && (!named || c.inName)
+    && (!q || (c.name + ' ' + c.area + ' ' + c.snippet).toLowerCase().includes(q)));
+  page = 0; draw();
+}
+function draw() {
+  const body = $('rows'); body.replaceChildren();
+  const pages = Math.max(1, Math.ceil(shown.length / PER_PAGE));
+  page = Math.min(page, pages - 1);
+  for (const c of shown.slice(page * PER_PAGE, (page + 1) * PER_PAGE)) {
+    const tr = el('tr');
+    const box = el('input', null, { type: 'checkbox', 'aria-label': 'Choose ' + c.name });
+    box.style.width = 'auto'; box.checked = picked.has(c.key);
+    box.onchange = () => { if (box.checked) { if (picked.size >= MAX) { box.checked = false; return say($('msg'), 'Choose at most ' + MAX + ' at a time.', false); } picked.set(c.key, c); } else picked.delete(c.key); count(); };
+    const name = el('td'); const a = el('a', c.name, { href: REGISTER[c.source](c.number), target: '_blank', rel: 'noopener' }); name.append(a, el('br'));
+    name.append(c.website ? el('a', c.website.replace(/^https?:\\/\\//, ''), { href: c.website, target: '_blank', rel: 'noopener' }) : el('span', 'No website on the register', { class: 'quiet' }));
+    name.append(el('br'), el('span', c.form + ' · ' + c.area, { class: 'quiet' }));
+    tr.append(el('td'), name, el('td', c.nations.join(', ')), el('td', c.conditions.join(', ')), el('td', (c.inName ? 'Named for it. ' : '') + c.snippet));
+    tr.firstChild.append(box);
+    body.append(tr);
+  }
+  $('page').textContent = 'Page ' + (page + 1) + ' of ' + pages;
+  $('prev').disabled = page === 0; $('next').disabled = page >= pages - 1;
+  count();
+}
+function count() {
+  $('count').textContent = shown.length + ' of ' + all.length + ' candidates shown.';
+  $('picked').textContent = picked.size ? picked.size + ' ticked' : '';
+}
+async function decide(action) {
+  if (!picked.size) return say($('msg'), 'Tick at least one first.', false);
+  const items = [...picked.values()];
+  if (action === 'add' && items.some((c) => !c.website)) return say($('msg'), 'Some ticked ones have no website on the register. Untick them, or add them by hand with their website.', false);
+  for (const b of [$('add'), $('reject')]) b.disabled = true;
+  try {
+    const r = await post('/admin/api/candidates', { action, items });
+    for (const key of r.done) { DECIDED.add(key); picked.delete(key); }
+    all = all.filter((c) => !DECIDED.has(c.key));
+    say($('msg'), (action === 'add' ? r.done.length + ' added. They are being checked now.' : r.done.length + ' marked not relevant.') + (r.problems.length ? ' Not done: ' + r.problems.join(' ') : ''), !r.problems.length);
+    filter();
+  } catch (e) { say($('msg'), e.message, false); }
+  finally { for (const b of [$('add'), $('reject')]) b.disabled = false; }
+}
+$('add').onclick = () => decide('add');
+$('reject').onclick = () => decide('reject');
+$('prev').onclick = () => { page--; draw(); scrollTo(0, 0); };
+$('next').onclick = () => { page++; draw(); scrollTo(0, 0); };
+for (const id of ['f-nation', 'f-cond', 'f-named']) $(id).onchange = filter;
+$('f-q').oninput = filter;
+fetch('https://raw.githubusercontent.com/${repo}/main/data/candidates.json', { cache: 'no-store' })
+  .then((r) => r.json())
+  .then((data) => {
+    all = data.candidates.filter((c) => !DECIDED.has(c.key));
+    for (const cond of [...new Set(all.flatMap((c) => c.conditions))].sort()) $('f-cond').append(el('option', cond));
+    filter();
+  })
+  .catch(() => { $('count').textContent = 'Could not load the candidates. Please refresh the page.'; });`);
 }

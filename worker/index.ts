@@ -1,18 +1,18 @@
-import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
+import { applyReview, MAX_PER_ADD, parseLines, tidyName, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
 import { renderSite } from '../src/render.ts';
 import type { State } from '../src/types.ts';
 import {
   audit, consumeLink, currentAdmin, endSession, nonce, passkeyRegister, passkeyRegistrationOptions, passkeySignIn,
   passkeySignInOptions, requestLink, SafeError, startSession, type Admin, type Env,
 } from './auth.ts';
-import { readFile, readPublic, startCheck, updateOrgs } from './github.ts';
-import { adminPage, linkPage, messagePage, passkeySetupPage, signInPage } from './pages.ts';
+import { readFile, readFileIfAny, readPublic, startCheck, updateJson, updateOrgs } from './github.ts';
+import { adminPage, candidatesPage, linkPage, messagePage, passkeySetupPage, signInPage } from './pages.ts';
 
 const MAX_BODY = 64 * 1024;
 
 function headers(n: string, extra: Record<string, string> = {}): Headers {
   return new Headers({
-    'content-security-policy': `default-src 'none'; script-src 'nonce-${n}'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`,
+    'content-security-policy': `default-src 'none'; script-src 'nonce-${n}'; style-src 'unsafe-inline'; connect-src 'self' https://raw.githubusercontent.com; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`,
     'x-content-type-options': 'nosniff',
     'referrer-policy': 'same-origin', // never sent to other sites; same-site posts keep a real Origin
     'permissions-policy': 'camera=(), microphone=(), geolocation=()',
@@ -118,6 +118,66 @@ async function startCheckSafely(env: Env, ids: string[]): Promise<boolean> {
   }
 }
 
+type Decisions = Record<string, { decision: 'added' | 'rejected'; by: string; date: string }>;
+const DECISIONS = 'data/candidate-decisions.json';
+const REGISTER_NOTE: Record<string, string> = {
+  oscr: 'A Scottish charity (Scottish register check not built yet)',
+  ccni: 'A Northern Ireland charity (Northern Ireland register check not built yet)',
+};
+
+async function candidatesHome(env: Env, admin: Admin, n: string): Promise<Response> {
+  const file = await readFileIfAny(env, DECISIONS);
+  const decided = file ? Object.keys(JSON.parse(file.text) as Decisions) : [];
+  return html(candidatesPage(n, admin, decided, env.GITHUB_REPO), n);
+}
+
+/** Add candidates to the directory, or mark them not relevant. Either way they leave the review list for good. */
+async function decideCandidates(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {
+  const action = body.action === 'add' ? 'add' : body.action === 'reject' ? 'reject' : null;
+  const items = Array.isArray(body.items) ? (body.items as Record<string, unknown>[]) : [];
+  if (!action || !items.length) return json({ error: 'Tick at least one organisation.' }, 400);
+  if (items.length > MAX_PER_ADD) return json({ error: `Please choose at most ${MAX_PER_ADD} at a time.` }, 400);
+  const valid = items.filter((i) => typeof i.key === 'string' && /^(ccew|oscr|ccni):[A-Za-z0-9]{1,12}$/.test(i.key));
+  if (valid.length !== items.length) return json({ error: 'Some items were not recognised.' }, 400);
+
+  const problems: string[] = [];
+  const added: { key: string; id: string }[] = [];
+  if (action === 'add') {
+    await updateOrgs(env, `Add ${valid.length} discovered organisation(s) (by ${admin.name}, admin page)`, (orgs) => {
+      problems.length = 0;
+      added.length = 0;
+      const taken = new Set(orgs.map((o) => o.id));
+      const next = [...orgs];
+      for (const i of valid) {
+        const source = String(i.key).split(':')[0];
+        const input: NewOrgInput = {
+          name: tidyName(String(i.name ?? '')),
+          url: String(i.website ?? ''),
+          area: String(i.area ?? '') || (Array.isArray(i.nations) ? i.nations.join(', ') : ''),
+          kind: 'Registered charity',
+          focus: Array.isArray(i.conditions) ? i.conditions.map(String) : [],
+          charityNumber: source === 'ccew' ? String(i.number ?? '') : '',
+          registerNote: REGISTER_NOTE[source],
+        };
+        const v = validateNew(input, next, taken);
+        if (v.org) { next.push(v.org); added.push({ key: String(i.key), id: v.org.id }); } else problems.push(`${input.name.slice(0, 50)}: ${v.problems.join(' ')}`);
+      }
+      return added.length ? next : null;
+    });
+  }
+  const decidedKeys = action === 'add' ? added.map((a) => a.key) : valid.map((i) => String(i.key));
+  if (decidedKeys.length) {
+    const today = new Date().toISOString().slice(0, 10);
+    await updateJson<Decisions>(env, DECISIONS, {}, `${action === 'add' ? 'Added' : 'Not relevant'}: ${decidedKeys.length} candidate(s) (by ${admin.name}, admin page)`, (d) => {
+      for (const key of decidedKeys) d[key] = { decision: action === 'add' ? 'added' : 'rejected', by: admin.name, date: today };
+      return d;
+    });
+  }
+  await audit(env, admin.email, `candidates-${action}`, decidedKeys.join(','));
+  if (added.length && !(await startCheckSafely(env, added.map((a) => a.id)))) problems.push('Saved, but the instant check did not start. They will be checked at the next daily check.');
+  return json({ done: decidedKeys, problems });
+}
+
 async function handle(req: Request, env: Env): Promise<Response> {
   const url = new URL(req.url);
   const n = nonce();
@@ -135,6 +195,12 @@ async function handle(req: Request, env: Env): Promise<Response> {
       return html(passkeySetupPage(n, admin, !!has), n);
     }
     return adminHome(env, admin, n);
+  }
+
+  if (method === 'GET' && path === '/admin/candidates') {
+    const admin = await currentAdmin(req, env);
+    if (!admin || admin.level !== 'passkey') return new Response(null, { status: 303, headers: { location: '/admin' } });
+    return candidatesHome(env, admin, n);
   }
 
   if (method === 'GET' && path === '/auth/link') return html(linkPage(n, url.searchParams.get('t') ?? ''), n);
@@ -180,6 +246,7 @@ async function handle(req: Request, env: Env): Promise<Response> {
   if (admin.level !== 'passkey') return json({ error: 'Please add a passkey first.' }, 403);
   if (path === '/admin/api/add') return addOrgs(env, admin, body);
   if (path === '/admin/api/review') return review(env, admin, body);
+  if (path === '/admin/api/candidates') return decideCandidates(env, admin, body);
   return json({ error: 'Not found.' }, 404);
 }
 

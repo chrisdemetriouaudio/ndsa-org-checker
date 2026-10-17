@@ -43,12 +43,29 @@ export async function readFile(env: Env, path: string): Promise<{ text: string; 
   return { text: await big.text(), sha: j.sha };
 }
 
-/** Writes a file only if nobody changed it since `sha` was read. Returns false on a clash. */
-export async function writeFile(env: Env, path: string, text: string, sha: string, message: string): Promise<boolean> {
+/** Like readFile, but a missing file comes back as null (so it can be created). */
+export async function readFileIfAny(env: Env, path: string): Promise<{ text: string; sha: string } | null> {
+  const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}?ref=main`, { method: 'HEAD', headers: apiHeaders(env) });
+  if (res.status === 404) return null;
+  return readFile(env, path);
+}
+
+/** Read–change–write of a small JSON file, created if missing, with one retry on a clash. */
+export async function updateJson<T>(env: Env, path: string, empty: T, message: string, change: (value: T) => T): Promise<T> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const file = await readFileIfAny(env, path);
+    const next = change(file ? (JSON.parse(file.text) as T) : empty);
+    if (await writeFile(env, path, `${JSON.stringify(next, null, 2)}\n`, file?.sha, message)) return next;
+  }
+  throw new SafeError('The list changed while saving. Please try again.');
+}
+
+/** Writes a file only if nobody changed it since `sha` was read (no sha = create). Returns false on a clash. */
+export async function writeFile(env: Env, path: string, text: string, sha: string | undefined, message: string): Promise<boolean> {
   const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}`, {
     method: 'PUT',
     headers: { ...apiHeaders(env), 'content-type': 'application/json' },
-    body: JSON.stringify({ message, content: encode(text), sha, branch: 'main' }),
+    body: JSON.stringify({ message, content: encode(text), branch: 'main', ...(sha ? { sha } : {}) }),
   });
   if (res.status === 409 || res.status === 422) return false;
   if (!res.ok) throw new Error(`Could not save ${path}: HTTP ${res.status}`);

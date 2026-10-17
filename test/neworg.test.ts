@@ -57,3 +57,13 @@ test('remove archives with a reason; restore undoes it; nothing is deleted', () 
 test('orgs.json keeps one entry per line', () => {
   assert.equal(serialiseOrgs(list).split('\n').length, 4);
 });
+
+import { tidyName } from '../src/neworg.ts';
+
+test('all-capitals register names are tidied, acronyms kept', () => {
+  assert.equal(tidyName('BRENT MENCAP'), 'Brent Mencap');
+  assert.equal(tidyName('ADHD SUPPORT GROUP FOR THE NORTH'), 'ADHD Support Group for the North');
+  assert.equal(tidyName("DOWN'S SYNDROME ASSOCIATION"), "Down's Syndrome Association");
+  assert.equal(tidyName('AUTISM WALES CIO'), 'Autism Wales CIO');
+  assert.equal(tidyName('Already Fine Name'), 'Already Fine Name');
+});
