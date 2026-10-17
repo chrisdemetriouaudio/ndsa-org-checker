@@ -2198,7 +2198,7 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.mencap.org.uk/",
-          "ms": 329,
+          "ms": 316,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
