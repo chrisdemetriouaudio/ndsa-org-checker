@@ -97,9 +97,14 @@ export async function requestLink(env: Env, rawEmail: string, ip: string): Promi
   const ipKey = `ip:${(await sha256Hex(`ndsa:${ip}`)).slice(0, 32)}`;
   if (!(await allow(env, ipKey, 10, 3600))) return;
   if (!(await allow(env, `email:${email}`, 3, 15 * 60))) return;
-  const admin = await env.DB.prepare('SELECT email, name FROM admins WHERE email = ?').bind(email).first<{ email: string; name: string }>();
+  const admin = await env.DB.prepare('SELECT email, name, email_ok FROM admins WHERE email = ?').bind(email).first<{ email: string; name: string; email_ok: number }>();
   if (!admin) {
     await audit(env, null, 'link-refused', 'address not on the admin list');
+    return;
+  }
+  if (admin.email_ok !== 1) {
+    // This admin must never be e-mailed. They get a hand-delivered link (npm run admin -- link).
+    await audit(env, email, 'link-held', 'never-email admin: nothing sent');
     return;
   }
   const token = randomToken(32);
