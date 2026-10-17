@@ -8,22 +8,25 @@ updated: 2026-10-17
 
 > [!info] At a glance
 > **What:** check every website each morning, then add the charity registers.
-> **Status:** 🛠️ Website checks live (17 Oct 2026). Register checks not started.
+> **Status:** ✅ Live (17 Oct 2026). Website checks and the England and Wales charity register.
 > **Passes when:** 4 weeks of checks, every flag either real or a fixed false alarm.
 > **Back to:** [[00 Dashboard]]
 
 ## 👉 Your actions
 
-- [ ] **Get a free Charity Commission API key** (only needed for register checks).
+- [ ] **Decide the 4 flagged services** in [[Live status]].
 
 ## 🛠️ For Claude
 
-- [ ] **Add Charity Commission register checks** once the key exists. This turns the "Charity register" tick on: the first proof category.
-- [ ] **Add Companies House checks** for charitable companies.
+- [ ] **Add the Scottish (OSCR) and Northern Ireland (CCNI) registers.** Both are free downloads.
+- [ ] **Add Companies House checks** for community interest companies such as Genius Within.
 
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Charity register connected** through the free daily download; no API key needed (17 Oct 2026).
+> - [x] **34 of 44 organisations matched** to their charity numbers; the other 10 show why they have none.
+> - [x] **Register found 4 problems:** 2 removed (proven closed), 1 in administration, 1 insolvent.
 > - [x] **Ticks and a score** for every organisation; proof kept apart from evidence (17 Oct 2026).
 > - [x] **Daily website check on GitHub Actions** (free), about 7am (17 Oct 2026).
 > - [x] **Spots:** address gone, site down, "we have closed" wording, parked domains, moves to a new domain.

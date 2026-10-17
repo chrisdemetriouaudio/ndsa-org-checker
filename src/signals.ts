@@ -1,3 +1,5 @@
+import { dateWords } from './dates.ts';
+import type { Register } from './register.ts';
 import type { CheckResult, Org } from './types.ts';
 
 export type Level = 'green' | 'amber' | 'red' | 'none';
@@ -12,6 +14,8 @@ export interface Signal {
   kind: 'proof' | 'evidence';
   /** Strong signals at red mean "likely closed"; weak ones mean "needs a check". */
   strength: 'strong' | 'weak';
+  /** Red here proves the organisation has closed (removed from the register, dissolved, or closed by a person). */
+  provesClosure?: boolean;
 }
 
 export const WINDOW = 7; // checks looked at (one a day)
@@ -21,7 +25,7 @@ const CONFIRMED_DAYS = 183;
 const daysBetween = (a: string, b: string) => (Date.parse(b) - Date.parse(a)) / 86_400_000;
 
 /** One line per category, each green / amber / red / not checked. Pure. */
-export function computeSignals(org: Org, history: CheckResult[], today: string): Signal[] {
+export function computeSignals(org: Org, history: CheckResult[], today: string, register?: Register): Signal[] {
   const review = org.review;
   const recent = history.filter((h) => !review || h.date > review.date).slice(-WINDOW);
   const n = recent.length;
@@ -29,7 +33,7 @@ export function computeSignals(org: Org, history: CheckResult[], today: string):
   const prev = recent.at(-2);
   const signals: Signal[] = [];
   const evidence = (s: Omit<Signal, 'kind'>) => signals.push({ ...s, kind: 'evidence' });
-  const proof = (s: Omit<Signal, 'kind' | 'strength'>) => signals.push({ ...s, kind: 'proof', strength: 'strong' });
+  const proof = (s: Omit<Signal, 'kind' | 'strength' | 'weight'> & { weight: number }) => signals.push({ ...s, kind: 'proof', strength: 'strong' });
 
   // Evidence from the website.
   const dns = recent.filter((h) => h.error === 'DNS').length;
@@ -70,10 +74,7 @@ export function computeSignals(org: Org, history: CheckResult[], today: string):
   });
 
   // Proof: an official record, or the organisation itself.
-  proof({
-    key: 'register', label: 'Charity register', weight: 25, level: 'none',
-    detail: 'Charity register check not set up yet (needs a free API key)',
-  });
+  proof({ key: 'register', label: 'Charity register', weight: 25, ...registerSignal(org, register) });
 
   const confirmedRecently = review?.status === 'Confirmed' && daysBetween(review.date, today) <= CONFIRMED_DAYS;
   proof({
@@ -85,12 +86,42 @@ export function computeSignals(org: Org, history: CheckResult[], today: string):
   return signals;
 }
 
+const OVERDUE = new Set(['Submission Overdue', 'Submission Double Default']);
+
+/** The charity register's say, as a level. Removed or dissolved proves closure. */
+export function registerSignal(org: Org, register?: Register): Pick<Signal, 'level' | 'detail' | 'provesClosure'> {
+  const n = org.charityNumber;
+  if (!n) return { level: 'none', detail: org.registerNote ?? 'No charity number yet' };
+  if (!register?.extractDate) return { level: 'none', detail: 'Charity register not downloaded yet' };
+  const e = register.entries[n];
+  const asOf = `(register of ${dateWords(register.extractDate)})`;
+  if (!e) return { level: 'amber', detail: `Charity number ${n} not found on the register ${asOf}` };
+  if (e.status === 'Removed') {
+    return { level: 'red', provesClosure: true, detail: `Removed from the charity register on ${dateWords(e.removedOn)}` };
+  }
+  if (e.dissolved) return { level: 'red', provesClosure: true, detail: `Charity ${n} is dissolved ${asOf}` };
+  if (e.inAdministration) return { level: 'red', detail: `Charity ${n} is in administration ${asOf}` };
+  if (e.insolvent) return { level: 'red', detail: `Charity ${n} is marked insolvent ${asOf}` };
+  if (e.reporting && OVERDUE.has(e.reporting)) return { level: 'amber', detail: `Accounts overdue: "${e.reporting}" ${asOf}` };
+  if (e.reporting === 'Suppressed') return { level: 'amber', detail: `Reporting suspended by the Charity Commission ${asOf}` };
+  return { level: 'green', detail: `Registered charity ${n}, last accounts to ${dateWords(e.lastAccounts)}` };
+}
+
 const VALUE: Record<Exclude<Level, 'none'>, number> = { green: 1, amber: 0.5, red: 0 };
 
-/** 0–100 confidence that the organisation is still running, from the categories checked so far. */
+export const PROOF_RED_CAP = 40;
+
+/**
+ * 0–100 confidence that the organisation is still running, from the categories checked so far.
+ * Proof outranks website evidence: proven closed scores 0, and any other red proof caps the score at 40.
+ */
 export function score(signals: Signal[]): { score: number | null; checked: number; total: number } {
   const checked = signals.filter((s) => s.level !== 'none');
   const weight = checked.reduce((t, s) => t + s.weight, 0);
   const got = checked.reduce((t, s) => t + s.weight * VALUE[s.level as Exclude<Level, 'none'>], 0);
-  return { score: weight ? Math.round((100 * got) / weight) : null, checked: checked.length, total: signals.length };
+  let result = weight ? Math.round((100 * got) / weight) : null;
+  const proofRed = checked.filter((s) => s.kind === 'proof' && s.level === 'red');
+  if (proofRed.some((s) => s.provesClosure)) result = 0;
+  else if (proofRed.length && result !== null) result = Math.min(result, PROOF_RED_CAP);
+  return { score: result, checked: checked.length, total: signals.length };
 }

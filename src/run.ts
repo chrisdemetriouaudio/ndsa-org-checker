@@ -1,8 +1,9 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkSite } from './check.ts';
 import { renderDashboardBlock, renderLivePage, renderNewFlags, renderSite, replaceBetweenMarkers } from './render.ts';
+import type { Register } from './register.ts';
 import { decideStatus } from './status.ts';
 import { FLAGGED, HISTORY_LIMIT, type Org, type State } from './types.ts';
 
@@ -34,6 +35,7 @@ async function main() {
   const renderOnly = process.argv.includes('--render-only');
   const orgs = await readJson<Org[]>(path('data/orgs.json'), []);
   const state = await readJson<State>(path('data/state.json'), { updated: null, orgs: {} });
+  const register = await readJson<Register>(path('data/register.json'), { extractDate: null, entries: {} });
   const now = new Date().toISOString();
   const today = now.slice(0, 10);
   const newly: { org: Org; s: State['orgs'][string] }[] = [];
@@ -47,7 +49,7 @@ async function main() {
       const mark = result.reachable ? 'ok ' : 'DOWN';
       console.log(`${mark} ${String(result.httpStatus ?? result.error).padEnd(8)} ${org.name}`);
     }
-    const { status, reasons, proven, signals, score } = decideStatus(org, history, today);
+    const { status, reasons, proven, signals, score } = decideStatus(org, history, today, register);
     const s = {
       status,
       reasons,
@@ -75,6 +77,7 @@ async function main() {
   if (dashboard) await write(dashboardFile, replaceBetweenMarkers(dashboard, renderDashboardBlock(orgs, state)));
 
   // The workflow posts this as a GitHub issue comment, which e-mails watchers.
+  await rm(path('out/new-flags.md'), { force: true });
   if (newly.length) await write(path('out/new-flags.md'), renderNewFlags(newly));
   console.log(`\n${orgs.length} services, ${newly.length} newly flagged.`);
 }

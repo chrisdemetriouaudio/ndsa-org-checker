@@ -17,7 +17,8 @@ export interface Org {
   area: string;
   kind: string;
   focus: string[];
-  charityNumber?: string | null;
+  charityNumber?: string | null; // England and Wales register
+  registerNote?: string; // why there is no charity number
   notes?: string;
   review?: Review;
 }

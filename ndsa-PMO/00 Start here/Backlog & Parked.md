@@ -13,13 +13,13 @@ updated: 2026-10-17
 ## 💭 Later (ideas, not planned yet)
 
 - [ ] **Check Companies House** for dissolved charitable companies (free API key).
-- [ ] **Check Scotland and Northern Ireland registers** (OSCR and CCNI downloads).
+- [ ] **Check Scotland and Northern Ireland registers** (OSCR and CCNI downloads, both free).
 - [ ] **Check domain expiry dates** through the free .uk registry lookup (RDAP).
 - [ ] **AI reads each homepage monthly:** try Cloudflare Workers AI's free daily allowance first.
 - [ ] **Review page:** accept or reject each flag in one click, instead of telling Claude.
 - [ ] **Twice-yearly verification e-mail** to each organisation, with one-click replies.
 - [ ] **Weekly e-mail digest to Wade** instead of GitHub issue alerts.
-- [ ] **Grow the list** from the charity register download (search: autism, ADHD, dyslexia).
+- [ ] **Grow the list** from the charity register download (search: autism, ADHD, dyslexia). The download is already in place.
 - [ ] **Export in Open Referral UK format** so other directories can reuse the data.
 
 ## 🅿️ Parked (on hold on purpose)

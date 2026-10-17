@@ -10,6 +10,11 @@ updated: 2026-10-17
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 17 Oct 2026 · Free register download, and what counts as proof
+> - **Decided:** use the Charity Commission's free daily download, not the API (no key, one file a day).
+> - **Decided:** removed or dissolved = proven closed (score 0). Insolvent or in administration = likely closed (score 40 at most).
+> - **Why:** administration can end in a rescue, so it is serious but not proof of closure.
+
 > [!question]- 17 Oct 2026 · Ticks, a score, and proof before "closed"
 > - **Decided:** each organisation gets 7 categories, each ✅ 🟡 🔴 or ⚪, and a score out of 100.
 > - **Decided:** website checks are evidence (they can be wrong). Proof = charity register, the organisation itself, or a person.

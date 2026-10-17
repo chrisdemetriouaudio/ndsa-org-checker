@@ -25,13 +25,17 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Download the charity register (free daily file, no key)
+        run: npm run register
+        continue-on-error: true # website checks still run if the download fails
       - run: npm run checks
 
       - name: Save results (data, live PMO notes, directory page)
         run: |
+          touch data/register.json
           git config user.name "ndsa-org-checker"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/state.json "ndsa-PMO/30 Live" "ndsa-PMO/00 Start here/00 Dashboard.md" site
+          git add data/state.json data/register.json "ndsa-PMO/30 Live" "ndsa-PMO/00 Start here/00 Dashboard.md" site
           if ! git diff --cached --quiet; then
             git commit -m "chore(check): daily check $(date -u +%F)"
             git pull --rebase

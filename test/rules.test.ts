@@ -121,3 +121,48 @@ test('confirmed by the organisation turns its tick green and adds to the score',
   assert.equal(d.signals.find((x) => x.key === 'confirmed')?.level, 'green');
   assert.equal(d.status, 'Needs a check'); // a move still needs a look
 });
+
+import { parseRegisterLine, type Register } from '../src/register.ts';
+
+const numbered: Org = { ...org, charityNumber: '123' };
+const reg = (entry: Partial<Register['entries'][string]>): Register => ({
+  extractDate: '2026-10-17',
+  entries: { '123': { number: '123', name: 'X', status: 'Registered', removedOn: null, reporting: 'Submission Received', lastAccounts: '2025-03-31', insolvent: false, inAdministration: false, dissolved: false, ...entry } },
+});
+const healthy = [ok('2026-10-16'), ok('2026-10-17')];
+const registerTick = (d: ReturnType<typeof decideStatus>) => d.signals.find((x) => x.key === 'register')?.level;
+
+test('register: a registered charity is green and the score stays 100', () => {
+  const d = decideStatus(numbered, healthy, '2026-10-17', reg({}));
+  assert.equal(registerTick(d), 'green');
+  assert.equal(d.score, 100);
+});
+
+test('register: removed proves closure even when the website looks fine', () => {
+  const d = decideStatus(numbered, healthy, '2026-10-17', reg({ status: 'Removed', removedOn: '2023-08-16' }));
+  assert.equal(d.status, 'Likely closed');
+  assert.equal(d.proven, true);
+  assert.equal(d.score, 0);
+  assert.deepEqual(d.reasons, ['Proof: Removed from the charity register on 16 Aug 2023']);
+});
+
+test('register: in administration is likely closed, not proven, score capped', () => {
+  const d = decideStatus(numbered, healthy, '2026-10-17', reg({ inAdministration: true }));
+  assert.equal(d.status, 'Likely closed');
+  assert.equal(d.proven, false);
+  assert.equal(d.score, 40);
+  assert.equal(d.reasons.length, 1);
+});
+
+test('register: overdue accounts are amber; no number is grey with its note', () => {
+  assert.equal(registerTick(decideStatus(numbered, healthy, '2026-10-17', reg({ reporting: 'Submission Overdue' }))), 'amber');
+  const d = decideStatus({ ...org, registerNote: 'A Scottish charity' }, healthy, '2026-10-17', reg({}));
+  assert.equal(registerTick(d), 'none');
+  assert.equal(d.signals.find((x) => x.key === 'register')?.detail, 'A Scottish charity');
+});
+
+test('register lines: main charity kept, linked sub-charities skipped', () => {
+  const line = ',{"date_of_extract":"2026-10-17T00:00:00","registered_charity_number":123,"linked_charity_number":0,"charity_name":"X","charity_registration_status":"Removed","date_of_removal":"2023-08-16T00:00:00","charity_reporting_status":"Removed","latest_acc_fin_period_end_date":null,"charity_insolvent":false,"charity_in_administration":false,"cio_is_dissolved":null}';
+  assert.equal(parseRegisterLine(line)?.removedOn, '2023-08-16');
+  assert.equal(parseRegisterLine(line.replace('"linked_charity_number":0', '"linked_charity_number":1')), null);
+});

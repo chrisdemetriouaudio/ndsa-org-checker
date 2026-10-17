@@ -1,4 +1,5 @@
 import { computeSignals, score, type Signal } from './signals.ts';
+import type { Register } from './register.ts';
 import type { CheckResult, Org, Status } from './types.ts';
 
 export interface Decision {
@@ -11,8 +12,8 @@ export interface Decision {
 }
 
 /** Turns the check history into a suggested status, its categories and a score. Pure. */
-export function decideStatus(org: Org, history: CheckResult[], today: string): Decision {
-  const signals = computeSignals(org, history, today);
+export function decideStatus(org: Org, history: CheckResult[], today: string, register?: Register): Decision {
+  const signals = computeSignals(org, history, today, register);
   const s = score(signals).score;
   const review = org.review;
 
@@ -26,8 +27,9 @@ export function decideStatus(org: Org, history: CheckResult[], today: string): D
   const strongRed = red.filter((x) => x.strength === 'strong');
   const why = (list: Signal[]) => list.map((x) => (x.kind === 'proof' ? `Proof: ${x.detail}` : x.detail));
 
-  if (proofRed.length) return { status: 'Likely closed', reasons: why(proofRed), proven: true, signals, score: s };
-  if (strongRed.length) return { status: 'Likely closed', reasons: why(strongRed), proven: false, signals, score: s };
+  const proving = red.filter((x) => x.provesClosure);
+  if (proving.length) return { status: 'Likely closed', reasons: why(red), proven: true, signals, score: s };
+  if (proofRed.length || strongRed.length) return { status: 'Likely closed', reasons: why(red.filter((x) => x.kind === 'proof' || x.strength === 'strong')), proven: false, signals, score: s };
   if (red.length) return { status: 'Needs a check', reasons: why(red), proven: false, signals, score: s };
 
   const confirmed = signals.find((x) => x.key === 'confirmed');

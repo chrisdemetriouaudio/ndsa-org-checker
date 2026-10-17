@@ -10,7 +10,14 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · Ticks and a score for every organisation · live
+> [!success]+ 🚀 17 Oct 2026 · Charity register connected · live
+> - **Source:** the Charity Commission's free daily register download. No API key.
+> - **Matched:** 34 of 44 organisations to their charity numbers.
+> - **Proven closed (removed from the register):** Autism Alliance UK (5 Jul 2023), Dyslexia Action (16 Aug 2023).
+> - **Likely closed:** ADHD Foundation (in administration), Dyspraxia Foundation (insolvent).
+> - **Scores:** proven closed scores 0. Insolvent or in administration scores 40 at most.
+
+> [!success]- 🚀 17 Oct 2026 · Ticks and a score for every organisation · live
 > - **7 categories per organisation:** ✅ fine · 🟡 in question · 🔴 serious · ⚪ not checked yet.
 > - **Score out of 100:** how sure we are it is still running. Shown in [[Live status]] and on the public directory.
 > - **Proof versus evidence:** website checks are evidence. Closure is "proven" only by an official record, the organisation or a person.

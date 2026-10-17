@@ -1,15 +1,10 @@
+import { dateWords } from './dates.ts';
 import type { Level, Signal } from './signals.ts';
+
+export { dateWords };
 import { FLAGGED, type Org, type OrgState, type State, type Status } from './types.ts';
 
 const REPO = 'https://github.com/chrisdemetriouaudio/ndsa-org-checker';
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-/** "2026-10-17" → "17 Oct 2026" (the vault's date style). */
-export function dateWords(iso: string | null): string {
-  if (!iso) return 'never';
-  const [y, m, d] = iso.slice(0, 10).split('-').map(Number);
-  return `${d} ${MONTHS.at(m - 1)} ${y}`;
-}
 
 const ICON: Record<Status, string> = {
   Confirmed: '✅',
@@ -51,11 +46,11 @@ function legend(all: Row[]): string[] {
   return [
     '> [!info]- How to read the ticks and the score (tap to open)',
     '> **Ticks:** ✅ fine · 🟡 in question · 🔴 serious · ⚪ not checked yet.',
-    '> **Score:** 0 to 100. How sure we are the organisation is still running, from the categories checked so far.',
+    '> **Score:** 0 to 100. How sure we are the organisation is still running, from the categories checked so far. Proven closed scores 0. Insolvent or in administration scores 40 at most.',
     '> **Proof or evidence:** evidence comes from the website and can be wrong. Proof comes from an official record or the organisation itself.',
     '> **Closure is only "proven"** when a proof category is 🔴. Website evidence alone means "likely closed".',
     '>',
-    ...sample.map((x) => `> - **${x.label}** (${x.kind}, ${x.weight} points): ${x.kind === 'proof' ? (x.key === 'register' ? 'the official charity record. 🔴 proves closure' : 'the organisation replies itself. 🔴 proves closure') :x.strength === 'strong' ? '🔴 means likely closed' : '🔴 means needs a check'}.`),
+    ...sample.map((x) => `> - **${x.label}** (${x.kind}, ${x.weight} points): ${x.kind === 'proof' ? (x.key === 'register' ? 'the official charity record. 🔴 removed or dissolved proves closure; 🔴 insolvent or in administration means likely closed' : 'the organisation replies itself') :x.strength === 'strong' ? '🔴 means likely closed' : '🔴 means needs a check'}.`),
   ];
 }
 

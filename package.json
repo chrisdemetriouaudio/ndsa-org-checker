@@ -7,6 +7,7 @@
     "node": ">=22.18"
   },
   "scripts": {
+    "register": "node src/register.ts",
     "checks": "node src/run.ts",
     "render": "node src/run.ts --render-only",
     "typecheck": "tsc --noEmit",
