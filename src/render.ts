@@ -229,7 +229,8 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <ul id="list">
 ${cards}
 </ul>
-<footer>Prototype. Services that look closed are hidden until a person checks them. <a href="${REPO}">How this works</a>.</footer>
+<footer>Prototype. Services that look closed are hidden until a person checks them. <a href="${REPO}">How this works</a>.<br>
+Sources include the Charity Commission for England and Wales, the Charity Commission for Northern Ireland and the Scottish Charity Register: © Crown Copyright and database right ${new Date().getFullYear()}. Contains information from the Scottish Charity Register supplied by the Office of the Scottish Charity Regulator and licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>.</footer>
 </main>
 <script>
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];

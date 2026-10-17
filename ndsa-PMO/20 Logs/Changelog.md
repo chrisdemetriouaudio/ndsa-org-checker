@@ -10,7 +10,13 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · Passkey sign-in loop fixed · live
+> [!success]+ 🚀 17 Oct 2026 · Finding organisations, stage 1 · live
+> - **Found:** 2,052 candidates from the charity registers of all 4 nations (England 1,532 · Wales 303 · Scotland 408 · Northern Ireland 139).
+> - **Conditions:** the 18 in scope, matched on exact phrases. 455 are named for a condition.
+> - **Review:** Admin → Review candidates. Add (checked straight away) or mark not relevant.
+> - **Runs weekly.** Counts in [[Candidates]].
+
+> [!success]- 🚀 17 Oct 2026 · Passkey sign-in loop fixed · live
 > - **Problem:** after an e-mailed link, people who already had a passkey were asked to add one again; the device refused ("invalid state").
 > - **Fix:** if you already have a passkey, the page offers **Use my passkey** first. Adding one for a new device is the second option.
 > - **For everyone on the admin list.** Tested both cases with a throwaway account (since removed).

@@ -9,18 +9,12 @@ updated: 2026-10-17
 > [!info] At a glance
 > **What:** a passkey-protected admin page to add, remove and review organisations. The directory stays public.
 > **Where:** https://ndsa.labs.chrisdemetriou.com/admin (directory at https://ndsa.labs.chrisdemetriou.com).
-> **Status:** ⏳ Live (17 Oct 2026). Sign-in works once the 2 keys below are added and admins are on the list.
+> **Status:** ✅ Live (17 Oct 2026). Keys added; Chris signed in with a passkey.
 > **Back to:** [[00 Dashboard]]
 
 ## 👉 Your actions
 
 - [ ] **Give Wade his sign-in link yourself** when ready: run `npm run admin -- link` with his address, then pass it on personally.
-- [ ] **Make a Resend key:** Resend → API Keys → Create, sending access only.
-- [ ] **Add it to the Worker:** in the project folder, run `npx wrangler secret put RESEND_API_KEY` and paste it.
-- [ ] **Make a GitHub token:** GitHub → Settings → Developer settings → Fine-grained tokens → Generate.
-- [ ] **Limit the token:** only the `ndsa-org-checker` repo; Contents and Actions set to "Read and write".
-- [ ] **Add it to the Worker:** run `npx wrangler secret put GITHUB_TOKEN` and paste it.
-- [ ] **Sign in once:** e-mail link, then add a passkey on your phone or computer.
 
 ## 💭 Later
 
@@ -30,6 +24,7 @@ updated: 2026-10-17
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Resend key and GitHub token added; Chris signed in with a passkey** (17 Oct 2026).
 > - [x] **Approved admin list in the database:** Chris (tech@) and Wade (17 Oct 2026). Only these two can sign in.
 > - [x] **Wade is never e-mailed by the system.** Link requests for him are held and logged; tested with a stand-in address.
 > - [x] **Hand-delivered links:** `npm run admin -- link` prints a single-use link (72 hours). Nothing is sent.

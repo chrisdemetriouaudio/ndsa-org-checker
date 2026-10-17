@@ -10,6 +10,13 @@ updated: 2026-10-17
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 17 Oct 2026 · How to find organisations
+> - **Decided:** 18 conditions only (Chris's list). Matched on exact phrases, so "Down" or "sensory" alone never count.
+> - **Decided:** everything found goes to a review list. A person adds it. Nothing found goes straight onto the directory.
+> - **Decided:** in stages, one source at a time: charity registers first, then Companies House, councils, possible DPOs.
+> - **Decided:** informal groups and peer networks are added by people. No register lists them.
+> - **Why:** a wrong listing would send families to the wrong place, the very problem this solves.
+
 > [!question]- 17 Oct 2026 · Wade is never contacted by the system
 > - **Decided:** Wade's address is on the admin list but marked "never e-mail". Sign-in link requests for it are held and logged.
 > - **Decided:** when Wade should get access, Chris makes a link by hand and gives it to him personally.

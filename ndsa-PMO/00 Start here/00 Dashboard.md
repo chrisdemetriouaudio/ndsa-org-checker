@@ -21,9 +21,8 @@ updated: 2026-10-17
 
 ## 👉 Your actions
 
+- [ ] **Review the 2,052 candidates** on the admin page (Review candidates). See [[Phase 7 — Finding Organisations]].
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
-- [ ] **Add the Resend key to the Worker:** see [[Phase 6 — Admin Front Door]] for the one command.
-- [ ] **Add a GitHub token to the Worker:** see [[Phase 6 — Admin Front Door]] for the steps.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
 - [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
 - [ ] **Decide ADHD Foundation and Dyspraxia Foundation** on the admin page when ready.
@@ -45,6 +44,8 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Discovery stage 1:** 2,052 candidates from all 4 nations' charity registers (17 Oct 2026).
+> - [x] **Keys added and first passkey sign-in done** (17 Oct 2026).
 > - [x] **Approved admin list set up:** Chris, and Wade (never e-mailed) (17 Oct 2026).
 > - [x] **Admin front door built and live** at ndsa.labs.chrisdemetriou.com (17 Oct 2026).
 > - [x] **Score colours follow the score** like a temperature (17 Oct 2026).
@@ -62,7 +63,8 @@ More ideas: [[Backlog & Parked]].
 | [[Phase 3 — AI Reading & Review Page]] | AI reads each homepage; one-click review | 💭 Later |
 | [[Phase 4 — Verification Emails & Reports]] | Twice-yearly emails; "report a problem" | 💭 Later (report link done) |
 | [[Phase 5 — Pilot]] | Larger list with a partner charity | 💭 Later |
-| [[Phase 6 — Admin Front Door]] | Passkey admin page: add, remove, review | ⏳ Live, waiting for 2 keys |
+| [[Phase 6 — Admin Front Door]] | Passkey admin page: add, remove, review | ✅ Live (Chris signed in) |
+| [[Phase 7 — Finding Organisations]] | Find organisations in all 4 nations | 🛠️ Stage 1 live |
 
 ## 🔗 Links
 
