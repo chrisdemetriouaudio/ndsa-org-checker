@@ -39,7 +39,7 @@ To decide: tell Claude "**[name] is still running**" or "**close [name]**". It g
 > | [ADHD UK](https://adhduk.co.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Afasic](https://www.afasic.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Ambitious about Autism](https://www.ambitiousaboutautism.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
-> | [Anna Kennedy Online](https://annakennedyonline.com) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
+> | [Anna Kennedy Online](https://annakennedyonline.com) | 🟢 Looks active | UK | 202 | 17 Oct 2026 |
 > | [Autism Alliance UK](https://autism-alliance.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Autism Anglia](https://www.autism-anglia.org.uk) | 🟢 Looks active | East of England | 200 | 17 Oct 2026 |
 > | [Autism Berkshire](https://www.autismberkshire.org.uk) | 🟢 Looks active | Berkshire | 200 | 17 Oct 2026 |
@@ -50,7 +50,7 @@ To decide: tell Claude "**[name] is still running**" or "**close [name]**". It g
 > | [Autism Plus](https://www.autismplus.co.uk) | 🟢 Looks active | Yorkshire and the Midlands | 200 | 17 Oct 2026 |
 > | [Autism Together](https://www.autismtogether.co.uk) | 🟢 Looks active | North West England | 200 | 17 Oct 2026 |
 > | [Autism Unlimited](https://www.autism-unlimited.org) | 🟢 Looks active | Dorset and Hampshire | 200 | 17 Oct 2026 |
-> | [Autistic Girls Network](https://autisticgirlsnetwork.org) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
+> | [Autistic Girls Network](https://autisticgirlsnetwork.org) | 🟢 Looks active | UK | 202 | 17 Oct 2026 |
 > | [Autistic UK](https://autisticuk.org) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Autistica](https://www.autistica.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [British Dyslexia Association](https://www.bdadyslexia.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
@@ -58,7 +58,7 @@ To decide: tell Claude "**[name] is still running**" or "**close [name]**". It g
 > | [Child Autism UK](https://www.childautism.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Contact (for families with disabled children)](https://contact.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Dyslexia Action](https://www.dyslexiaaction.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
-> | [Dyslexia Scotland](https://dyslexiascotland.org.uk) | 🟢 Looks active | Scotland | 200 | 17 Oct 2026 |
+> | [Dyslexia Scotland](https://dyslexiascotland.org.uk) | 🟢 Looks active | Scotland | 403 | 17 Oct 2026 |
 > | [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Genius Within](https://www.geniuswithin.org) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
 > | [Helen Arkell Dyslexia Charity](https://www.helenarkell.org.uk) | 🟢 Looks active | UK | 200 | 17 Oct 2026 |
