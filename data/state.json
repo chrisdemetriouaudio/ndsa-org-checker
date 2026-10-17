@@ -1,0 +1,937 @@
+{
+  "updated": "2026-10-17T13:15:16.008Z",
+  "orgs": {
+    "ambitious-about-autism": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.ambitiousaboutautism.org.uk/",
+          "ms": 321,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism Charity | Ambitious about Autism"
+        }
+      ]
+    },
+    "child-autism-uk": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.childautism.org.uk/",
+          "ms": 373,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home - Child Autism"
+        }
+      ]
+    },
+    "national-autistic-society": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autism.org.uk/",
+          "ms": 414,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "National Autistic Society"
+        }
+      ]
+    },
+    "autism-alliance": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autism-alliance.org.uk/",
+          "ms": 491,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism Alliance UK"
+        }
+      ]
+    },
+    "autism-education-trust": {
+      "status": "Needs a check",
+      "reasons": [
+        "The website now goes to nen.org.uk"
+      ],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.nen.org.uk/",
+          "ms": 495,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": "nen.org.uk",
+          "title": "Neuroinclusive Education Network"
+        }
+      ]
+    },
+    "autistic-girls-network": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://autisticgirlsnetwork.org/",
+          "ms": 198,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Welcome to the Autistic Girls Network"
+        }
+      ]
+    },
+    "autistic-uk": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autisticuk.org/",
+          "ms": 517,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home | Autistic UK CIC"
+        }
+      ]
+    },
+    "autism-central": {
+      "status": "Needs a check",
+      "reasons": [
+        "The website now goes to autismcentral.nhs.uk"
+      ],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autismcentral.nhs.uk/",
+          "ms": 439,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": "autismcentral.nhs.uk",
+          "title": "Autism Central - England&#039;s Peer Education Programme | Autism Central"
+        }
+      ]
+    },
+    "national-autistic-taskforce": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://nationalautistictaskforce.org.uk/",
+          "ms": 704,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "National Autistic Taskforce &#8211; Bolder Voices, Better Practice"
+        }
+      ]
+    },
+    "adhd-uk": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://adhduk.co.uk/",
+          "ms": 167,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "ADHD UK - Homepage - ADHD UK"
+        }
+      ]
+    },
+    "spectrum-gaming": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.spectrumgaming.net/",
+          "ms": 438,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home | Spectrum Gaming"
+        }
+      ]
+    },
+    "adhd-foundation": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": false,
+          "httpStatus": null,
+          "finalUrl": null,
+          "ms": 412,
+          "error": "Network",
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": null
+        }
+      ]
+    },
+    "aadd-uk": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://aadduk.org/",
+          "ms": 372,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "AADD-UK &#8211; The site for and by adults with ADHD"
+        }
+      ]
+    },
+    "autistica": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autistica.org.uk/",
+          "ms": 1817,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home | UK autism charity | Autism research and campaigning | Autistica"
+        }
+      ]
+    },
+    "anna-kennedy-online": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://annakennedyonline.com/",
+          "ms": 2162,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home - Anna Kennedy Online"
+        }
+      ]
+    },
+    "helen-arkell": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://helenarkell.org.uk/",
+          "ms": 1538,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Helen Arkell"
+        }
+      ]
+    },
+    "british-dyslexia-association": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.bdadyslexia.org.uk/",
+          "ms": 1623,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "British Dyslexia Association"
+        }
+      ]
+    },
+    "pda-society": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.pdasociety.org.uk/",
+          "ms": 3366,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "PDA Society - Pathological Demand Avoidance"
+        }
+      ]
+    },
+    "dyspraxia-foundation": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://dyspraxiafoundation.org.uk/",
+          "ms": 488,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Non GamStop Casinos for UK Players - Best Online Casinos Ranked"
+        }
+      ]
+    },
+    "tourettes-action": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.tourettes-action.org.uk/",
+          "ms": 245,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Tourettes Action"
+        }
+      ]
+    },
+    "dyslexia-scotland": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://dyslexiascotland.org.uk/",
+          "ms": 1407,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Dyslexia ScotlandDyslexia Scotland - Empowering people with dyslexia to reach their full potential"
+        }
+      ]
+    },
+    "contact": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://contact.org.uk/",
+          "ms": 237,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Contact: the charity for families with disabled children"
+        }
+      ]
+    },
+    "ipsea": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.ipsea.org.uk/",
+          "ms": 277,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "(IPSEA) Independent Provider of Special Education Advice"
+        }
+      ]
+    },
+    "addiss": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.addiss.co.uk/",
+          "ms": 3009,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "ADDISS &#8211; The National Attention Deficit Disorder Information and Support Service"
+        }
+      ]
+    },
+    "mencap": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.mencap.org.uk/",
+          "ms": 265,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Learning Disability - Down syndrome - Williams syndrome | Mencap"
+        }
+      ]
+    },
+    "cerebra": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://cerebra.org.uk/",
+          "ms": 248,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Cerebra - Working with you and your amazing child"
+        }
+      ]
+    },
+    "genius-within": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://geniuswithin.org/",
+          "ms": 427,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Ambitious for Neurodivergent Potential - Genius Within C.I.C."
+        }
+      ]
+    },
+    "sossen": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://sossen.org.uk/",
+          "ms": 952,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "SOS!SEN &#8211; The Independent Helpline for Special Education Needs &#8211; We offer a free, friendly, independent and confidential telephone helpline for parents and others looking for information a"
+        }
+      ]
+    },
+    "scottish-autism": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.scottishautism.org/",
+          "ms": 204,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Scottish Autism"
+        }
+      ]
+    },
+    "autism-ni": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://autismni.org/",
+          "ms": 364,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism NI - Support for individuals, businesses &amp; carers | Autism NI"
+        }
+      ]
+    },
+    "neurodiversity-in-business": {
+      "status": "Needs a check",
+      "reasons": [
+        "The website now goes to neurodiversity.org"
+      ],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://neurodiversity.org/",
+          "ms": 864,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": "neurodiversity.org",
+          "title": "Neurodiversity in Business (NiB) | Charity"
+        }
+      ]
+    },
+    "afasic": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://afasic.org.uk/",
+          "ms": 1679,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home - Afasic"
+        }
+      ]
+    },
+    "dyslexia-action": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://dyslexiaaction.org.uk/",
+          "ms": 2226,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Dyslexia Action | Training and Professional Development"
+        }
+      ]
+    },
+    "autism-hampshire": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autismhampshire.org.uk/",
+          "ms": 328,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home | Autism Hampshire"
+        }
+      ]
+    },
+    "autism-initiatives": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://autisminitiatives.org/",
+          "ms": 558,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism Charity for Children and Adults | Autism Initiatives"
+        }
+      ]
+    },
+    "adhd-embrace": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://adhdembrace.org/",
+          "ms": 4682,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Welcome - Homepage"
+        }
+      ]
+    },
+    "autism-anglia": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autism-anglia.org.uk/",
+          "ms": 1197,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism Anglia | Enhancing the lives of people living with Autism"
+        }
+      ]
+    },
+    "autism-unlimited": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autism-unlimited.org/",
+          "ms": 851,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home :: Autism Unlimited"
+        }
+      ]
+    },
+    "autism-east-midlands": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autismeastmidlands.org.uk/",
+          "ms": 940,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Providing help and support to autistic people… | Autism East Midlands"
+        }
+      ]
+    },
+    "autism-berkshire": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.autismberkshire.org.uk/",
+          "ms": 1375,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism Berkshire Reading - Autism Berkshire"
+        }
+      ]
+    },
+    "autism-plus": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://autismplus.co.uk/",
+          "ms": 526,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Autism Plus - Adding Value to Lives"
+        }
+      ]
+    },
+    "autism-together": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://autismtogether.co.uk/",
+          "ms": 2406,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Supporting Brighter Futures - Autism Together"
+        }
+      ]
+    },
+    "autism-wales": {
+      "status": "Needs a check",
+      "reasons": [
+        "The website now goes to neurodivergencewales.org"
+      ],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://neurodivergencewales.org/en/",
+          "ms": 3710,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": "neurodivergencewales.org",
+          "title": "Home - Niwrowahaniaeth Cymru | Neurodivergence Wales | National Neurodivergence Team"
+        }
+      ]
+    },
+    "resources-for-autism": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-17",
+      "lastChecked": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://www.resourcesforautism.org.uk/",
+          "ms": 3537,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Home - Resources for Autism"
+        }
+      ]
+    }
+  }
+}

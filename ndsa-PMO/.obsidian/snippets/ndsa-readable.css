@@ -1,0 +1,31 @@
+/* NDSA PMO — easier reading (Autism / ADHD / dyslexia friendly).
+   Calm spacing, bigger text and targets, clear separation of open vs done.
+   Switch off: Settings → Appearance → CSS snippets → ndsa-readable. */
+
+body {
+  --font-text-size: 17px;
+  --line-height-normal: 1.75;
+  --file-line-width: 46rem;          /* shorter lines are easier to track */
+  --p-spacing: 1.1rem;
+  --list-spacing: 0.35em;
+  --checkbox-size: 1.15rem;
+}
+.markdown-rendered, .markdown-source-view.mod-cm6 .cm-content {
+  letter-spacing: 0.012em;
+  word-spacing: 0.06em;
+}
+/* No italics anywhere: harder to read. */
+.markdown-rendered em, .cm-em { font-style: normal; }
+/* Headings stand apart from the text above. */
+.markdown-rendered h2 { margin-top: 2.2rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--background-modifier-border); }
+/* Each task line has room to breathe and a bigger tap target. */
+.markdown-rendered li.task-list-item { padding: 0.15rem 0; }
+/* Finished tasks are quieter, but still readable (no strike-through). */
+.markdown-rendered li.task-list-item[data-task="x"],
+.markdown-rendered li.task-list-item.is-checked { color: var(--text-muted); text-decoration: none; }
+.markdown-rendered li.is-checked > .task-list-item-checkbox ~ * { text-decoration: none; }
+/* Folded boxes: clearer titles and padding. */
+.callout { padding: 0.9rem 1.1rem; border-radius: 10px; }
+.callout-title { font-weight: 600; }
+/* Tables: roomier rows. */
+.markdown-rendered table td, .markdown-rendered table th { padding: 0.45rem 0.7rem; }

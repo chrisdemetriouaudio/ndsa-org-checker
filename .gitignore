@@ -3,3 +3,4 @@ node_modules/
 ._*
 .env
 .obsidian/workspace*.json
+out/
