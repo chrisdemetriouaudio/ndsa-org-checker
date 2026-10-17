@@ -10,7 +10,15 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · Finding organisations, stage 1 · live
+> [!success]+ 🚀 18 Oct 2026 · Near you, who for, and a gentler daily run · live
+> - **Near you:** postcode + 5 to 100 miles; nearest first; nationwide ones under "Also covering your area".
+> - **Who is it for?** Children and young people · Adults · Families and carers.
+> - **One morning run:** finds new organisations, refreshes the register, checks websites. Each register file is downloaded once.
+> - **Gentle on websites:** one visit per site, robots.txt weekly, "has it changed?", healthy ones every 3 days.
+> - **Daily discovery:** clear new organisations are added automatically (max 20 a day). The rest wait, marked NEW.
+> - **Fixed:** a merge left broken text in a data file for a few minutes on 17 Oct 2026; restored the same night.
+
+> [!success]- 🚀 17 Oct 2026 · Finding organisations, stage 1 · live
 > - **Found:** 2,052 candidates from the charity registers of all 4 nations (England 1,532 · Wales 303 · Scotland 408 · Northern Ireland 139).
 > - **Conditions:** the 18 in scope, matched on exact phrases. 455 are named for a condition.
 > - **Review:** Admin → Review candidates. Add (checked straight away) or mark not relevant.

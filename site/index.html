@@ -443,7 +443,7 @@ const limit=+document.getElementById('miles').value;const local=[],wide=[];
 for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
 const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;
 let placeOk=true;const d=li.querySelector('.dist');d.hidden=true;
-if(here){if(li.dataset.cov==='local'){if(li.dataset.lat){const m=miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon});placeOk=m<=limit;li.dataset.m=m;d.textContent='Based about '+(m<1?'less than 1 mile':Math.round(m)+(Math.round(m)===1?' mile':' miles'))+' away';d.hidden=!placeOk;}else placeOk=false;}
+if(here){if(li.dataset.cov==='local'){if(li.dataset.lat){const m=miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon});placeOk=m<=limit;li.dataset.m=m;d.textContent=m<1?'Based less than 1 mile away':'Based about '+Math.round(m)+(Math.round(m)===1?' mile':' miles')+' away';d.hidden=!placeOk;}else placeOk=false;}
 else{const n=li.dataset.nations;placeOk=!n||n.split('|').includes(here.country);}}
 li.hidden=!(textOk&&audOk&&placeOk);if(here&&!li.hidden)(li.dataset.cov==='local'?local:wide).push(li);}
 if(here){local.sort((x,y)=>x.dataset.m-y.dataset.m);list.replaceChildren(...local,...(wide.length?[head]:[]),...wide,...order.filter(li=>li.hidden));

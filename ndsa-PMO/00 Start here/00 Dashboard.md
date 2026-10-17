@@ -21,6 +21,7 @@ updated: 2026-10-17
 
 ## 👉 Your actions
 
+- [ ] **Try "Near you" and "Who is it for?"** on the directory. See [[Phase 8 — Finding Support Easily]].
 - [ ] **Review the 2,052 candidates** on the admin page (Review candidates). See [[Phase 7 — Finding Organisations]].
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
@@ -44,6 +45,9 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Near you + Who is it for?** filters on the directory (18 Oct 2026).
+> - [x] **One gentle morning run:** find, refresh, check; healthy sites every 3 days (18 Oct 2026).
+> - [x] **Daily discovery:** clear new ones added automatically (max 20 a day); the rest marked NEW (18 Oct 2026).
 > - [x] **Discovery stage 1:** 2,052 candidates from all 4 nations' charity registers (17 Oct 2026).
 > - [x] **Keys added and first passkey sign-in done** (17 Oct 2026).
 > - [x] **Approved admin list set up:** Chris, and Wade (never e-mailed) (17 Oct 2026).
@@ -64,7 +68,8 @@ More ideas: [[Backlog & Parked]].
 | [[Phase 4 — Verification Emails & Reports]] | Twice-yearly emails; "report a problem" | 💭 Later (report link done) |
 | [[Phase 5 — Pilot]] | Larger list with a partner charity | 💭 Later |
 | [[Phase 6 — Admin Front Door]] | Passkey admin page: add, remove, review | ✅ Live (Chris signed in) |
-| [[Phase 7 — Finding Organisations]] | Find organisations in all 4 nations | 🛠️ Stage 1 live |
+| [[Phase 7 — Finding Organisations]] | Find organisations in all 4 nations | 🛠️ Stage 1 live, runs daily |
+| [[Phase 8 — Finding Support Easily]] | Who for, near you, button finder | 🛠️ Filters live |
 
 ## 🔗 Links
 
