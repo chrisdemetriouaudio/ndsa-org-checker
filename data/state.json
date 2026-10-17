@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-17T20:02:50.823Z",
+  "updated": "2026-10-17T22:58:42.405Z",
   "orgs": {
     "ambitious-about-autism": {
       "status": "Looks active",
@@ -24,7 +24,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -79,13 +79,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.ambitiousaboutautism.org.uk/",
-          "ms": 326,
+          "ms": 800,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism Charity | Ambitious about Autism"
+          "title": "Autism Charity | Ambitious about Autism",
+          "etag": "W/\"1792166593\"",
+          "lastModified": "Fri, 16 Oct 2026 16:03:13 GMT"
         }
       ]
     },
@@ -112,7 +114,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -167,13 +169,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.childautism.org.uk/",
-          "ms": 670,
+          "ms": 715,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home - Child Autism"
+          "title": "Home - Child Autism",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 22:55:45 GMT"
         }
       ]
     },
@@ -200,7 +204,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -255,13 +259,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autism.org.uk/",
-          "ms": 644,
+          "ms": 1649,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "National Autistic Society"
+          "title": "National Autistic Society",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 22:58:43 GMT"
         }
       ]
     },
@@ -379,7 +385,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -434,13 +440,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.nen.org.uk/",
-          "ms": 577,
+          "ms": 692,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Neuroinclusive Education Network"
+          "title": "Neuroinclusive Education Network",
+          "etag": "W/\"1792272173\"",
+          "lastModified": "Sat, 17 Oct 2026 21:22:53 GMT"
         }
       ]
     },
@@ -467,7 +475,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -522,13 +530,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://autisticgirlsnetwork.org/",
-          "ms": 962,
+          "ms": 1614,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Welcome to the Autistic Girls Network"
+          "title": "Welcome to the Autistic Girls Network",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -555,7 +565,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -610,13 +620,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autisticuk.org/",
-          "ms": 685,
+          "ms": 1278,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home | Autistic UK CIC"
+          "title": "Home | Autistic UK CIC",
+          "etag": "W/\"34c515e0d89db5d14ef1d67f31374ba0\"",
+          "lastModified": null
         }
       ]
     },
@@ -643,7 +655,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -698,13 +710,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autismcentral.nhs.uk/",
-          "ms": 245,
+          "ms": 2087,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism Central - England&#039;s Peer Education Programme | Autism Central"
+          "title": "Autism Central - England&#039;s Peer Education Programme | Autism Central",
+          "etag": "W/\"1792277923\"",
+          "lastModified": "Sat, 17 Oct 2026 22:58:43 GMT"
         }
       ]
     },
@@ -731,7 +745,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -786,13 +800,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://nationalautistictaskforce.org.uk/",
-          "ms": 4612,
+          "ms": 4275,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "National Autistic Taskforce &#8211; Bolder Voices, Better Practice"
+          "title": "National Autistic Taskforce &#8211; Bolder Voices, Better Practice",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -819,7 +835,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -874,13 +890,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://adhduk.co.uk/",
-          "ms": 241,
+          "ms": 275,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "ADHD UK - Homepage - ADHD UK"
+          "title": "ADHD UK - Homepage - ADHD UK",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 19:58:19 GMT"
         }
       ]
     },
@@ -907,7 +925,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -962,13 +980,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.spectrumgaming.net/",
-          "ms": 880,
+          "ms": 332,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home | Spectrum Gaming"
+          "title": "Home | Spectrum Gaming",
+          "etag": "W/\"e9505707fd371f1010cd69d339b69960\"",
+          "lastModified": null
         }
       ]
     },
@@ -1052,7 +1072,7 @@
           "reachable": false,
           "httpStatus": null,
           "finalUrl": null,
-          "ms": 13633,
+          "ms": 23994,
           "error": "Network",
           "robotsBlocked": false,
           "closedPhrases": [],
@@ -1085,7 +1105,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1140,13 +1160,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://aadduk.org/",
-          "ms": 32,
+          "ms": 454,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "AADD-UK &#8211; The site for and by adults with ADHD"
+          "title": "AADD-UK &#8211; The site for and by adults with ADHD",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 19:58:00 GMT"
         }
       ]
     },
@@ -1173,7 +1195,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1228,13 +1250,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autistica.org.uk/",
-          "ms": 1604,
+          "ms": 1820,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home | UK autism charity | Autism research and campaigning | Autistica"
+          "title": "Home | UK autism charity | Autism research and campaigning | Autistica",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -1261,7 +1285,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1316,13 +1340,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://annakennedyonline.com/",
-          "ms": 3202,
+          "ms": 2626,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home - Anna Kennedy Online"
+          "title": "Home - Anna Kennedy Online",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -1349,7 +1375,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1404,13 +1430,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://helenarkell.org.uk/",
-          "ms": 2475,
+          "ms": 2298,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Helen Arkell"
+          "title": "Helen Arkell",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -1437,7 +1465,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1492,13 +1520,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.bdadyslexia.org.uk/",
-          "ms": 2991,
+          "ms": 2228,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "British Dyslexia Association"
+          "title": "British Dyslexia Association",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -1525,7 +1555,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1580,13 +1610,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.pdasociety.org.uk/",
-          "ms": 3136,
+          "ms": 3748,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "PDA Society - Pathological Demand Avoidance"
+          "title": "PDA Society - Pathological Demand Avoidance",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 19:26:33 GMT"
         }
       ]
     },
@@ -1615,7 +1647,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1670,13 +1702,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://dyspraxiafoundation.org.uk/",
-          "ms": 1116,
+          "ms": 695,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Non GamStop Casinos for UK Players - Best Online Casinos Ranked"
+          "title": "Non GamStop Casinos for UK Players - Best Online Casinos Ranked",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 21:04:40 GMT"
         }
       ]
     },
@@ -1703,7 +1737,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1758,13 +1792,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.tourettes-action.org.uk/",
-          "ms": 894,
+          "ms": 991,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Tourettes Action"
+          "title": "Tourettes Action",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -1791,7 +1827,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1846,13 +1882,15 @@
           "reachable": true,
           "httpStatus": 403,
           "finalUrl": "https://dyslexiascotland.org.uk/",
-          "ms": 64,
+          "ms": 60,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": null
+          "title": null,
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -1879,7 +1917,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -1934,13 +1972,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://contact.org.uk/",
-          "ms": 89,
+          "ms": 165,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Contact: the charity for families with disabled children"
+          "title": "Contact: the charity for families with disabled children",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 22:51:40 GMT"
         }
       ]
     },
@@ -1967,7 +2007,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2022,13 +2062,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.ipsea.org.uk/",
-          "ms": 1346,
+          "ms": 392,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "(IPSEA) Independent Provider of Special Education Advice"
+          "title": "(IPSEA) Independent Provider of Special Education Advice",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2055,7 +2097,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2110,13 +2152,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.addiss.co.uk/",
-          "ms": 8078,
+          "ms": 5721,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "ADDISS &#8211; The National Attention Deficit Disorder Information and Support Service"
+          "title": "ADDISS &#8211; The National Attention Deficit Disorder Information and Support Service",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2143,7 +2187,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2198,13 +2242,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.mencap.org.uk/",
-          "ms": 316,
+          "ms": 417,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Learning Disability - Down syndrome - Williams syndrome | Mencap"
+          "title": "Learning Disability - Down syndrome - Williams syndrome | Mencap",
+          "etag": "W/\"1792276750\"",
+          "lastModified": "Sat, 17 Oct 2026 22:39:10 GMT"
         }
       ]
     },
@@ -2231,7 +2277,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2286,13 +2332,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://cerebra.org.uk/",
-          "ms": 2970,
+          "ms": 136,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Cerebra - Working with you and your amazing child"
+          "title": "Cerebra - Working with you and your amazing child",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2319,7 +2367,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2374,13 +2422,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://geniuswithin.org/",
-          "ms": 677,
+          "ms": 2491,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Ambitious for Neurodivergent Potential - Genius Within C.I.C."
+          "title": "Ambitious for Neurodivergent Potential - Genius Within C.I.C.",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 22:53:07 GMT"
         }
       ]
     },
@@ -2407,7 +2457,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2462,13 +2512,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://sossen.org.uk/",
-          "ms": 1417,
+          "ms": 2007,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "SOS!SEN &#8211; The Independent Helpline for Special Education Needs &#8211; We offer a free, friendly, independent and confidential telephone helpline for parents and others looking for information a"
+          "title": "SOS!SEN &#8211; The Independent Helpline for Special Education Needs &#8211; We offer a free, friendly, independent and confidential telephone helpline for parents and others looking for information a",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2495,7 +2547,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2550,13 +2602,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.scottishautism.org/",
-          "ms": 2645,
+          "ms": 2093,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Scottish Autism"
+          "title": "Scottish Autism",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2583,7 +2637,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2638,13 +2692,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://autismni.org/",
-          "ms": 3188,
+          "ms": 1765,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism NI - Support for individuals, businesses &amp; carers | Autism NI"
+          "title": "Autism NI - Support for individuals, businesses &amp; carers | Autism NI",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2671,7 +2727,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2726,13 +2782,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://neurodiversity.org/",
-          "ms": 1788,
+          "ms": 1937,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Neurodiversity in Business (NiB) | Charity"
+          "title": "Neurodiversity in Business (NiB) | Charity",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2759,7 +2817,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2814,13 +2872,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://afasic.org.uk/",
-          "ms": 2310,
+          "ms": 3908,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home - Afasic"
+          "title": "Home - Afasic",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -2938,7 +2998,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -2993,13 +3053,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autismhampshire.org.uk/",
-          "ms": 1184,
+          "ms": 2945,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home | Autism Hampshire"
+          "title": "Home | Autism Hampshire",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -3026,7 +3088,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3081,13 +3143,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://autisminitiatives.org/",
-          "ms": 2753,
+          "ms": 3523,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism Charity for Children and Adults | Autism Initiatives"
+          "title": "Autism Charity for Children and Adults | Autism Initiatives",
+          "etag": "\"1263-1792274400;br\"",
+          "lastModified": null
         }
       ]
     },
@@ -3114,7 +3178,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3169,13 +3233,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://adhdembrace.org/",
-          "ms": 5625,
+          "ms": 6371,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Welcome - Homepage"
+          "title": "Welcome - Homepage",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -3202,7 +3268,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3257,13 +3323,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autism-anglia.org.uk/",
-          "ms": 1351,
+          "ms": 2755,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism Anglia | Enhancing the lives of people living with Autism"
+          "title": "Autism Anglia | Enhancing the lives of people living with Autism",
+          "etag": "\"5980-65e10a164de02\"",
+          "lastModified": "Sat, 17 Oct 2026 22:16:20 GMT"
         }
       ]
     },
@@ -3290,7 +3358,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3345,13 +3413,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autism-unlimited.org/",
-          "ms": 2472,
+          "ms": 1550,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home :: Autism Unlimited"
+          "title": "Home :: Autism Unlimited",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -3378,7 +3448,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3433,13 +3503,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autismeastmidlands.org.uk/",
-          "ms": 1471,
+          "ms": 3164,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Providing help and support to autistic people… | Autism East Midlands"
+          "title": "Providing help and support to autistic people… | Autism East Midlands",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -3466,7 +3538,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3521,13 +3593,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.autismberkshire.org.uk/",
-          "ms": 1541,
+          "ms": 3604,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism Berkshire Reading - Autism Berkshire"
+          "title": "Autism Berkshire Reading - Autism Berkshire",
+          "etag": "\"f81b7655160cd7b96547c2a574589546\"",
+          "lastModified": "Sat, 17 Oct 2026 22:54:01 GMT"
         }
       ]
     },
@@ -3554,7 +3628,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3609,13 +3683,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://autismplus.co.uk/",
-          "ms": 1353,
+          "ms": 1708,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Autism Plus - Adding Value to Lives"
+          "title": "Autism Plus - Adding Value to Lives",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -3642,7 +3718,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3697,13 +3773,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://autismtogether.co.uk/",
-          "ms": 2616,
+          "ms": 5010,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Supporting Brighter Futures - Autism Together"
+          "title": "Supporting Brighter Futures - Autism Together",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 16:50:19 GMT"
         }
       ]
     },
@@ -3730,7 +3808,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3785,13 +3863,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://neurodivergencewales.org/en/",
-          "ms": 5497,
+          "ms": 4455,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home - Niwrowahaniaeth Cymru | Neurodivergence Wales | National Neurodivergence Team"
+          "title": "Home - Niwrowahaniaeth Cymru | Neurodivergence Wales | National Neurodivergence Team",
+          "etag": null,
+          "lastModified": null
         }
       ]
     },
@@ -3818,7 +3898,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3873,13 +3953,15 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://www.resourcesforautism.org.uk/",
-          "ms": 4998,
+          "ms": 5310,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Home - Resources for Autism"
+          "title": "Home - Resources for Autism",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 17:33:56 GMT"
         }
       ]
     },
@@ -3906,7 +3988,7 @@
           "weight": 15,
           "strength": "weak",
           "level": "green",
-          "detail": "Website answers every day",
+          "detail": "Website answered at every check",
           "kind": "evidence"
         },
         {
@@ -3961,15 +4043,187 @@
           "reachable": true,
           "httpStatus": 200,
           "finalUrl": "https://ndsa.uk/content/",
-          "ms": 2447,
+          "ms": 1378,
           "error": null,
           "robotsBlocked": false,
           "closedPhrases": [],
           "parkedPhrases": [],
           "movedTo": null,
-          "title": "Neuro Diverse Self Advocacy | Neuro Diverse Self Advocacy Forum"
+          "title": "Neuro Diverse Self Advocacy | Neuro Diverse Self Advocacy Forum",
+          "etag": null,
+          "lastModified": "Sat, 17 Oct 2026 22:58:54 GMT"
         }
       ]
+    }
+  },
+  "robots": {
+    "www.ambitiousaboutautism.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.childautism.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.nen.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "autisticuk.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autism.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autistica.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismcentral.nhs.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "spectrumgaming.net": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "autisticgirlsnetwork.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "nationalautistictaskforce.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "adhduk.co.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "aadduk.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.addiss.co.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "annakennedyonline.com": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.pdasociety.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.bdadyslexia.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.helenarkell.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "dyslexiascotland.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "dyspraxiafoundation.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "contact.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.tourettes-action.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.afasic.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.ipsea.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "cerebra.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.mencap.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.adhdembrace.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.sossen.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "neurodiversity.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.scottishautism.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.geniuswithin.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "neurodivergencewales.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismni.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismhampshire.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autism-anglia.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autisminitiatives.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autism-unlimited.org": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismeastmidlands.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismberkshire.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "ndsa.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismplus.co.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.autismtogether.co.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
+    },
+    "www.resourcesforautism.org.uk": {
+      "date": "2026-10-17",
+      "disallowAll": false
     }
   }
 }
