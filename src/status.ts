@@ -1,44 +1,37 @@
+import { computeSignals, score, type Signal } from './signals.ts';
 import type { CheckResult, Org, Status } from './types.ts';
 
-const WINDOW = 7; // checks looked at (one a day)
-const STRIKES = 3; // failures in the window before it counts
-const CONFIRMED_DAYS = 183;
+export interface Decision {
+  status: Status;
+  reasons: string[];
+  /** True when the closure rests on proof (an official record, the organisation, or a person), not just the website. */
+  proven: boolean;
+  signals: Signal[];
+  score: number | null;
+}
 
-const daysBetween = (a: string, b: string) => (Date.parse(b) - Date.parse(a)) / 86_400_000;
-
-/** Turns the check history into a suggested status with plain-English reasons. Pure. */
-export function decideStatus(org: Org, history: CheckResult[], today: string): { status: Status; reasons: string[] } {
+/** Turns the check history into a suggested status, its categories and a score. Pure. */
+export function decideStatus(org: Org, history: CheckResult[], today: string): Decision {
+  const signals = computeSignals(org, history, today);
+  const s = score(signals).score;
   const review = org.review;
+
   if (review?.status === 'Closed') {
-    return { status: 'Closed', reasons: [`Closed by ${review.by} on ${review.date}${review.note ? `: ${review.note}` : ''}`] };
+    const why = `Closed by ${review.by} on ${review.date}${review.note ? `: ${review.note}` : ''}`;
+    return { status: 'Closed', reasons: [why], proven: true, signals, score: 0 };
   }
 
-  const recent = history.filter((h) => !review || h.date > review.date).slice(-WINDOW);
-  const lastTwo = recent.slice(-2);
-  const strong: string[] = [];
-  const weak: string[] = [];
+  const red = signals.filter((x) => x.level === 'red');
+  const proofRed = red.filter((x) => x.kind === 'proof');
+  const strongRed = red.filter((x) => x.strength === 'strong');
+  const why = (list: Signal[]) => list.map((x) => (x.kind === 'proof' ? `Proof: ${x.detail}` : x.detail));
 
-  const dnsFails = recent.filter((h) => h.error === 'DNS').length;
-  if (dnsFails >= STRIKES) strong.push(`The web address no longer exists (${dnsFails} of the last ${recent.length} checks)`);
+  if (proofRed.length) return { status: 'Likely closed', reasons: why(proofRed), proven: true, signals, score: s };
+  if (strongRed.length) return { status: 'Likely closed', reasons: why(strongRed), proven: false, signals, score: s };
+  if (red.length) return { status: 'Needs a check', reasons: why(red), proven: false, signals, score: s };
 
-  if (lastTwo.length === 2 && lastTwo.every((h) => h.parkedPhrases.length > 0)) {
-    strong.push(`The domain looks parked or for sale ("${lastTwo[1].parkedPhrases[0]}")`);
-  }
-  if (lastTwo.length === 2 && lastTwo.every((h) => h.closedPhrases.length > 0)) {
-    strong.push(`The website says "${lastTwo[1].closedPhrases[0]}"`);
-  }
-
-  const down = recent.filter((h) => !h.reachable && h.error !== 'DNS').length;
-  if (down >= STRIKES) weak.push(`The website was down on ${down} of the last ${recent.length} checks`);
-
-  const last = recent.at(-1);
-  if (last?.movedTo && !strong.length) weak.push(`The website now goes to ${last.movedTo}`);
-
-  if (strong.length) return { status: 'Likely closed', reasons: strong };
-  if (weak.length) return { status: 'Needs a check', reasons: weak };
-  if (review?.status === 'Confirmed' && daysBetween(review.date, today) <= CONFIRMED_DAYS) {
-    return { status: 'Confirmed', reasons: [`Confirmed by ${review.by} on ${review.date}`] };
-  }
-  if (!recent.length) return { status: 'Looks active', reasons: ['Not checked yet'] };
-  return { status: 'Looks active', reasons: [] };
+  const confirmed = signals.find((x) => x.key === 'confirmed');
+  if (confirmed?.level === 'green') return { status: 'Confirmed', reasons: [confirmed.detail], proven: false, signals, score: s };
+  const checked = signals.some((x) => x.kind === 'evidence' && x.level !== 'none');
+  return { status: 'Looks active', reasons: checked ? [] : ['Not checked yet'], proven: false, signals, score: s };
 }

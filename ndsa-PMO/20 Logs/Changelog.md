@@ -10,7 +10,13 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · 4 moved organisations updated · live
+> [!success]+ 🚀 17 Oct 2026 · Ticks and a score for every organisation · live
+> - **7 categories per organisation:** ✅ fine · 🟡 in question · 🔴 serious · ⚪ not checked yet.
+> - **Score out of 100:** how sure we are it is still running. Shown in [[Live status]] and on the public directory.
+> - **Proof versus evidence:** website checks are evidence. Closure is "proven" only by an official record, the organisation or a person.
+> - **Lowest scores first** in [[Live status]], so problems are easy to spot.
+
+> [!success]- 🚀 17 Oct 2026 · 4 moved organisations updated · live
 > - **Neuroinclusive Education Network:** was Autism Education Trust. Now nen.org.uk.
 > - **Neurodivergence Wales:** was Autism Wales. Now neurodivergencewales.org.
 > - **Autism Central:** now autismcentral.nhs.uk.

@@ -10,6 +10,12 @@ updated: 2026-10-17
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 17 Oct 2026 · Ticks, a score, and proof before "closed"
+> - **Decided:** each organisation gets 7 categories, each ✅ 🟡 🔴 or ⚪, and a score out of 100.
+> - **Decided:** website checks are evidence (they can be wrong). Proof = charity register, the organisation itself, or a person.
+> - **Decided:** only proof makes a closure "proven". A person still makes the final call.
+> - **Why:** one number to sort by, ticks to see why, and no closure on website evidence alone.
+
 > [!question]- 17 Oct 2026 · Free tools only for the prototype
 > - **Decided:** GitHub Actions runs the checks; GitHub Pages hosts the directory; data lives in the repo.
 > - **Why:** costs nothing on a public repo, and needs no server.

@@ -1,3 +1,5 @@
+import type { Signal } from './signals.ts';
+
 export type Status = 'Confirmed' | 'Looks active' | 'Needs a check' | 'Likely closed' | 'Closed';
 
 /** A person's decision about a listing. Checks dated on or before it are ignored. */
@@ -39,6 +41,9 @@ export interface OrgState {
   reasons: string[];
   since: string; // date the current status started
   lastChecked: string | null;
+  proven: boolean; // closure rests on proof, not just website evidence
+  score: number | null; // 0–100 confidence it is still running
+  signals: Signal[]; // one per category, green / amber / red / not checked
   history: CheckResult[]; // newest last, at most HISTORY_LIMIT
 }
 

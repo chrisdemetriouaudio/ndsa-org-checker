@@ -38,7 +38,10 @@ Each symbol means one thing, on every page.
 - 🔴 **Problem:** something broken, or a service that looks closed.
 - ✅ **Done:** finished and checked.
 
-On [[Live status]] only: 🟢 looks active · 🟡 needs a check · 🔴 likely closed · ⚫ closed.
+On [[Live status]] only:
+- **Status:** 🟢 looks active · 🟡 needs a check · 🔴 likely closed · ⚫ closed.
+- **Category ticks:** ✅ fine · 🟡 in question · 🔴 serious · ⚪ not checked yet.
+- **Score:** 0 to 100, how sure we are it is still running.
 
 ## 📐 Writing rules (for everyone adding to this vault, Claude included)
 

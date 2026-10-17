@@ -6,6 +6,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -27,6 +94,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -48,6 +182,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -69,6 +270,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -90,6 +358,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -111,6 +446,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -132,6 +534,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -153,6 +622,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -174,6 +710,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -195,6 +798,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -216,6 +886,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -237,6 +974,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 88,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "amber",
+          "detail": "Website down on 1 of the last 1 checks",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -258,6 +1062,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -279,6 +1150,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -300,6 +1238,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -321,6 +1326,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -342,6 +1414,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -363,6 +1502,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -384,6 +1590,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -405,6 +1678,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -426,6 +1766,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -447,6 +1854,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -468,6 +1942,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -489,6 +2030,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -510,6 +2118,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -531,6 +2206,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -552,6 +2294,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -573,6 +2382,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -594,6 +2470,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -615,6 +2558,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -636,6 +2646,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -657,6 +2734,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -678,6 +2822,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -699,6 +2910,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -720,6 +2998,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -741,6 +3086,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -762,6 +3174,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -783,6 +3262,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -804,6 +3350,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -825,6 +3438,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -846,6 +3526,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -867,6 +3614,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -888,6 +3702,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",
@@ -909,6 +3790,73 @@
       "reasons": [],
       "since": "2026-10-17",
       "lastChecked": "2026-10-17",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answers every day",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "none",
+          "detail": "Charity register check not set up yet (needs a free API key)",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
       "history": [
         {
           "date": "2026-10-17",

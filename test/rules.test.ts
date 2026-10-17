@@ -84,3 +84,40 @@ test('dates as words and live markers', () => {
   const doc = 'a\n<!-- live:start -->\nold\n<!-- live:end -->\nb';
   assert.equal(replaceBetweenMarkers(doc, 'new'), 'a\n<!-- live:start -->\nnew\n<!-- live:end -->\nb');
 });
+
+test('ticks: all fine is green, not-yet-built checks are grey', () => {
+  const d = decideStatus(org, [ok('2026-10-16'), ok('2026-10-17')], '2026-10-17');
+  const level = Object.fromEntries(d.signals.map((x) => [x.key, x.level]));
+  assert.deepEqual(level, { address: 'green', answers: 'green', notice: 'green', parked: 'green', moved: 'green', register: 'none', confirmed: 'none' });
+  assert.equal(d.score, 100);
+});
+
+test('ticks: one bad day is amber and lowers the score, three is red', () => {
+  const one = decideStatus(org, [ok('2026-10-16'), down('2026-10-17')], '2026-10-17');
+  assert.equal(one.signals.find((x) => x.key === 'answers')?.level, 'amber');
+  assert.ok(one.score! < 100 && one.score! > 50);
+  const three = decideStatus(org, [down('2026-10-15'), down('2026-10-16'), down('2026-10-17')], '2026-10-17');
+  assert.equal(three.signals.find((x) => x.key === 'answers')?.level, 'red');
+  assert.equal(three.status, 'Needs a check');
+});
+
+test('website evidence alone is never "proven"', () => {
+  const h = [down('2026-10-15', 'DNS'), down('2026-10-16', 'DNS'), down('2026-10-17', 'DNS')];
+  const d = decideStatus(org, h, '2026-10-17');
+  assert.equal(d.status, 'Likely closed');
+  assert.equal(d.proven, false);
+});
+
+test('a person closing it counts as proof', () => {
+  const closed = { ...org, review: { status: 'Closed' as const, date: '2026-10-17', by: 'Wade' } };
+  const d = decideStatus(closed, [], '2026-10-17');
+  assert.equal(d.proven, true);
+  assert.equal(d.score, 0);
+});
+
+test('confirmed by the organisation turns its tick green and adds to the score', () => {
+  const c = { ...org, review: { status: 'Confirmed' as const, date: '2026-10-01', by: 'the charity' } };
+  const d = decideStatus(c, [ok('2026-10-02', { movedTo: 'y.org' })], '2026-10-02');
+  assert.equal(d.signals.find((x) => x.key === 'confirmed')?.level, 'green');
+  assert.equal(d.status, 'Needs a check'); // a move still needs a look
+});

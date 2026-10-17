@@ -47,12 +47,15 @@ async function main() {
       const mark = result.reachable ? 'ok ' : 'DOWN';
       console.log(`${mark} ${String(result.httpStatus ?? result.error).padEnd(8)} ${org.name}`);
     }
-    const { status, reasons } = decideStatus(org, history, today);
+    const { status, reasons, proven, signals, score } = decideStatus(org, history, today);
     const s = {
       status,
       reasons,
       since: prev && prev.status === status ? prev.since : today,
       lastChecked: history.at(-1)?.date ?? null,
+      proven,
+      score,
+      signals,
       history,
     };
     state.orgs[org.id] = s;

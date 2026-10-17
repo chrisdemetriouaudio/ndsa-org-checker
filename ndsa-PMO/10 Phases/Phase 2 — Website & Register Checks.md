@@ -18,12 +18,13 @@ updated: 2026-10-17
 
 ## 🛠️ For Claude
 
-- [ ] **Add Charity Commission register checks** once the key exists.
+- [ ] **Add Charity Commission register checks** once the key exists. This turns the "Charity register" tick on: the first proof category.
 - [ ] **Add Companies House checks** for charitable companies.
 
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Ticks and a score** for every organisation; proof kept apart from evidence (17 Oct 2026).
 > - [x] **Daily website check on GitHub Actions** (free), about 7am (17 Oct 2026).
 > - [x] **Spots:** address gone, site down, "we have closed" wording, parked domains, moves to a new domain.
 > - [x] **Polite:** one visit a day, named robot, follows robots.txt.

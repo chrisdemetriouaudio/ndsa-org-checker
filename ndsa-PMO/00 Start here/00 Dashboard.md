@@ -15,7 +15,7 @@ updated: 2026-10-17
 > [!info] Live (updated by the daily check)
 > **Last check:** 17 Oct 2026.
 > **To review:** 0. See [[Live status]].
-> **Fine:** 44 · **Closed:** 0
+> **Fine:** 44 · **Closed:** 0 · **Average score:** 100 out of 100
 <!-- live:end -->
 
 ## 👉 Your actions
