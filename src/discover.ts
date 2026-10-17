@@ -13,6 +13,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inferAudiences } from './audience.ts';
+import { addMapPoints } from './geo.ts';
+import { ccewCoverage, ccniCoverage, oscrCoverage, postcodeIn, ukPostcode, type Coverage } from './place.ts';
 import { candidateToInput, isClear, MAX_AUTO_ADD, NATIONS, pickAutoAdds, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
 import { checkSite } from './check.ts';
 import { matchConditions } from './conditions.ts';
@@ -80,11 +82,12 @@ const host = (url: string | null) => (url ? new URL(url).hostname.replace(/^www\
 /** Listed organisations, so register rows about them can fill in missing details (who they are for). */
 interface Listed { byNumber: Map<string, string>; byHost: Map<string, string> }
 /** What a register says about a listed organisation: free text and category labels. */
-type About = Map<string, { text: string; categories: string }>;
+type About = Map<string, { text: string; categories: string; postcode?: string | null; coverage?: Coverage; nations?: Nation[] }>;
 
 async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candidate[]> {
   const found = new Map<string, Candidate>();
   const text = new Map<string, string>(); // number -> activities, for found and listed charities
+  const postcodes = new Map<string, string | null>();
   await forEachZipLine(`${CCEW}/publicextract.charity.zip`, (line) => {
     if (!line.includes('"linked_charity_number":0') || !line.includes('"Registered"')) return;
     const r = jsonLine(line);
@@ -92,10 +95,11 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     const number = String(r.registered_charity_number);
     const name = tidy(r.charity_name);
     const activities = tidy(r.charity_activities);
-    if (listed.byNumber.has(number)) text.set(number, `${name} · ${activities}`);
+    if (listed.byNumber.has(number)) { text.set(number, `${name} · ${activities}`); postcodes.set(number, ukPostcode(r.charity_contact_postcode)); }
     const m = matchConditions(name, activities);
     if (!m) return;
     text.set(number, `${name} · ${activities}`);
+    postcodes.set(number, ukPostcode(r.charity_contact_postcode));
     found.set(number, {
       key: `ccew:${number}`, source: 'ccew', number, name, website: site(r.charity_contact_web),
       nations: [], area: '', form: tidy(r.charity_type) || 'Registered charity', audiences: [], ...m,
@@ -106,7 +110,7 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     if (!line.includes('"linked_charity_number":0')) return;
     const r = jsonLine(line);
     const number = r && String(r.registered_charity_number);
-    if (!r || !number || !found.has(number)) return;
+    if (!r || !number || !text.has(number)) return;
     const list = areas.get(number) ?? [];
     list.push({ description: tidy(r.geographic_area_description), welsh: r.welsh_ind === true, type: tidy(r.geographic_area_type) });
     areas.set(number, list);
@@ -124,9 +128,16 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     c.nations = ccewNations(list);
     c.area = list.filter((a) => a.type !== 'Country').map((a) => a.description).slice(0, 4).join(', ') || 'England and Wales';
     c.audiences = inferAudiences(text.get(number) ?? '', (who.get(number) ?? []).join(', '));
+    c.postcode = postcodes.get(number) ?? null;
+    c.coverage = ccewCoverage(list.map((a) => a.description));
   }
   for (const [number, id] of listed.byNumber) {
-    if (text.has(number)) about.set(id, { text: text.get(number)!, categories: (who.get(number) ?? []).join(', ') });
+    if (!text.has(number)) continue;
+    const list = areas.get(number) ?? [];
+    about.set(id, {
+      text: text.get(number)!, categories: (who.get(number) ?? []).join(', '), postcode: postcodes.get(number) ?? null,
+      coverage: ccewCoverage(list.map((a) => a.description)), nations: ccewNations(list),
+    });
   }
   return [...found.values()];
 }
@@ -140,14 +151,16 @@ async function fromScotland(listed: Listed, about: About): Promise<Candidate[]> 
     const description = [r['Known As'], r['Objectives'], r['Activities'], r['What the charity is set up to do and how it does this']].map(tidy).join(' · ');
     const website = site(r['Website']);
     const listedId = website ? listed.byHost.get(host(website)!) : undefined;
-    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']) });
+    const postcode = ukPostcode(r['Postcode']);
+    const coverage = oscrCoverage(tidy(r['Geographical Spread']));
+    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']), postcode, coverage, nations: ['Scotland'] });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
       key: `oscr:${r['Charity Number']}`, source: 'oscr' as const, number: r['Charity Number'], name, website,
       nations: ['Scotland' as Nation], area: tidy(r['Main Operating Location']) || tidy(r['Geographical Spread']) || 'Scotland',
       form: tidy(r['Constitutional Form']).replace(/\s*\(.*\)$/, '') || 'Scottish charity',
-      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), ...m,
+      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), postcode, coverage, ...m,
     }];
   });
 }
@@ -163,13 +176,15 @@ async function fromNorthernIreland(listed: Listed, about: About): Promise<Candid
     const description = [r['Other name'], r['What the charity does'], focused].map(tidy).join(' · ');
     const website = site(r['Website']);
     const listedId = website ? listed.byHost.get(host(website)!) : undefined;
-    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps });
+    const postcode = postcodeIn(r['Public address']);
+    const coverage = ccniCoverage(`${name} · ${tidy(r['What the charity does'])}`);
+    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps, postcode, coverage, nations: ['Northern Ireland'] });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
       key: `ccni:${r['Reg charity number']}`, source: 'ccni' as const, number: r['Reg charity number'], name, website,
       nations: ['Northern Ireland' as Nation], area: 'Northern Ireland', form: tidy(r['Type of governing document']) || 'NI charity',
-      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), ...m,
+      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), postcode, coverage, ...m,
     }];
   });
 }
@@ -265,7 +280,10 @@ function alertText(today: string, added: Candidate[], review: Candidate[], verdi
 export async function discover(): Promise<string[]> {
   const root = join(dirname(fileURLToPath(import.meta.url)), '..');
   const path = (p: string) => join(root, p);
-  const read = async <T>(p: string, fallback: T) => readFile(path(p), 'utf8').then((t) => JSON.parse(t) as T, () => fallback);
+  // A missing, empty or unreadable file counts as "nothing yet".
+  const read = async <T>(p: string, fallback: T): Promise<T> => {
+    try { const t = await readFile(path(p), 'utf8'); return t.trim() ? (JSON.parse(t) as T) : fallback; } catch { return fallback; }
+  };
   const listed = await read<Org[]>('data/orgs.json', []);
   const decided = await read<Record<string, Decision>>('data/candidate-decisions.json', {});
   const previousFile = await read<{ updated?: string; baseline?: string; candidates: Candidate[] } | null>('data/candidates.json', null);
@@ -290,13 +308,26 @@ export async function discover(): Promise<string[]> {
   let filled = 0;
   for (const org of listed) {
     const info = about.get(org.id);
-    if (org.audiences?.length || !info) continue;
-    const found = inferAudiences(info.text, info.categories);
-    if (found.length) { org.audiences = found; filled++; }
+    if (!info) continue;
+    const before = JSON.stringify(org);
+    if (!org.audiences?.length) {
+      const found = inferAudiences(info.text, info.categories);
+      if (found.length) org.audiences = found;
+    }
+    if (!org.postcode && info.postcode) org.postcode = info.postcode;
+    if (!org.coverage && info.coverage) org.coverage = info.coverage;
+    if (!org.nations?.length && info.nations?.length) org.nations = info.nations;
+    if (JSON.stringify(org) !== before) filled++;
+  }
+  try {
+    const points = await addMapPoints(listed);
+    if (points) { filled += points; console.log(`Map points added: ${points}.`); }
+  } catch (e) {
+    console.error('Map points could not be added today; they will be tried tomorrow.', e);
   }
   if (filled) {
     await writeFile(path('data/orgs.json'), serialiseOrgs(listed));
-    console.log(`Filled in who it is for: ${filled} listed organisations.`);
+    console.log(`Filled in details from the registers: ${filled} listed organisations.`);
   }
   let candidates = shortlist(parts.flat(), listed, decided);
   // Baseline = the first run. Only candidates first seen after it are shown as NEW.

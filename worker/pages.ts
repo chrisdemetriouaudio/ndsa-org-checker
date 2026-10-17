@@ -148,9 +148,14 @@ function audienceBoxes(prefix: string, chosen: string[] = []) {
   return `<div class="checks">${AUDIENCES.map((a) => `<label><input type="checkbox" name="audiences" value="${a}" id="${prefix}${a}"${chosen.includes(a) ? ' checked' : ''}> ${esc(AUDIENCE_LABEL[a])}</label>`).join('')}</div>`;
 }
 
-function whoForControl(org: Org) {
-  return `<details><summary>Who for</summary><form data-api="/admin/api/audiences" class="inline" style="flex-direction:column">
-<input type="hidden" name="id" value="${esc(org.id)}">${audienceBoxes(`w-${esc(org.id)}-`, org.audiences ?? [])}<button class="plain">Save</button></form></details>`;
+function detailsControl(org: Org) {
+  const cov = org.coverage ?? 'national';
+  return `<details><summary>Edit details</summary><form data-api="/admin/api/details" class="inline" style="flex-direction:column">
+<input type="hidden" name="id" value="${esc(org.id)}">
+<strong>Who it is for</strong>${audienceBoxes(`w-${esc(org.id)}-`, org.audiences ?? [])}
+<label for="pc-${esc(org.id)}">Base postcode</label><input id="pc-${esc(org.id)}" name="postcode" value="${esc(org.postcode ?? '')}" placeholder="Where it is based, like SO23 9AA">
+<label for="cov-${esc(org.id)}">Works</label><select id="cov-${esc(org.id)}" name="coverage"><option value="local"${cov === 'local' ? ' selected' : ''}>Locally (shown by distance)</option><option value="national"${cov === 'national' ? ' selected' : ''}>Across the nation</option></select>
+<button class="plain">Save</button></form></details>`;
 }
 
 function removeControl(org: Org) {
@@ -183,6 +188,8 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: State): s
 <div><label for="a-url">Website</label><input id="a-url" name="url" required placeholder="https://www.example.org.uk"></div></div>
 <div class="row"><div><label for="a-area">Area</label><input id="a-area" name="area" list="areas" placeholder="UK, Scotland, Hampshire…"><datalist id="areas">${options(AREAS)}</datalist></div>
 <div><label for="a-kind">Type</label><select id="a-kind" name="kind">${options(KINDS, 'Not sure')}</select></div></div>
+<div class="row"><div><label for="a-pc">Base postcode (optional)</label><input id="a-pc" name="postcode" placeholder="Where it is based, like SO23 9AA"></div>
+<div><label for="a-cov">Works</label><select id="a-cov" name="coverage"><option value="local">Locally (shown by distance)</option><option value="national">Across the nation</option></select></div></div>
 <label for="a-num">Charity number (England and Wales, optional)</label><input id="a-num" name="charityNumber" inputmode="numeric" placeholder="Leave blank if unsure">
 <label>Who it supports</label>${focusBoxes('a-f')}
 <label>Who it is for (tick all that apply; none = ages not stated)</label>${audienceBoxes('a-a')}
@@ -215,7 +222,7 @@ ${removeControl(o)}</div>`;
 <div class="table-wrap"><table><thead><tr><th>Organisation</th><th>Score</th><th>Status</th><th>Ticks</th><th>For</th><th>Checked</th><th></th></tr></thead><tbody>
 ${live.map((o) => {
     const s = state.orgs[o.id];
-    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${ticks(s)}</td><td>${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}${whoForControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
+    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${ticks(s)}</td><td>${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}<br><span class="quiet">${o.coverage === 'local' ? `Local · ${esc(o.postcode ?? 'no postcode')}` : 'Across the nation'}</span>${detailsControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
   }).join('')}
 </tbody></table></div>
 

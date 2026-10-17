@@ -3,10 +3,10 @@
  * into a directory entry. Pure: no downloads, no Node-only parts (the Worker uses this too).
  */
 import { cleanAudiences, type Audience } from './audience.ts';
+import type { Coverage, Nation } from './place.ts';
 import { tidyName, type NewOrgInput } from './neworg.ts';
 
-export type Nation = 'England' | 'Wales' | 'Scotland' | 'Northern Ireland';
-export const NATIONS: Nation[] = ['England', 'Wales', 'Scotland', 'Northern Ireland'];
+export { NATIONS, type Nation } from './place.ts';
 
 export interface Candidate {
   key: string; // source:number, stable between runs
@@ -21,6 +21,8 @@ export interface Candidate {
   inName: boolean;
   snippet: string;
   audiences: Audience[]; // who it is for, where the register or its description says
+  postcode?: string | null; // base postcode from the register
+  coverage?: Coverage;
   firstSeen?: string; // date discovery first found it
 }
 
@@ -32,7 +34,7 @@ const REGISTER_NOTE: Record<string, string> = {
 };
 
 /** The directory entry a candidate becomes (still checked by validateNew before saving). */
-export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name' | 'website' | 'area' | 'nations' | 'conditions'> & { audiences?: unknown }): NewOrgInput {
+export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name' | 'website' | 'area' | 'nations' | 'conditions'> & { audiences?: unknown; postcode?: unknown; coverage?: unknown }): NewOrgInput {
   return {
     name: tidyName(String(c.name ?? '')),
     url: String(c.website ?? ''),
@@ -42,6 +44,9 @@ export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name'
     charityNumber: c.source === 'ccew' ? String(c.number ?? '') : '',
     registerNote: REGISTER_NOTE[c.source],
     audiences: cleanAudiences(c.audiences),
+    postcode: String(c.postcode ?? ''),
+    coverage: c.coverage === 'national' ? 'national' : 'local',
+    nations: Array.isArray(c.nations) ? c.nations.map(String) : [],
   };
 }
 

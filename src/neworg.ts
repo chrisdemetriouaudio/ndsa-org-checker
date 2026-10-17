@@ -1,3 +1,4 @@
+import { NATIONS, ukPostcode } from './place.ts';
 import { cleanAudiences } from './audience.ts';
 import type { Org, Review } from './types.ts';
 
@@ -11,6 +12,9 @@ export interface NewOrgInput {
   charityNumber?: string;
   registerNote?: string;
   audiences?: string[];
+  postcode?: string;
+  coverage?: string;
+  nations?: string[];
 }
 
 export const AREAS = ['UK', 'England', 'Scotland', 'Wales', 'Northern Ireland'];
@@ -82,6 +86,11 @@ export function validateNew(input: NewOrgInput, existing: Org[], takenIds: Set<s
     focus: focus.length ? focus : ['neurodiversity'],
   };
   if (number) org.charityNumber = number;
+  const postcode = ukPostcode(input.postcode);
+  if (postcode) org.postcode = postcode;
+  if (input.coverage === 'national' || input.coverage === 'local') org.coverage = input.coverage;
+  const nations = NATIONS.filter((n) => (input.nations ?? []).includes(n));
+  if (nations.length) org.nations = nations;
   const audiences = cleanAudiences(input.audiences);
   if (audiences.length) org.audiences = audiences;
   const note = clean(input.registerNote, 120);

@@ -54,7 +54,7 @@ export async function readFileIfAny(env: Env, path: string): Promise<{ text: str
 export async function updateJson<T>(env: Env, path: string, empty: T, message: string, change: (value: T) => T): Promise<T> {
   for (let attempt = 0; attempt < 2; attempt++) {
     const file = await readFileIfAny(env, path);
-    const next = change(file ? (JSON.parse(file.text) as T) : empty);
+    const next = change(file?.text.trim() ? (JSON.parse(file.text) as T) : empty);
     if (await writeFile(env, path, `${JSON.stringify(next, null, 2)}\n`, file?.sha, message)) return next;
   }
   throw new SafeError('The list changed while saving. Please try again.');

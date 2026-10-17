@@ -31,7 +31,7 @@ test('too many clear ones at once: none added, all to review, with a reason', ()
 
 test('a candidate becomes a tidy directory entry', () => {
   assert.deepEqual(candidateToInput(make(7, { name: 'HEADWAY KENT' })), {
-    name: 'Headway Kent', url: 'https://group7.org.uk', area: 'Kent', kind: 'Registered charity', focus: ['autism'], charityNumber: '1000007', registerNote: undefined, audiences: [],
+    name: 'Headway Kent', url: 'https://group7.org.uk', area: 'Kent', kind: 'Registered charity', focus: ['autism'], charityNumber: '1000007', registerNote: undefined, audiences: [], postcode: '', coverage: 'local', nations: ['England'],
   });
   assert.deepEqual(candidateToInput(make(9, { audiences: ['children', 'families'] })).audiences, ['children', 'families']);
   const scottish = candidateToInput(make(8, { source: 'oscr', number: 'SC012345', area: '' , nations: ['Scotland'] }));

@@ -1,4 +1,5 @@
 import { cleanAudiences } from '../src/audience.ts';
+import { ukPostcode } from '../src/place.ts';
 import { candidateToInput, type Candidate, type Decision } from '../src/candidates.ts';
 import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, type ReviewAction } from '../src/neworg.ts';
 import { renderSite } from '../src/render.ts';
@@ -67,7 +68,7 @@ async function addOrgs(env: Env, admin: Admin, body: Record<string, unknown>): P
   const shared = { kind: String(body.kind ?? ''), focus: asList(body.focus), audiences: asList(body.audiences) };
   const inputs: NewOrgInput[] = typeof body.lines === 'string'
     ? parseLines(body.lines).map((i) => ({ ...shared, ...i }))
-    : [{ ...shared, name: String(body.name ?? ''), url: String(body.url ?? ''), area: String(body.area ?? ''), charityNumber: String(body.charityNumber ?? '') }];
+    : [{ ...shared, name: String(body.name ?? ''), url: String(body.url ?? ''), area: String(body.area ?? ''), charityNumber: String(body.charityNumber ?? ''), postcode: String(body.postcode ?? ''), coverage: String(body.coverage ?? '') }];
   if (!inputs.length) return json({ error: 'Add at least one organisation.' }, 400);
   if (inputs.length > MAX_PER_ADD) return json({ error: `Please add at most ${MAX_PER_ADD} at a time.` }, 400);
 
@@ -124,7 +125,7 @@ type Decisions = Record<string, Decision>;
 const DECISIONS = 'data/candidate-decisions.json';
 async function candidatesHome(env: Env, admin: Admin, n: string): Promise<Response> {
   const file = await readFileIfAny(env, DECISIONS);
-  const decided = file ? Object.keys(JSON.parse(file.text) as Decisions) : [];
+  const decided = file?.text.trim() ? Object.keys(JSON.parse(file.text) as Decisions) : [];
   return html(candidatesPage(n, admin, decided, env.GITHUB_REPO), n);
 }
 
@@ -166,23 +167,45 @@ async function decideCandidates(env: Env, admin: Admin, body: Record<string, unk
   return json({ done: decidedKeys, problems });
 }
 
-/** Sets who an organisation is for (children / adults / families; none = not stated). */
-async function setAudiences(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {
+/** A UK postcode or district ("SO23 9AA" or "SO23") to a map point, via postcodes.io. Nothing is stored or logged. */
+async function lookupPostcode(raw: string): Promise<{ lat: number; lon: number; country: string; label: string } | null> {
+  const full = ukPostcode(raw);
+  const district = raw.toUpperCase().replace(/\s/g, '');
+  if (!full && !/^[A-Z]{1,2}\d[A-Z\d]?$/.test(district)) return null;
+  const res = await fetch(full ? `https://api.postcodes.io/postcodes/${encodeURIComponent(full)}` : `https://api.postcodes.io/outcodes/${district}`);
+  if (!res.ok) return null;
+  const r = ((await res.json()) as { result?: { latitude: number | null; longitude: number | null; country: string | string[] } }).result;
+  if (r?.latitude == null || r.longitude == null) return null;
+  const country = Array.isArray(r.country) ? r.country[0] : r.country;
+  return { lat: r.latitude, lon: r.longitude, country, label: full ?? district };
+}
+
+/** Edits who an organisation is for, its base postcode and whether it works locally or across the nation. */
+async function setDetails(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {
   const id = String(body.id ?? '');
   const audiences = cleanAudiences(asList(body.audiences));
+  const rawPostcode = String(body.postcode ?? '').trim();
+  const postcode = rawPostcode ? ukPostcode(rawPostcode) : null;
+  if (rawPostcode && !postcode) return json({ error: 'That is not a full UK postcode, like SO23 9AA.' }, 400);
+  const point = postcode ? await lookupPostcode(postcode) : null;
+  if (postcode && !point) return json({ error: 'postcodes.io could not find that postcode.' }, 400);
+  const coverage = body.coverage === 'local' || body.coverage === 'national' ? body.coverage : null;
   let found = false;
-  await updateOrgs(env, `Who ${id} is for: ${audiences.join(', ') || 'not stated'} (by ${admin.name}, admin page)`, (orgs) => {
+  await updateOrgs(env, `Details for ${id} (by ${admin.name}, admin page)`, (orgs) => {
     found = orgs.some((o) => o.id === id);
     if (!found) return null;
     return orgs.map((o) => {
       if (o.id !== id) return o;
       const copy = { ...o };
       if (audiences.length) copy.audiences = audiences; else delete copy.audiences;
+      if (postcode && point) Object.assign(copy, { postcode, lat: Math.round(point.lat * 1000) / 1000, lon: Math.round(point.lon * 1000) / 1000 });
+      if (!rawPostcode) { delete copy.postcode; delete copy.lat; delete copy.lon; }
+      if (coverage) copy.coverage = coverage;
       return copy;
     });
   });
   if (!found) return json({ error: 'That organisation is not on the list.' }, 400);
-  await audit(env, admin.email, 'audiences', `${id}: ${audiences.join(',')}`);
+  await audit(env, admin.email, 'details', `${id}: ${audiences.join(',')} ${postcode ?? '-'} ${coverage ?? ''}`);
   await startCheckSafely(env, []);
   return json({ ok: true });
 }
@@ -194,6 +217,11 @@ async function handle(req: Request, env: Env): Promise<Response> {
   const method = req.method;
 
   if (method === 'GET' && path === '/') return directory(env, n);
+  if ((method === 'GET' || method === 'HEAD') && path === '/api/postcode') {
+    if (method === 'HEAD') return new Response(null, { status: 200 });
+    const point = await lookupPostcode(url.searchParams.get('pc') ?? '');
+    return point ? json(point) : json({ error: 'We could not find that postcode. Try the first half, like SO23.' }, 400);
+  }
   if (method === 'GET' && path === '/robots.txt') return new Response('User-agent: *\nDisallow: /admin\nDisallow: /auth\n');
 
   if (method === 'GET' && path === '/admin') {
@@ -256,7 +284,7 @@ async function handle(req: Request, env: Env): Promise<Response> {
   if (path === '/admin/api/add') return addOrgs(env, admin, body);
   if (path === '/admin/api/review') return review(env, admin, body);
   if (path === '/admin/api/candidates') return decideCandidates(env, admin, body);
-  if (path === '/admin/api/audiences') return setAudiences(env, admin, body);
+  if (path === '/admin/api/details') return setDetails(env, admin, body);
   return json({ error: 'Not found.' }, 404);
 }
 

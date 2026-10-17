@@ -186,10 +186,12 @@ export function renderSite(orgs: Org[], state: State): string {
     const freshness = s.status === 'Confirmed' ? `Confirmed by the organisation` : `Last checked ${dateWords(s.lastChecked)}`;
     const hue = s.score === null ? null : scoreHue(s.score);
     const who = org.audiences?.length ? org.audiences.map((a) => AUDIENCE_LABEL[a]).join(' · ') : 'Ages not stated';
-    return `<li class="card" data-aud="${esc((org.audiences ?? []).join(' '))}">
+    const place = org.lat != null ? ` data-lat="${org.lat}" data-lon="${org.lon}"` : '';
+    return `<li class="card" data-aud="${esc((org.audiences ?? []).join(' '))}" data-cov="${org.coverage ?? 'national'}" data-nations="${esc((org.nations ?? []).join('|'))}"${place}>
   <div class="top"><h2><a href="${esc(org.url)}">${esc(org.name)}</a></h2><span class="score" ${hue === null ? '' : `style="--h:${hue}"`} title="How sure we are it is still running">${s.score ?? '—'}<small>/100</small></span></div>
   <p class="meta">${esc(org.kind)} · ${esc(org.area)}</p>
   <p class="who">For: ${esc(who)}</p>
+  <p class="dist" hidden></p>
   <p class="tags">${org.focus.map((f) => `<span>${esc(f)}</span>`).join('')}</p>
   ${siteChecks(s)}
   ${checking}<p class="fresh">${freshness} · <a href="${report}">Report a problem</a></p>
@@ -222,7 +224,12 @@ main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;ma
 input{width:100%;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);margin:0 0 16px}
 footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 .who{font-size:.9rem;margin:4px 0 0}
-#more{margin-top:16px}.linkish{font:inherit;background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0}
+#more{margin-top:16px}
+.near{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 16px}.near label{font-weight:600}
+.nearrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.nearrow input{flex:1 1 160px;margin:0}.nearrow select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.nearrow button:not(.linkish){font:inherit;border:1px solid var(--accent);background:var(--accent);color:var(--bg);border-radius:8px;padding:8px 16px;cursor:pointer}
+.hint{color:var(--quiet);font-size:.85rem;margin:8px 0 0}.dist{font-size:.9rem;font-weight:600;margin:4px 0 0}
+.group{list-style:none;font-weight:600;color:var(--quiet);margin:12px 0 0;padding:0 4px}.linkish{font:inherit;background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0}
 .aud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}.aud span{color:var(--quiet);margin-right:4px}
 .aud button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
 .aud button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
@@ -234,6 +241,14 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <p class="lead">${shown.length} UK organisations supporting neurodivergent people. Websites are checked every 1 to 3 days, and daily if anything looks wrong. Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
 <label for="q" class="lead">Search by name, area or need</label>
 <input id="q" type="search" placeholder="For example: ADHD, Scotland, dyslexia">
+<form id="near" class="near" hidden>
+<label for="pc">Near you</label>
+<div class="nearrow"><input id="pc" autocomplete="postal-code" placeholder="Postcode, like SO23 9AA or SO23" maxlength="9">
+<select id="miles" aria-label="Distance">${[5, 10, 20, 30, 50, 100].map((m) => `<option value="${m}"${m === 20 ? ' selected' : ''}>within ${m} miles</option>`).join('')}</select>
+<button>Search</button><button type="button" id="clear" class="linkish" hidden>Clear</button></div>
+<p class="hint">Your postcode is only used to work out distances. It is not stored. Distances are to where each organisation is based, which is not always where its groups meet.</p>
+<p id="near-msg" class="hint" hidden></p>
+</form>
 <div class="aud" role="group" aria-label="Who is it for?"><span>Who is it for?</span>
 <button type="button" data-a="" aria-pressed="true">Everyone</button>
 ${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false">${AUDIENCE_LABEL[a]}</button>`).join('\n')}
@@ -249,11 +264,31 @@ Sources include the Charity Commission for England and Wales, the Charity Commis
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];
 let aud='',showUnstated=false;
 const more=document.getElementById('more');
+let here=null;
+const list=document.getElementById('list');const order=[...items];
+const head=document.createElement('li');head.className='group';head.textContent='Also covering your area (works across the nation)';
+const miles=(a,b)=>{const r=(d)=>d*Math.PI/180,h=Math.sin(r(b.lat-a.lat)/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(r(b.lon-a.lon)/2)**2;return 3958.8*2*Math.asin(Math.sqrt(h));};
 const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;
+const limit=+document.getElementById('miles').value;const local=[],wide=[];
 for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
-const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;li.hidden=!(textOk&&audOk);}
+const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;
+let placeOk=true;const d=li.querySelector('.dist');d.hidden=true;
+if(here){if(li.dataset.cov==='local'){if(li.dataset.lat){const m=miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon});placeOk=m<=limit;li.dataset.m=m;d.textContent='Based about '+(m<1?'less than 1 mile':Math.round(m)+(Math.round(m)===1?' mile':' miles'))+' away';d.hidden=!placeOk;}else placeOk=false;}
+else{const n=li.dataset.nations;placeOk=!n||n.split('|').includes(here.country);}}
+li.hidden=!(textOk&&audOk&&placeOk);if(here&&!li.hidden)(li.dataset.cov==='local'?local:wide).push(li);}
+if(here){local.sort((x,y)=>x.dataset.m-y.dataset.m);list.replaceChildren(...local,...(wide.length?[head]:[]),...wide,...order.filter(li=>li.hidden));
+nearMsg.hidden=false;nearMsg.textContent=local.length+' based within '+limit+' miles of '+here.label+(wide.length?', and '+wide.length+' working across '+here.country:'')+'.';}
+else if(head.isConnected){head.remove();list.replaceChildren(...order);}
 more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
+const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
+fetch('/api/postcode?pc=SW1A',{method:'HEAD'}).then(r=>{if(r.ok)near.hidden=false;}).catch(()=>{});
+near.addEventListener('submit',async(e)=>{e.preventDefault();const pc=document.getElementById('pc').value.trim();if(!pc)return;
+nearMsg.hidden=false;nearMsg.textContent='Finding '+pc+'…';
+try{const r=await fetch('/api/postcode?pc='+encodeURIComponent(pc));const j=await r.json();if(!r.ok)throw new Error(j.error||'Postcode not found');here=j;clear.hidden=false;apply();}
+catch(err){here=null;nearMsg.textContent=err.message;apply();}});
+document.getElementById('miles').addEventListener('change',()=>{if(here)apply();});
+clear.addEventListener('click',()=>{here=null;clear.hidden=true;nearMsg.hidden=true;document.getElementById('pc').value='';apply();});
 q.addEventListener('input',apply);
 for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
 </script>

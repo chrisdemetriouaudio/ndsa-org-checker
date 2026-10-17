@@ -12,5 +12,5 @@
     "lib": ["ES2023"],
     "types": ["./worker/worker-configuration.d.ts"]
   },
-  "include": ["worker", "src/neworg.ts", "src/render.ts", "src/signals.ts", "src/dates.ts", "src/types.ts", "src/registerTypes.ts", "src/candidates.ts", "src/audience.ts"]
+  "include": ["worker", "src/neworg.ts", "src/render.ts", "src/signals.ts", "src/dates.ts", "src/types.ts", "src/registerTypes.ts", "src/candidates.ts", "src/audience.ts", "src/place.ts"]
 }

@@ -38,7 +38,7 @@ jobs:
         run: |
           git config user.name "ndsa-org-checker"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          touch data/register.json data/candidate-decisions.json
+          touch data/register.json
           git add data "ndsa-PMO/30 Live" "ndsa-PMO/00 Start here/00 Dashboard.md" site
           if ! git diff --cached --quiet; then
             git commit -m "chore(check): daily run $(date -u +%F)"

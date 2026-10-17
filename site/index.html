@@ -24,7 +24,12 @@ main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;ma
 input{width:100%;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);margin:0 0 16px}
 footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 .who{font-size:.9rem;margin:4px 0 0}
-#more{margin-top:16px}.linkish{font:inherit;background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0}
+#more{margin-top:16px}
+.near{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 16px}.near label{font-weight:600}
+.nearrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.nearrow input{flex:1 1 160px;margin:0}.nearrow select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.nearrow button:not(.linkish){font:inherit;border:1px solid var(--accent);background:var(--accent);color:var(--bg);border-radius:8px;padding:8px 16px;cursor:pointer}
+.hint{color:var(--quiet);font-size:.85rem;margin:8px 0 0}.dist{font-size:.9rem;font-weight:600;margin:4px 0 0}
+.group{list-style:none;font-weight:600;color:var(--quiet);margin:12px 0 0;padding:0 4px}.linkish{font:inherit;background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0}
 .aud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}.aud span{color:var(--quiet);margin-right:4px}
 .aud button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
 .aud button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
@@ -36,6 +41,14 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <p class="lead">41 UK organisations supporting neurodivergent people. Websites are checked every 1 to 3 days, and daily if anything looks wrong. Last check: 17 Oct 2026. The score (out of 100) shows how sure we are each one is still running.</p>
 <label for="q" class="lead">Search by name, area or need</label>
 <input id="q" type="search" placeholder="For example: ADHD, Scotland, dyslexia">
+<form id="near" class="near" hidden>
+<label for="pc">Near you</label>
+<div class="nearrow"><input id="pc" autocomplete="postal-code" placeholder="Postcode, like SO23 9AA or SO23" maxlength="9">
+<select id="miles" aria-label="Distance"><option value="5">within 5 miles</option><option value="10">within 10 miles</option><option value="20" selected>within 20 miles</option><option value="30">within 30 miles</option><option value="50">within 50 miles</option><option value="100">within 100 miles</option></select>
+<button>Search</button><button type="button" id="clear" class="linkish" hidden>Clear</button></div>
+<p class="hint">Your postcode is only used to work out distances. It is not stored. Distances are to where each organisation is based, which is not always where its groups meet.</p>
+<p id="near-msg" class="hint" hidden></p>
+</form>
 <div class="aud" role="group" aria-label="Who is it for?"><span>Who is it for?</span>
 <button type="button" data-a="" aria-pressed="true">Everyone</button>
 <button type="button" data-a="children" aria-pressed="false">Children and young people</button>
@@ -43,330 +56,371 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <button type="button" data-a="families" aria-pressed="false">Families and carers</button>
 </div>
 <ul id="list">
-<li class="card" data-aud="adults">
+<li class="card" data-aud="adults" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://aadduk.org">AADD-UK</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>ADHD</span><span>adults</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20AADD-UK&body=Listing%3A%20AADD-UK%20(https%3A%2F%2Faadduk.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Wales" data-lat="51.607" data-lon="-0.275">
   <div class="top"><h2><a href="https://www.addiss.co.uk">ADDISS</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>ADHD</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1070827, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20ADDISS&body=Listing%3A%20ADDISS%20(https%3A%2F%2Fwww.addiss.co.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="local" data-nations="England" data-lat="51.42" data-lon="-0.209">
   <div class="top"><h2><a href="https://www.adhdembrace.org">ADHD Embrace</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Local charity · England</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>ADHD</span><span>families</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1188759, last accounts to 31 Mar 2026"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20ADHD%20Embrace&body=Listing%3A%20ADHD%20Embrace%20(https%3A%2F%2Fwww.adhdembrace.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England|Wales" data-lat="51.514" data-lon="-0.131">
   <div class="top"><h2><a href="https://adhduk.co.uk">ADHD UK</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>ADHD</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1188365, last accounts to 31 Dec 2024"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20ADHD%20UK&body=Listing%3A%20ADHD%20UK%20(https%3A%2F%2Fadhduk.co.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Wales|Scotland|Northern Ireland" data-lat="51.53" data-lon="-0.054">
   <div class="top"><h2><a href="https://www.afasic.org.uk">Afasic</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>developmental language disorder</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1045617, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Afasic&body=Listing%3A%20Afasic%20(https%3A%2F%2Fwww.afasic.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England|Wales" data-lat="51.587" data-lon="-0.148">
   <div class="top"><h2><a href="https://www.ambitiousaboutautism.org.uk">Ambitious about Autism</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1063184, last accounts to 31 Aug 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Ambitious%20about%20Autism&body=Listing%3A%20Ambitious%20about%20Autism%20(https%3A%2F%2Fwww.ambitiousaboutautism.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England|Wales">
   <div class="top"><h2><a href="https://annakennedyonline.com">Anna Kennedy Online</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1143630, last accounts to 30 Apr 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Anna%20Kennedy%20Online&body=Listing%3A%20Anna%20Kennedy%20Online%20(https%3A%2F%2Fannakennedyonline.com)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="local" data-nations="England" data-lat="51.924" data-lon="0.922">
   <div class="top"><h2><a href="https://www.autism-anglia.org.uk">Autism Anglia</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Regional charity · East of England</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1063717, last accounts to 31 Aug 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Anglia&body=Listing%3A%20Autism%20Anglia%20(https%3A%2F%2Fwww.autism-anglia.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="local" data-nations="England" data-lat="51.455" data-lon="-0.976">
   <div class="top"><h2><a href="https://www.autismberkshire.org.uk">Autism Berkshire</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Local charity · Berkshire</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1076217, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Berkshire&body=Listing%3A%20Autism%20Berkshire%20(https%3A%2F%2Fwww.autismberkshire.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="families">
+<li class="card" data-aud="families" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://www.autismcentral.nhs.uk">Autism Central</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">NHS-funded programme · England</p>
   <p class="who">For: Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>families</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Central&body=Listing%3A%20Autism%20Central%20(https%3A%2F%2Fwww.autismcentral.nhs.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults">
+<li class="card" data-aud="children adults" data-cov="national" data-nations="England" data-lat="53.259" data-lon="-1.214">
   <div class="top"><h2><a href="https://www.autismeastmidlands.org.uk">Autism East Midlands</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Regional charity · East Midlands</p>
   <p class="who">For: Children and young people · Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 517954, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20East%20Midlands&body=Listing%3A%20Autism%20East%20Midlands%20(https%3A%2F%2Fwww.autismeastmidlands.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults">
+<li class="card" data-aud="children adults" data-cov="local" data-nations="England" data-lat="51.418" data-lon="0.121">
   <div class="top"><h2><a href="https://www.autismhampshire.org.uk">Autism Hampshire</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Local charity · Hampshire</p>
   <p class="who">For: Children and young people · Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 288141, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Hampshire&body=Listing%3A%20Autism%20Hampshire%20(https%3A%2F%2Fwww.autismhampshire.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Scotland" data-lat="53.47" data-lon="-2.971">
   <div class="top"><h2><a href="https://www.autisminitiatives.org">Autism Initiatives</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Regional charity · England and Scotland</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 702632, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Initiatives&body=Listing%3A%20Autism%20Initiatives%20(https%3A%2F%2Fwww.autisminitiatives.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="local" data-nations="Northern Ireland" data-lat="54.549" data-lon="-5.925">
   <div class="top"><h2><a href="https://www.autismni.org">Autism NI</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · Northern Ireland</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20NI&body=Listing%3A%20Autism%20NI%20(https%3A%2F%2Fwww.autismni.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults">
+<li class="card" data-aud="children adults" data-cov="national" data-nations="England|Wales" data-lat="53.386" data-lon="-1.465">
   <div class="top"><h2><a href="https://www.autismplus.co.uk">Autism Plus</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Regional charity · Yorkshire and the Midlands</p>
   <p class="who">For: Children and young people · Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 518591, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Plus&body=Listing%3A%20Autism%20Plus%20(https%3A%2F%2Fwww.autismplus.co.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="families">
+<li class="card" data-aud="families" data-cov="local" data-nations="England|Wales">
   <div class="top"><h2><a href="https://www.autismtogether.co.uk">Autism Together</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Regional charity · North West England</p>
   <p class="who">For: Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1007878, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Together&body=Listing%3A%20Autism%20Together%20(https%3A%2F%2Fwww.autismtogether.co.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="local" data-nations="England" data-lat="50.785" data-lon="-1.85">
   <div class="top"><h2><a href="https://www.autism-unlimited.org">Autism Unlimited</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Regional charity · Dorset and Hampshire</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1000792, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autism%20Unlimited&body=Listing%3A%20Autism%20Unlimited%20(https%3A%2F%2Fwww.autism-unlimited.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England|Wales" data-lat="52.193" data-lon="-1.736">
   <div class="top"><h2><a href="https://autisticgirlsnetwork.org">Autistic Girls Network</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>girls and women</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1196655, last accounts to 31 Dec 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autistic%20Girls%20Network&body=Listing%3A%20Autistic%20Girls%20Network%20(https%3A%2F%2Fautisticgirlsnetwork.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="">
+<li class="card" data-aud="" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://autisticuk.org">Autistic UK</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">User-led organisation · UK</p>
   <p class="who">For: Ages not stated</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>advocacy</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autistic%20UK&body=Listing%3A%20Autistic%20UK%20(https%3A%2F%2Fautisticuk.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="">
+<li class="card" data-aud="" data-cov="national" data-nations="England|Wales" data-lat="51.524" data-lon="-0.096">
   <div class="top"><h2><a href="https://www.autistica.org.uk">Autistica</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Ages not stated</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>research</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1107350, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Autistica&body=Listing%3A%20Autistica%20(https%3A%2F%2Fwww.autistica.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England|Wales" data-lat="51.41" data-lon="-0.767">
   <div class="top"><h2><a href="https://www.bdadyslexia.org.uk">British Dyslexia Association</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>dyslexia</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 289243, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20British%20Dyslexia%20Association&body=Listing%3A%20British%20Dyslexia%20Association%20(https%3A%2F%2Fwww.bdadyslexia.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Wales|Scotland|Northern Ireland" data-lat="51.855" data-lon="-4.307">
   <div class="top"><h2><a href="https://cerebra.org.uk">Cerebra</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>brain conditions</span><span>children</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1089812, last accounts to 31 Dec 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Cerebra&body=Listing%3A%20Cerebra%20(https%3A%2F%2Fcerebra.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Wales|Scotland|Northern Ireland">
   <div class="top"><h2><a href="https://www.childautism.org.uk">Child Autism UK</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>children</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1063982, last accounts to 30 Apr 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Child%20Autism%20UK&body=Listing%3A%20Child%20Autism%20UK%20(https%3A%2F%2Fwww.childautism.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Wales|Scotland|Northern Ireland" data-lat="51.533" data-lon="-0.096">
   <div class="top"><h2><a href="https://contact.org.uk">Contact (for families with disabled children)</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>families</span><span>SEND</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 284912, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Contact%20(for%20families%20with%20disabled%20children)&body=Listing%3A%20Contact%20(for%20families%20with%20disabled%20children)%20(https%3A%2F%2Fcontact.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults">
+<li class="card" data-aud="children adults" data-cov="national" data-nations="Scotland" data-lat="56.12" data-lon="-3.932">
   <div class="top"><h2><a href="https://dyslexiascotland.org.uk">Dyslexia Scotland</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · Scotland</p>
   <p class="who">For: Children and young people · Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>dyslexia</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Dyslexia%20Scotland&body=Listing%3A%20Dyslexia%20Scotland%20(https%3A%2F%2Fdyslexiascotland.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="adults">
+<li class="card" data-aud="adults" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://www.geniuswithin.org">Genius Within</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Community interest company · UK</p>
   <p class="who">For: Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>neurodiversity</span><span>work</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Genius%20Within&body=Listing%3A%20Genius%20Within%20(https%3A%2F%2Fwww.geniuswithin.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England" data-lat="51.214" data-lon="-0.803">
   <div class="top"><h2><a href="https://www.helenarkell.org.uk">Helen Arkell Dyslexia Charity</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>dyslexia</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1064646, last accounts to 31 Aug 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Helen%20Arkell%20Dyslexia%20Charity&body=Listing%3A%20Helen%20Arkell%20Dyslexia%20Charity%20(https%3A%2F%2Fwww.helenarkell.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="national" data-nations="England" data-lat="51.876" data-lon="0.262">
   <div class="top"><h2><a href="https://www.ipsea.org.uk">IPSEA</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · England</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>SEND</span><span>legal advice</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 327691, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20IPSEA&body=Listing%3A%20IPSEA%20(https%3A%2F%2Fwww.ipsea.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults">
+<li class="card" data-aud="children adults" data-cov="national" data-nations="England|Wales|Northern Ireland">
   <div class="top"><h2><a href="https://www.mencap.org.uk">Mencap</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · England, Wales and Northern Ireland</p>
   <p class="who">For: Children and young people · Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>learning disability</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 222377, last accounts to 31 Mar 2026"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Mencap&body=Listing%3A%20Mencap%20(https%3A%2F%2Fwww.mencap.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="national" data-nations="England|Wales|Scotland|Northern Ireland" data-lat="51.523" data-lon="-0.08">
   <div class="top"><h2><a href="https://www.autism.org.uk">National Autistic Society</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 269425, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20National%20Autistic%20Society&body=Listing%3A%20National%20Autistic%20Society%20(https%3A%2F%2Fwww.autism.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="adults">
+<li class="card" data-aud="adults" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://nationalautistictaskforce.org.uk">National Autistic Taskforce</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">User-led organisation · UK</p>
   <p class="who">For: Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>advocacy</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20National%20Autistic%20Taskforce&body=Listing%3A%20National%20Autistic%20Taskforce%20(https%3A%2F%2Fnationalautistictaskforce.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="adults">
+<li class="card" data-aud="adults" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://ndsa.uk">Neuro Diverse Self Advocacy (NDSA)</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Community interest company · UK (online forum, based in Herefordshire)</p>
   <p class="who">For: Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>ADHD</span><span>neurodiversity</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Neuro%20Diverse%20Self%20Advocacy%20(NDSA)&body=Listing%3A%20Neuro%20Diverse%20Self%20Advocacy%20(NDSA)%20(https%3A%2F%2Fndsa.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="">
+<li class="card" data-aud="" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://neurodivergencewales.org">Neurodivergence Wales (National Neurodivergence Team)</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Government-funded service · Wales</p>
   <p class="who">For: Ages not stated</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>neurodivergence</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Neurodivergence%20Wales%20(National%20Neurodivergence%20Team)&body=Listing%3A%20Neurodivergence%20Wales%20(National%20Neurodivergence%20Team)%20(https%3A%2F%2Fneurodivergencewales.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="adults">
+<li class="card" data-aud="adults" data-cov="national" data-nations="England|Wales" data-lat="52.569" data-lon="-0.287">
   <div class="top"><h2><a href="https://neurodiversity.org">Neurodiversity in Business</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>neurodiversity</span><span>work</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1198291, last accounts to 31 Aug 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Neurodiversity%20in%20Business&body=Listing%3A%20Neurodiversity%20in%20Business%20(https%3A%2F%2Fneurodiversity.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="">
   <div class="top"><h2><a href="https://www.nen.org.uk">Neuroinclusive Education Network</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National programme · England</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>education</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Neuroinclusive%20Education%20Network&body=Listing%3A%20Neuroinclusive%20Education%20Network%20(https%3A%2F%2Fwww.nen.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England|Wales" data-lat="53.36" data-lon="-1.425">
   <div class="top"><h2><a href="https://www.pdasociety.org.uk">PDA Society</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>PDA</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1165038, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20PDA%20Society&body=Listing%3A%20PDA%20Society%20(https%3A%2F%2Fwww.pdasociety.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults families">
+<li class="card" data-aud="children adults families" data-cov="local" data-nations="England" data-lat="51.587" data-lon="-0.2">
   <div class="top"><h2><a href="https://www.resourcesforautism.org.uk">Resources for Autism</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">Local charity · London</p>
   <p class="who">For: Children and young people · Adults · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1061253, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Resources%20for%20Autism&body=Listing%3A%20Resources%20for%20Autism%20(https%3A%2F%2Fwww.resourcesforautism.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="Scotland" data-lat="56.116" data-lon="-3.811">
   <div class="top"><h2><a href="https://www.scottishautism.org">Scottish Autism</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · Scotland</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk none">2 more checks coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Scottish%20Autism&body=Listing%3A%20Scottish%20Autism%20(https%3A%2F%2Fwww.scottishautism.org)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children families">
+<li class="card" data-aud="children families" data-cov="national" data-nations="England" data-lat="51.379" data-lon="-0.241">
   <div class="top"><h2><a href="https://www.sossen.org.uk">SOS!SEN</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · England</p>
   <p class="who">For: Children and young people · Families and carers</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>SEND</span><span>legal advice</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1153884, last accounts to 30 Sep 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20SOS!SEN&body=Listing%3A%20SOS!SEN%20(https%3A%2F%2Fwww.sossen.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children">
+<li class="card" data-aud="children" data-cov="national" data-nations="England">
   <div class="top"><h2><a href="https://spectrumgaming.net">Spectrum Gaming</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>autism</span><span>young people</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1193763, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Spectrum%20Gaming&body=Listing%3A%20Spectrum%20Gaming%20(https%3A%2F%2Fspectrumgaming.net)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
 </li>
-<li class="card" data-aud="children adults">
+<li class="card" data-aud="children adults" data-cov="national" data-nations="England|Wales|Scotland|Northern Ireland" data-lat="51.292" data-lon="-0.754">
   <div class="top"><h2><a href="https://www.tourettes-action.org.uk">Tourettes Action</a></h2><span class="score" style="--h:130" title="How sure we are it is still running">100<small>/100</small></span></div>
   <p class="meta">National charity · UK</p>
   <p class="who">For: Children and young people · Adults</p>
+  <p class="dist" hidden></p>
   <p class="tags"><span>Tourette syndrome</span><span>tics</span></p>
   <ul class="checks" aria-label="Checks"><li class="chk green" title="Web address exists"><span aria-hidden="true">✓</span> Web address</li><li class="chk green" title="Website answered at every check"><span aria-hidden="true">✓</span> Website answers</li><li class="chk green" title="No closing wording on the homepage"><span aria-hidden="true">✓</span> No closing notice</li><li class="chk green" title="Domain is not parked or for sale"><span aria-hidden="true">✓</span> Not for sale</li><li class="chk green" title="Website stays at its own address"><span aria-hidden="true">✓</span> Same address</li><li class="chk green" title="Registered charity 1003317, last accounts to 31 Mar 2025"><span aria-hidden="true">✓</span> Charity register</li><li class="chk none">1 more check coming</li></ul>
   <p class="fresh">Last checked 17 Oct 2026 · <a href="https://github.com/chrisdemetriouaudio/ndsa-org-checker/issues/new?title=Problem%20with%20Tourettes%20Action&body=Listing%3A%20Tourettes%20Action%20(https%3A%2F%2Fwww.tourettes-action.org.uk)%0A%0AWhat%20went%20wrong%3A%0A">Report a problem</a></p>
@@ -380,11 +434,31 @@ Sources include the Charity Commission for England and Wales, the Charity Commis
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];
 let aud='',showUnstated=false;
 const more=document.getElementById('more');
+let here=null;
+const list=document.getElementById('list');const order=[...items];
+const head=document.createElement('li');head.className='group';head.textContent='Also covering your area (works across the nation)';
+const miles=(a,b)=>{const r=(d)=>d*Math.PI/180,h=Math.sin(r(b.lat-a.lat)/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(r(b.lon-a.lon)/2)**2;return 3958.8*2*Math.asin(Math.sqrt(h));};
 const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;
+const limit=+document.getElementById('miles').value;const local=[],wide=[];
 for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
-const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;li.hidden=!(textOk&&audOk);}
+const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;
+let placeOk=true;const d=li.querySelector('.dist');d.hidden=true;
+if(here){if(li.dataset.cov==='local'){if(li.dataset.lat){const m=miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon});placeOk=m<=limit;li.dataset.m=m;d.textContent='Based about '+(m<1?'less than 1 mile':Math.round(m)+(Math.round(m)===1?' mile':' miles'))+' away';d.hidden=!placeOk;}else placeOk=false;}
+else{const n=li.dataset.nations;placeOk=!n||n.split('|').includes(here.country);}}
+li.hidden=!(textOk&&audOk&&placeOk);if(here&&!li.hidden)(li.dataset.cov==='local'?local:wide).push(li);}
+if(here){local.sort((x,y)=>x.dataset.m-y.dataset.m);list.replaceChildren(...local,...(wide.length?[head]:[]),...wide,...order.filter(li=>li.hidden));
+nearMsg.hidden=false;nearMsg.textContent=local.length+' based within '+limit+' miles of '+here.label+(wide.length?', and '+wide.length+' working across '+here.country:'')+'.';}
+else if(head.isConnected){head.remove();list.replaceChildren(...order);}
 more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
+const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
+fetch('/api/postcode?pc=SW1A',{method:'HEAD'}).then(r=>{if(r.ok)near.hidden=false;}).catch(()=>{});
+near.addEventListener('submit',async(e)=>{e.preventDefault();const pc=document.getElementById('pc').value.trim();if(!pc)return;
+nearMsg.hidden=false;nearMsg.textContent='Finding '+pc+'…';
+try{const r=await fetch('/api/postcode?pc='+encodeURIComponent(pc));const j=await r.json();if(!r.ok)throw new Error(j.error||'Postcode not found');here=j;clear.hidden=false;apply();}
+catch(err){here=null;nearMsg.textContent=err.message;apply();}});
+document.getElementById('miles').addEventListener('change',()=>{if(here)apply();});
+clear.addEventListener('click',()=>{here=null;clear.hidden=true;nearMsg.hidden=true;document.getElementById('pc').value='';apply();});
 q.addEventListener('input',apply);
 for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
 </script>

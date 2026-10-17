@@ -1,4 +1,5 @@
 import type { Audience } from './audience.ts';
+import type { Coverage, Nation } from './place.ts';
 import type { Signal } from './signals.ts';
 
 export type Status = 'Confirmed' | 'Looks active' | 'Needs a check' | 'Likely closed' | 'Closed';
@@ -21,6 +22,11 @@ export interface Org {
   charityNumber?: string | null; // England and Wales register
   registerNote?: string; // why there is no charity number
   audiences?: Audience[]; // children / adults / families; empty or missing = not stated
+  postcode?: string; // base postcode (registered office), not always where groups meet
+  lat?: number; // map point for the postcode (postcodes.io), about 100 m accurate
+  lon?: number;
+  coverage?: Coverage; // works locally, or across a whole nation
+  nations?: Nation[]; // which nations it covers
   notes?: string;
   review?: Review;
 }
