@@ -14,6 +14,7 @@ updated: 2026-10-17
 > [!info]- How to read the ticks and the score (tap to open)
 > **Ticks:** ✅ fine · 🟡 in question · 🔴 serious · ⚪ not checked yet.
 > **Score:** 0 to 100. How sure we are the organisation is still running, from the categories checked so far. Proven closed scores 0. Insolvent or in administration scores 40 at most.
+> **Score colours:** 🟢 90 to 100 · 🟡 70 to 89 · 🟠 50 to 69 · 🔴 1 to 49 · ⚫ 0 (proven closed).
 > **Proof or evidence:** evidence comes from the website and can be wrong. Proof comes from an official record or the organisation itself.
 > **Closure is only "proven"** when a proof category is 🔴. Website evidence alone means "likely closed".
 >
@@ -27,13 +28,13 @@ updated: 2026-10-17
 
 ## 👉 To review
 
-- 🔴 **Check ADHD Foundation:** likely closed since 17 Oct 2026. Score 40.
-- 🔴 **Check Dyspraxia Foundation:** likely closed since 17 Oct 2026. Score 40.
+- 🔴 **Check ADHD Foundation:** likely closed since 17 Oct 2026. Score 🔴 40.
+- 🔴 **Check Dyspraxia Foundation:** likely closed since 17 Oct 2026. Score 🔴 40.
 
 | Service | Score | Web address | Website answers | No closing notice | Not for sale | Same address | Charity register | Confirmed by them | Why |
 | --- | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
-| [ADHD Foundation](https://www.adhdfoundation.org.uk) | 40 | ✅ | 🟡 | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1120898 is in administration (register of 17 Oct 2026) |
-| [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1058352 is marked insolvent (register of 17 Oct 2026) |
+| [ADHD Foundation](https://www.adhdfoundation.org.uk) | 🔴 40 | ✅ | 🟡 | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1120898 is in administration (register of 17 Oct 2026) |
+| [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 🔴 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1058352 is marked insolvent (register of 17 Oct 2026) |
 
 To decide: tell Claude "**[name] is still running**" or "**close [name]**". It goes into `data/orgs.json`.
 
@@ -42,46 +43,46 @@ To decide: tell Claude "**[name] is still running**" or "**close [name]**". It g
 > [!success]- 40 services look fine (lowest score first)
 > | Service | Score | Web address | Website answers | No closing notice | Not for sale | Same address | Charity register | Confirmed by them | Last checked |
 > | --- | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
-> | [AADD-UK](https://aadduk.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [ADDISS](https://www.addiss.co.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [ADHD Embrace](https://www.adhdembrace.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [ADHD UK](https://adhduk.co.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Afasic](https://www.afasic.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Ambitious about Autism](https://www.ambitiousaboutautism.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Anna Kennedy Online](https://annakennedyonline.com) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Anglia](https://www.autism-anglia.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Berkshire](https://www.autismberkshire.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Central](https://www.autismcentral.nhs.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Autism East Midlands](https://www.autismeastmidlands.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Hampshire](https://www.autismhampshire.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Initiatives](https://www.autisminitiatives.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism NI](https://www.autismni.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Autism Plus](https://www.autismplus.co.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Together](https://www.autismtogether.co.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autism Unlimited](https://www.autism-unlimited.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autistic Girls Network](https://autisticgirlsnetwork.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Autistic UK](https://autisticuk.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Autistica](https://www.autistica.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [British Dyslexia Association](https://www.bdadyslexia.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Cerebra](https://cerebra.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Child Autism UK](https://www.childautism.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Contact (for families with disabled children)](https://contact.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Dyslexia Scotland](https://dyslexiascotland.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Genius Within](https://www.geniuswithin.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Helen Arkell Dyslexia Charity](https://www.helenarkell.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [IPSEA](https://www.ipsea.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Mencap](https://www.mencap.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [National Autistic Society](https://www.autism.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [National Autistic Taskforce](https://nationalautistictaskforce.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Neurodivergence Wales (National Neurodivergence Team)](https://neurodivergencewales.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [Neurodiversity in Business](https://neurodiversity.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Neuroinclusive Education Network](https://www.nen.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [PDA Society](https://www.pdasociety.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Resources for Autism](https://www.resourcesforautism.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Scottish Autism](https://www.scottishautism.org) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
-> | [SOS!SEN](https://www.sossen.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Spectrum Gaming](https://spectrumgaming.net) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
-> | [Tourettes Action](https://www.tourettes-action.org.uk) | 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [AADD-UK](https://aadduk.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [ADDISS](https://www.addiss.co.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [ADHD Embrace](https://www.adhdembrace.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [ADHD UK](https://adhduk.co.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Afasic](https://www.afasic.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Ambitious about Autism](https://www.ambitiousaboutautism.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Anna Kennedy Online](https://annakennedyonline.com) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Anglia](https://www.autism-anglia.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Berkshire](https://www.autismberkshire.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Central](https://www.autismcentral.nhs.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Autism East Midlands](https://www.autismeastmidlands.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Hampshire](https://www.autismhampshire.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Initiatives](https://www.autisminitiatives.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism NI](https://www.autismni.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Autism Plus](https://www.autismplus.co.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Together](https://www.autismtogether.co.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autism Unlimited](https://www.autism-unlimited.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autistic Girls Network](https://autisticgirlsnetwork.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Autistic UK](https://autisticuk.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Autistica](https://www.autistica.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [British Dyslexia Association](https://www.bdadyslexia.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Cerebra](https://cerebra.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Child Autism UK](https://www.childautism.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Contact (for families with disabled children)](https://contact.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Dyslexia Scotland](https://dyslexiascotland.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Genius Within](https://www.geniuswithin.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Helen Arkell Dyslexia Charity](https://www.helenarkell.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [IPSEA](https://www.ipsea.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Mencap](https://www.mencap.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [National Autistic Society](https://www.autism.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [National Autistic Taskforce](https://nationalautistictaskforce.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Neurodivergence Wales (National Neurodivergence Team)](https://neurodivergencewales.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [Neurodiversity in Business](https://neurodiversity.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Neuroinclusive Education Network](https://www.nen.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [PDA Society](https://www.pdasociety.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Resources for Autism](https://www.resourcesforautism.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Scottish Autism](https://www.scottishautism.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | ⚪ | 17 Oct 2026 |
+> | [SOS!SEN](https://www.sossen.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Spectrum Gaming](https://spectrumgaming.net) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
+> | [Tourettes Action](https://www.tourettes-action.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 17 Oct 2026 |
 
 > [!note]- 2 closed (archived, not deleted)
 > - **Autism Alliance UK:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 5 Jul 2023

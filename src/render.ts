@@ -33,7 +33,19 @@ export function countByStatus(orgs: Org[], state: State): Record<Status, number>
 }
 
 const cell = (text: string) => text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
-const scoreText = (s: OrgState) => (s.score === null ? '—' : `${s.score}`);
+/** Score as a temperature: 🟢 90+ · 🟡 70–89 · 🟠 50–69 · 🔴 1–49 · ⚫ 0 (proven closed). */
+export function scoreEmoji(score: number | null): string {
+  if (score === null) return '⚪';
+  return score >= 90 ? '🟢' : score >= 70 ? '🟡' : score >= 50 ? '🟠' : score > 0 ? '🔴' : '⚫';
+}
+
+/** Hue on a smooth red (0) → amber (40) → green (130) scale, so colour tracks the score exactly. */
+export function scoreHue(score: number): number {
+  const s = Math.max(0, Math.min(100, score));
+  return Math.round(s <= 60 ? (s / 60) * 40 : 40 + ((s - 60) / 40) * 90);
+}
+
+const scoreText = (s: OrgState) => (s.score === null ? '—' : `${scoreEmoji(s.score)} ${s.score}`);
 const signalsOf = (s: OrgState): Signal[] => s.signals ?? [];
 
 /** Category headers, taken from the first organisation that has them. */
@@ -47,6 +59,7 @@ function legend(all: Row[]): string[] {
     '> [!info]- How to read the ticks and the score (tap to open)',
     '> **Ticks:** ✅ fine · 🟡 in question · 🔴 serious · ⚪ not checked yet.',
     '> **Score:** 0 to 100. How sure we are the organisation is still running, from the categories checked so far. Proven closed scores 0. Insolvent or in administration scores 40 at most.',
+    '> **Score colours:** 🟢 90 to 100 · 🟡 70 to 89 · 🟠 50 to 69 · 🔴 1 to 49 · ⚫ 0 (proven closed).',
     '> **Proof or evidence:** evidence comes from the website and can be wrong. Proof comes from an official record or the organisation itself.',
     '> **Closure is only "proven"** when a proof category is 🔴. Website evidence alone means "likely closed".',
     '>',
@@ -170,9 +183,9 @@ export function renderSite(orgs: Org[], state: State): string {
     const report = `${REPO}/issues/new?title=${encodeURIComponent(`Problem with ${org.name}`)}&body=${encodeURIComponent(`Listing: ${org.name} (${org.url})\n\nWhat went wrong:\n`)}`;
     const checking = s.status === 'Needs a check' ? '<p class="note">We are re-checking this service.</p>' : '';
     const freshness = s.status === 'Confirmed' ? `Confirmed by the organisation` : `Last checked ${dateWords(s.lastChecked)}`;
-    const band = s.score === null ? 'none' : s.score >= 80 ? 'green' : s.score >= 50 ? 'amber' : 'red';
+    const hue = s.score === null ? null : scoreHue(s.score);
     return `<li class="card">
-  <div class="top"><h2><a href="${esc(org.url)}">${esc(org.name)}</a></h2><span class="score ${band}" title="How sure we are it is still running">${s.score ?? '—'}<small>/100</small></span></div>
+  <div class="top"><h2><a href="${esc(org.url)}">${esc(org.name)}</a></h2><span class="score" ${hue === null ? '' : `style="--h:${hue}"`} title="How sure we are it is still running">${s.score ?? '—'}<small>/100</small></span></div>
   <p class="meta">${esc(org.kind)} · ${esc(org.area)}</p>
   <p class="tags">${org.focus.map((f) => `<span>${esc(f)}</span>`).join('')}</p>
   ${siteChecks(s)}
@@ -197,7 +210,8 @@ main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;ma
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .card h2{font-size:1.15rem;margin:0}.card a{color:var(--accent)}.meta,.fresh{color:var(--quiet);font-size:.9rem;margin:4px 0 0}
 .score{font-weight:700;font-size:1.05rem;border-radius:8px;padding:2px 10px;white-space:nowrap}.score small{font-weight:400;font-size:.75rem;opacity:.8}
-.score.green{background:var(--green-bg);color:var(--green)}.score.amber{background:var(--amber-bg);color:var(--amber)}.score.red{background:var(--red-bg);color:var(--red)}
+.score{--h:0;background:hsl(var(--h) 70% 92%);color:hsl(var(--h) 75% 26%)}
+@media (prefers-color-scheme:dark){.score{background:hsl(var(--h) 45% 20%);color:hsl(var(--h) 70% 72%)}}
 .tags{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px}.tags span{border:1px solid var(--line);border-radius:999px;padding:0 10px;font-size:.85rem}
 .checks{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}.chk{font-size:.8rem;border-radius:6px;padding:1px 8px}
 .chk span{font-weight:700}.chk.green{background:var(--green-bg);color:var(--green)}.chk.amber{background:var(--amber-bg);color:var(--amber)}.chk.red{background:var(--red-bg);color:var(--red)}.chk.none{color:var(--quiet);border:1px dashed var(--line)}

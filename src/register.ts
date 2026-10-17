@@ -24,6 +24,7 @@ export interface RegisterEntry {
   insolvent: boolean;
   inAdministration: boolean;
   dissolved: boolean;
+  web: string | null; // website the charity gave the register
 }
 
 export interface Register {
@@ -50,14 +51,12 @@ export function parseRegisterLine(line: string): (RegisterEntry & { extractDate:
     insolvent: r.charity_insolvent === true,
     inAdministration: r.charity_in_administration === true,
     dissolved: r.cio_is_dissolved === true,
+    web: (r.charity_contact_web as string | null) ?? null,
   };
 }
 
-/** Downloads the register and keeps only our charities. Streams: the unzipped file is about 500 MB. */
-async function main() {
-  const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-  const orgs = JSON.parse(await readFile(join(root, 'data/orgs.json'), 'utf8')) as Org[];
-  const wanted = new Set(orgs.map((o) => o.charityNumber).filter(Boolean));
+/** Downloads the register and keeps the main charities `keep` accepts. Streams: unzipped it is about 500 MB. */
+export async function downloadRegister(keep: (entry: RegisterEntry) => boolean): Promise<Register> {
   const dir = await mkdtemp(join(tmpdir(), 'ccew-'));
   const zip = join(dir, 'register.zip');
   try {
@@ -70,18 +69,27 @@ async function main() {
     for await (const line of createInterface({ input: unzip.stdout })) {
       if (!line.includes('"linked_charity_number":0')) continue;
       const entry = parseRegisterLine(line);
-      if (!entry || !wanted.has(entry.number)) continue;
+      if (!entry) continue;
       const { extractDate, ...rest } = entry;
       register.extractDate ??= extractDate;
-      register.entries[rest.number] = rest;
+      if (keep(rest)) register.entries[rest.number] = rest;
     }
-    const missing = [...wanted].filter((n) => !register.entries[n as string]);
-    await writeFile(join(root, 'data/register.json'), `${JSON.stringify(register, null, 2)}\n`);
-    console.log(`Register of ${register.extractDate}: found ${Object.keys(register.entries).length} of ${wanted.size} charities.`);
-    if (missing.length) console.log(`Not found: ${missing.join(', ')}`);
+    return register;
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
+}
+
+/** Refreshes data/register.json for every charity number on our list. */
+async function main() {
+  const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+  const orgs = JSON.parse(await readFile(join(root, 'data/orgs.json'), 'utf8')) as Org[];
+  const wanted = new Set(orgs.map((o) => o.charityNumber).filter(Boolean));
+  const register = await downloadRegister((e) => wanted.has(e.number));
+  const missing = [...wanted].filter((n) => !register.entries[n as string]);
+  await writeFile(join(root, 'data/register.json'), `${JSON.stringify(register, null, 2)}\n`);
+  console.log(`Register of ${register.extractDate}: found ${Object.keys(register.entries).length} of ${wanted.size} charities.`);
+  if (missing.length) console.log(`Not found: ${missing.join(', ')}`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) await main();

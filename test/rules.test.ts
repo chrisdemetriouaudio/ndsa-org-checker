@@ -127,7 +127,7 @@ import { parseRegisterLine, type Register } from '../src/register.ts';
 const numbered: Org = { ...org, charityNumber: '123' };
 const reg = (entry: Partial<Register['entries'][string]>): Register => ({
   extractDate: '2026-10-17',
-  entries: { '123': { number: '123', name: 'X', status: 'Registered', removedOn: null, reporting: 'Submission Received', lastAccounts: '2025-03-31', insolvent: false, inAdministration: false, dissolved: false, ...entry } },
+  entries: { '123': { number: '123', name: 'X', status: 'Registered', removedOn: null, reporting: 'Submission Received', lastAccounts: '2025-03-31', insolvent: false, inAdministration: false, dissolved: false, web: null, ...entry } },
 });
 const healthy = [ok('2026-10-16'), ok('2026-10-17')];
 const registerTick = (d: ReturnType<typeof decideStatus>) => d.signals.find((x) => x.key === 'register')?.level;
@@ -165,4 +165,14 @@ test('register lines: main charity kept, linked sub-charities skipped', () => {
   const line = ',{"date_of_extract":"2026-10-17T00:00:00","registered_charity_number":123,"linked_charity_number":0,"charity_name":"X","charity_registration_status":"Removed","date_of_removal":"2023-08-16T00:00:00","charity_reporting_status":"Removed","latest_acc_fin_period_end_date":null,"charity_insolvent":false,"charity_in_administration":false,"cio_is_dissolved":null}';
   assert.equal(parseRegisterLine(line)?.removedOn, '2023-08-16');
   assert.equal(parseRegisterLine(line.replace('"linked_charity_number":0', '"linked_charity_number":1')), null);
+});
+
+import { scoreEmoji, scoreHue } from '../src/render.ts';
+
+test('score colour follows the score like a temperature', () => {
+  assert.deepEqual([100, 90, 89, 70, 69, 50, 49, 1, 0].map(scoreEmoji), ['🟢', '🟢', '🟡', '🟡', '🟠', '🟠', '🔴', '🔴', '⚫']);
+  assert.equal(scoreHue(0), 0);
+  assert.equal(scoreHue(60), 40);
+  assert.equal(scoreHue(100), 130);
+  assert.ok(scoreHue(85) > scoreHue(70) && scoreHue(70) > scoreHue(40));
 });
