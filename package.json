@@ -16,7 +16,8 @@
     "worker:types": "wrangler types worker/worker-configuration.d.ts",
     "worker:dev": "wrangler dev",
     "worker:deploy": "CI=true wrangler d1 migrations apply ndsa-admin-db --remote && wrangler deploy",
-    "admin": "node scripts/admin.mjs"
+    "admin": "node scripts/admin.mjs",
+    "discover": "node src/discover.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",

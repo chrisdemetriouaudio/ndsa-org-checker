@@ -40,29 +40,33 @@ export function parseRegisterLine(line: string): (RegisterEntry & { extractDate:
   };
 }
 
-/** Downloads the register and keeps the main charities `keep` accepts. Streams: unzipped it is about 500 MB. */
-export async function downloadRegister(keep: (entry: RegisterEntry) => boolean): Promise<Register> {
-  const dir = await mkdtemp(join(tmpdir(), 'ccew-'));
-  const zip = join(dir, 'register.zip');
+/** Downloads a zip and hands each line of the file inside to `onLine`, without unzipping to disk. */
+export async function forEachZipLine(url: string, onLine: (line: string) => void): Promise<void> {
+  const dir = await mkdtemp(join(tmpdir(), 'ndsa-'));
+  const zip = join(dir, 'download.zip');
   try {
-    const res = await fetch(REGISTER_ZIP);
-    if (!res.ok || !res.body) throw new Error(`Register download failed: HTTP ${res.status}`);
+    const res = await fetch(url);
+    if (!res.ok || !res.body) throw new Error(`Download failed (${url}): HTTP ${res.status}`);
     await pipeline(Readable.fromWeb(res.body as never), createWriteStream(zip));
-
     const unzip = spawn('unzip', ['-p', zip], { stdio: ['ignore', 'pipe', 'inherit'] });
-    const register: Register = { extractDate: null, entries: {} };
-    for await (const line of createInterface({ input: unzip.stdout })) {
-      if (!line.includes('"linked_charity_number":0')) continue;
-      const entry = parseRegisterLine(line);
-      if (!entry) continue;
-      const { extractDate, ...rest } = entry;
-      register.extractDate ??= extractDate;
-      if (keep(rest)) register.entries[rest.number] = rest;
-    }
-    return register;
+    for await (const line of createInterface({ input: unzip.stdout })) onLine(line);
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
+}
+
+/** Downloads the register and keeps the main charities `keep` accepts. Streams: unzipped it is about 500 MB. */
+export async function downloadRegister(keep: (entry: RegisterEntry) => boolean): Promise<Register> {
+  const register: Register = { extractDate: null, entries: {} };
+  await forEachZipLine(REGISTER_ZIP, (line) => {
+    if (!line.includes('"linked_charity_number":0')) return;
+    const entry = parseRegisterLine(line);
+    if (!entry) return;
+    const { extractDate, ...rest } = entry;
+    register.extractDate ??= extractDate;
+    if (keep(rest)) register.entries[rest.number] = rest;
+  });
+  return register;
 }
 
 /** Refreshes data/register.json for every charity number on our list. */
