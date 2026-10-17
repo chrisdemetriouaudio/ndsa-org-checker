@@ -10,7 +10,12 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · Approved admin list · live
+> [!success]+ 🚀 17 Oct 2026 · Passkey sign-in loop fixed · live
+> - **Problem:** after an e-mailed link, people who already had a passkey were asked to add one again; the device refused ("invalid state").
+> - **Fix:** if you already have a passkey, the page offers **Use my passkey** first. Adding one for a new device is the second option.
+> - **For everyone on the admin list.** Tested both cases with a throwaway account (since removed).
+
+> [!success]- 🚀 17 Oct 2026 · Approved admin list · live
 > - **Who can sign in:** Chris and Wade only. Everyone else gets nothing.
 > - **Never-email admins:** the system will not e-mail Wade, even if someone types his address. Tested.
 > - **Hand-delivered links:** `npm run admin -- link` makes a single-use link for you to pass on yourself.

@@ -33,6 +33,7 @@ updated: 2026-10-17
 > - [x] **Approved admin list in the database:** Chris (tech@) and Wade (17 Oct 2026). Only these two can sign in.
 > - [x] **Wade is never e-mailed by the system.** Link requests for him are held and logged; tested with a stand-in address.
 > - [x] **Hand-delivered links:** `npm run admin -- link` prints a single-use link (72 hours). Nothing is sent.
+> - [x] **No sign-in loop:** people with a passkey are offered it first after an e-mailed link (17 Oct 2026).
 > - [x] **Passwordless:** a single-use link, then a passkey. No passwords anywhere.
 > - [x] **Cloudflare Worker (free tier)** serves the public directory and /admin (17 Oct 2026).
 > - [x] **Admins:** an e-mail on the list, then a passkey. A link alone can only add a passkey.

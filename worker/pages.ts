@@ -89,22 +89,47 @@ export function messagePage(n: string, title: string, text: string): string {
   return layout(title, `<h1>${esc(title)}</h1><p>${esc(text)}</p><p><a href="/admin">Go to sign in</a></p>`, n);
 }
 
-export function passkeySetupPage(n: string, admin: Admin): string {
-  return layout('Add a passkey', `
-<h1>Add a passkey</h1>
-<p>Hello ${esc(admin.name)}. To finish, add a passkey on this device.</p>
-<p class="quiet">A passkey uses your face, fingerprint or device PIN. Nothing to remember, and it cannot be phished.</p>
-<p><button id="add">Add a passkey</button></p><div id="m" hidden></div>`, n, `${POST_JS}
-document.getElementById('add').onclick = async () => {
-  const m = document.getElementById('m');
+const USE_PASSKEY_JS = `
+async function usePasskey(m) {
+  const { id, options } = await post('/auth/passkey/options');
+  const cred = await navigator.credentials.get({ publicKey: PublicKeyCredential.parseRequestOptionsFromJSON(options) });
+  await post('/auth/passkey/verify', { id, response: cred.toJSON() });
+  location.href = '/admin';
+}
+async function addPasskey() {
+  const { id, options } = await post('/auth/passkey/register-options');
+  const cred = await navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(options) });
+  await post('/auth/passkey/register', { id, response: cred.toJSON() });
+  location.href = '/admin';
+}
+function why(e, action) {
+  if (e.name === 'InvalidStateError') return 'This device already has your passkey. Click "Use my passkey" instead.';
+  if (e.name === 'NotAllowedError') return action + ' was cancelled or timed out. Please try again.';
+  return e.message;
+}`;
+
+/**
+ * After an e-mailed link. Someone who already has a passkey is offered it first: a device that holds
+ * one refuses to make a second for the same account ("InvalidStateError"), which looked like a loop.
+ */
+export function passkeySetupPage(n: string, admin: Admin, hasPasskey: boolean): string {
+  const use = `<div class="card"><h2 style="margin-top:0">Use my passkey</h2>
+<p>You already have a passkey. Use it to finish signing in.</p>
+<p><button id="use">Use my passkey</button></p><div id="use-msg" hidden></div></div>`;
+  const add = `<div class="card"><h2 style="margin-top:0">${hasPasskey ? 'New device?' : 'Add a passkey'}</h2>
+<p>${hasPasskey ? 'Add a passkey for this device if your passkey is not on it.' : 'A passkey uses your face, fingerprint or device PIN. Nothing to remember, and it cannot be phished.'}</p>
+<p><button id="add" class="${hasPasskey ? 'plain' : ''}">Add a passkey${hasPasskey ? ' for this device' : ''}</button></p><div id="add-msg" hidden></div></div>`;
+  return layout(hasPasskey ? 'Finish signing in' : 'Add a passkey', `
+<h1>${hasPasskey ? 'Finish signing in' : 'Add a passkey'}</h1>
+<p>Hello ${esc(admin.name)}.</p>
+${hasPasskey ? use + add : add}`, n, `${POST_JS}${USE_PASSKEY_JS}
+const run = (button, box, fn, action) => { const el = document.getElementById(button); if (!el) return; el.onclick = async () => {
+  const m = document.getElementById(box);
   if (!passkeysWork) return say(m, 'This browser cannot use passkeys. Please update it, or use another browser.', false);
-  try {
-    const { id, options } = await post('/auth/passkey/register-options');
-    const cred = await navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(options) });
-    await post('/auth/passkey/register', { id, response: cred.toJSON() });
-    location.href = '/admin';
-  } catch (e) { say(m, e.name === 'NotAllowedError' ? 'Adding the passkey was cancelled.' : e.message, false); }
-};`);
+  try { await fn(m); } catch (e) { say(m, why(e, action), false); }
+}; };
+run('use', 'use-msg', usePasskey, 'Signing in');
+run('add', 'add-msg', addPasskey, 'Adding the passkey');`);
 }
 
 const scoreBadge = (s?: OrgState) => (s?.score == null ? '<span class="quiet">—</span>' : `<span class="score" style="--h:${scoreHue(s.score)}">${s.score}</span>`);

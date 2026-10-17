@@ -130,7 +130,10 @@ async function handle(req: Request, env: Env): Promise<Response> {
   if (method === 'GET' && path === '/admin') {
     const admin = await currentAdmin(req, env);
     if (!admin) return html(signInPage(n), n);
-    if (admin.level === 'link') return html(passkeySetupPage(n, admin), n);
+    if (admin.level === 'link') {
+      const has = await env.DB.prepare('SELECT 1 FROM passkeys WHERE email = ? LIMIT 1').bind(admin.email).first();
+      return html(passkeySetupPage(n, admin, !!has), n);
+    }
     return adminHome(env, admin, n);
   }
 
