@@ -9,12 +9,12 @@ updated: 2026-10-17
 > [!info] At a glance
 > **What:** find UK organisations that support people with the 18 conditions in scope, in all 4 nations.
 > **How:** a script reads free official data, matches exact phrases, and puts candidates on a review list. A person adds them.
-> **Status:** 🛠️ Stage 1 live (17 Oct 2026): 2,052 candidates from the charity registers of all 4 nations.
+> **Status:** 🛠️ Stage 1 live. 18 Oct 2026: 830 added automatically, 682 turned down, 222 left for a person, 318 have no website.
 > **Back to:** [[00 Dashboard]] · counts in [[Candidates]]
 
 ## 👉 Your actions
 
-- [ ] **Review candidates** on the admin page: Admin → Review candidates. Start with "Only ones named for a condition".
+- [ ] **Look at the 222 unclear ones** when you have time: Admin → Review candidates (shows only those by default).
 - [ ] **Add informal groups and peer networks by hand** (Add an organisation). No register lists them.
 
 ## 🛠️ For Claude
@@ -30,6 +30,10 @@ updated: 2026-10-17
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Automatic triage:** each candidate gets a relevance score with reasons: add, unclear, or turned down (18 Oct 2026).
+> - [x] **Turned down automatically:** care and housing providers, schools, grant-makers, overseas work, general services.
+> - [x] **980 borderline ones read and decided by Claude** (618 kept, 362 turned down); saved as overrides the rules respect.
+> - [x] **830 added** after a website check; each one's register areas, postcode, map point and "who for" filled in.
 > - [x] **The 18 conditions** set by Chris: autism, ADHD, Tourette, dyslexia, dyscalculia, dysgraphia, dyspraxia, DLD, sensory processing, prosopagnosia, synaesthesia, OCD, learning disability, Down, Williams and Fragile X syndromes, acquired and traumatic brain injury (plus neurodiversity in general).
 > - [x] **Exact-phrase matching,** tested against look-alikes (County Down, sensory impairment services, "Add", "Williams Trust").
 > - [x] **All 4 nations:** England and Wales register (Welsh areas flagged), Scottish Charity Register, Northern Ireland register.

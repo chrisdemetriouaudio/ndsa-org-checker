@@ -24,6 +24,8 @@ updated: 2026-10-18
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **"Serves:" on every card,** from the registers' areas of operation (18 Oct 2026).
+> - [x] **Near you, by council area:** serves your council first, then based within N miles, then nationwide. BL8 2RZ: 10 serve Bury, 20 nearby, 187 across England.
 > - [x] **Button finder:** 3 questions, buttons only: what for, who for, where. The list updates after each answer (18 Oct 2026).
 > - [x] **Who is it for?** Children and young people · Adults · Families and carers, from the registers' own categories and exact phrases (17 Oct 2026).
 > - [x] **"Ages not stated"** organisations are left out of a group, with a "Show them too" line.

@@ -10,7 +10,13 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Button finder · live
+> [!success]+ 🚀 18 Oct 2026 · 830 organisations added; Near you by council area · live
+> - **Directory:** 869 organisations (was 41). Each card says who it serves.
+> - **Automatic triage:** clear ones added (website checked), clear misfits turned down with reasons, 222 unclear ones wait.
+> - **Near you:** finds who serves your council area, then who is based nearby, then nationwide ones.
+> - **Faster admin page:** reads a 198 KB summary instead of the full history.
+
+> [!success]- 🚀 18 Oct 2026 · Button finder · live
 > - **"Not sure where to start?"** 3 questions with buttons: what for, who for, where. No typing except an optional postcode.
 > - **Uses the same filters** as the rest of the page; the list updates after each answer.
 

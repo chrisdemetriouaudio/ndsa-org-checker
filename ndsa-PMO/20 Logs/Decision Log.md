@@ -10,6 +10,17 @@ updated: 2026-10-17
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 18 Oct 2026 · Decide candidates automatically
+> - **Decided:** nobody can review 2,052 by hand. A relevance score with reasons decides: add, unclear, or turn down.
+> - **Decided:** care homes, housing and care providers, schools, grant-makers and overseas work are not signposting services.
+> - **Decided:** day-opportunity, activity, advocacy, arts, sport and peer groups are.
+> - **Decided:** Claude read the 980 borderline ones; those decisions are saved and outrank the rules. Anyone can reverse one.
+> - **Why:** a useful directory now, with every decision explained.
+
+> [!question]- 18 Oct 2026 · Near you means "serves my area"
+> - **Decided:** match the visitor's council (from their postcode) against each organisation's service areas on the register.
+> - **Why:** distance from an office missed local groups that serve the area.
+
 > [!question]- 18 Oct 2026 · Daily, gentle, and private
 > - **Decided:** one morning run does everything. Healthy, steady organisations are visited every 3 days; anything doubtful daily.
 > - **Decided:** clear new finds are added automatically (named for a condition, website passes), at most 20 a day.

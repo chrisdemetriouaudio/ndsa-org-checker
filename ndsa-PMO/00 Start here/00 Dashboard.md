@@ -22,7 +22,7 @@ updated: 2026-10-17
 ## 👉 Your actions
 
 - [ ] **Try the button finder, "Near you" and "Who is it for?"** on the directory. See [[Phase 8 — Finding Support Easily]].
-- [ ] **Review the 2,052 candidates** on the admin page (Review candidates). See [[Phase 7 — Finding Organisations]].
+- [ ] **Look at the 222 unclear candidates** when you have time (Admin → Review candidates). The rest were decided automatically.
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
 - [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
@@ -45,6 +45,8 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **830 organisations added automatically, 682 turned down with reasons** (18 Oct 2026).
+> - [x] **Near you finds who serves your council area,** not just who is based nearby (18 Oct 2026).
 > - [x] **Button finder** on the directory (18 Oct 2026).
 > - [x] **Near you + Who is it for?** filters on the directory (18 Oct 2026).
 > - [x] **One gentle morning run:** find, refresh, check; healthy sites every 3 days (18 Oct 2026).
