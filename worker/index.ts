@@ -14,7 +14,7 @@ function headers(n: string, extra: Record<string, string> = {}): Headers {
   return new Headers({
     'content-security-policy': `default-src 'none'; script-src 'nonce-${n}'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`,
     'x-content-type-options': 'nosniff',
-    'referrer-policy': 'no-referrer',
+    'referrer-policy': 'same-origin', // never sent to other sites; same-site posts keep a real Origin
     'permissions-policy': 'camera=(), microphone=(), geolocation=()',
     'strict-transport-security': 'max-age=31536000',
     ...extra,
@@ -27,8 +27,12 @@ const html = (body: string, n: string, extra: Record<string, string> = {}, statu
 const json = (data: unknown, status = 200, extra: Record<string, string> = {}) =>
   new Response(JSON.stringify(data), { status, headers: headers('none', { 'content-type': 'application/json', 'cache-control': 'no-store', ...extra }) });
 
-/** Only accept writes sent by our own pages. */
-const sameOrigin = (req: Request, env: Env) => req.headers.get('origin') === env.ORIGIN;
+/**
+ * Only accept writes sent by our own pages. Browsers may send `Origin: null` on a same-site form post
+ * (privacy settings), so the browser-set Sec-Fetch-Site header is accepted too; pages cannot fake it.
+ */
+const sameOrigin = (req: Request, env: Env) =>
+  req.headers.get('origin') === env.ORIGIN || req.headers.get('sec-fetch-site') === 'same-origin';
 
 async function readJson(req: Request): Promise<Record<string, unknown>> {
   const text = await req.text();
