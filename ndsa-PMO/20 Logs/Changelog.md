@@ -10,7 +10,12 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 17 Oct 2026 · Admin front door · live
+> [!success]+ 🚀 17 Oct 2026 · Approved admin list · live
+> - **Who can sign in:** Chris and Wade only. Everyone else gets nothing.
+> - **Never-email admins:** the system will not e-mail Wade, even if someone types his address. Tested.
+> - **Hand-delivered links:** `npm run admin -- link` makes a single-use link for you to pass on yourself.
+
+> [!success]- 🚀 17 Oct 2026 · Admin front door · live
 > - **Directory:** now also at ndsa.labs.chrisdemetriou.com (public).
 > - **Admin page:** ndsa.labs.chrisdemetriou.com/admin. E-mail on the admin list, then a passkey.
 > - **Admins can:** add one or several organisations, remove (archive), restore, and clear flags.

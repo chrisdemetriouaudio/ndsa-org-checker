@@ -21,7 +21,7 @@ updated: 2026-10-17
 
 ## 👉 Your actions
 
-- [ ] **Send Claude the admin e-mail addresses** (with each person's name).
+- [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Add the Resend key to the Worker:** see [[Phase 6 — Admin Front Door]] for the one command.
 - [ ] **Add a GitHub token to the Worker:** see [[Phase 6 — Admin Front Door]] for the steps.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
@@ -45,6 +45,7 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Approved admin list set up:** Chris, and Wade (never e-mailed) (17 Oct 2026).
 > - [x] **Admin front door built and live** at ndsa.labs.chrisdemetriou.com (17 Oct 2026).
 > - [x] **Score colours follow the score** like a temperature (17 Oct 2026).
 > - [x] **Closed Autism Alliance UK and Dyslexia Action:** both removed from the register (17 Oct 2026).

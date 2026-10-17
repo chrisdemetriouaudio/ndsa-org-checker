@@ -14,7 +14,7 @@ updated: 2026-10-17
 
 ## 👉 Your actions
 
-- [ ] **Send Claude the admin e-mail addresses,** with each person's name.
+- [ ] **Give Wade his sign-in link yourself** when ready: run `npm run admin -- link` with his address, then pass it on personally.
 - [ ] **Make a Resend key:** Resend → API Keys → Create, sending access only.
 - [ ] **Add it to the Worker:** in the project folder, run `npx wrangler secret put RESEND_API_KEY` and paste it.
 - [ ] **Make a GitHub token:** GitHub → Settings → Developer settings → Fine-grained tokens → Generate.
@@ -30,6 +30,10 @@ updated: 2026-10-17
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Approved admin list in the database:** Chris (tech@) and Wade (17 Oct 2026). Only these two can sign in.
+> - [x] **Wade is never e-mailed by the system.** Link requests for him are held and logged; tested with a stand-in address.
+> - [x] **Hand-delivered links:** `npm run admin -- link` prints a single-use link (72 hours). Nothing is sent.
+> - [x] **Passwordless:** a single-use link, then a passkey. No passwords anywhere.
 > - [x] **Cloudflare Worker (free tier)** serves the public directory and /admin (17 Oct 2026).
 > - [x] **Admins:** an e-mail on the list, then a passkey. A link alone can only add a passkey.
 > - [x] **Safe by default:** single-use 15-minute links, hashed tokens, rate limits, same-site checks, strict security headers.

@@ -10,6 +10,11 @@ updated: 2026-10-17
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 17 Oct 2026 · Wade is never contacted by the system
+> - **Decided:** Wade's address is on the admin list but marked "never e-mail". Sign-in link requests for it are held and logged.
+> - **Decided:** when Wade should get access, Chris makes a link by hand and gives it to him personally.
+> - **Why:** Chris's instruction. Nothing may e-mail or notify Wade.
+
 > [!question]- 17 Oct 2026 · Admin front door with passkeys
 > - **Decided:** the directory stays public. Only admins (e-mail on the list + passkey) add or remove organisations.
 > - **Decided:** no public suggestion forms. A Cloudflare Worker (free) is the front door; the list stays in GitHub.
