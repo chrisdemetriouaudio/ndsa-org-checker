@@ -13,8 +13,7 @@ updated: 2026-10-18
 
 ## 🆕 New on 18 Oct 2026
 
-**Added to the directory automatically (1):** named for a condition, with a working website.
-- ✅ STEPPING STONE 2TO (England): learning disability
+- Nothing was added automatically.
 
 - No new ones still settling.
 
