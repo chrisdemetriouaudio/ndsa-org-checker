@@ -71,7 +71,7 @@ async function adminHome(env: Env, admin: Admin, n: string, ref: string | null):
   // Right after a change, read the exact version saved: "main" can lag behind it for a few seconds.
   const orgsFile = await readFile(env, 'data/orgs.json', ref ?? 'main').catch(() => readFile(env, 'data/orgs.json'));
   const stateFile = await readFile(env, 'data/summary.json');
-  return html(adminPage(n, admin, JSON.parse(orgsFile.text), JSON.parse(stateFile.text) as Summary), n);
+  return html(adminPage(n, admin, JSON.parse(orgsFile.text), JSON.parse(stateFile.text) as Summary, !env.GITHUB_TOKEN), n);
 }
 
 async function addOrgs(env: Env, admin: Admin, body: Record<string, unknown>): Promise<Response> {

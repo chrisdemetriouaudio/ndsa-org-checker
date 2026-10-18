@@ -9,7 +9,7 @@ import { SafeError, type Env } from './auth.ts';
 const API = 'https://api.github.com';
 
 const apiHeaders = (env: Env) => {
-  if (!env.GITHUB_TOKEN) throw new Error('GITHUB_TOKEN is not set');
+  if (!env.GITHUB_TOKEN) throw new SafeError('Saving is switched off on this site until its GitHub key (GITHUB_TOKEN) is added.');
   return {
     authorization: `Bearer ${env.GITHUB_TOKEN}`,
     accept: 'application/vnd.github+json',
@@ -30,6 +30,7 @@ const encode = (text: string) => {
  * serve slightly out of date for a few seconds after a save; a commit id is always exact.
  */
 export async function readFile(env: Env, path: string, ref = 'main'): Promise<{ text: string; sha: string }> {
+  if (!env.GITHUB_TOKEN) return readPublic(env, path, ref);
   const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`, { headers: apiHeaders(env) });
   if (!res.ok) throw new Error(`Could not read ${path}: HTTP ${res.status}`);
   const j = (await res.json()) as { content?: string; sha: string; download_url?: string };
@@ -38,8 +39,18 @@ export async function readFile(env: Env, path: string, ref = 'main'): Promise<{ 
   return { text: await big.text(), sha: j.sha };
 }
 
+/** Without the key (read-only mode): the public copy of the file. It can be a few minutes old, and has no sha, so it cannot be saved over. */
+async function readPublic(env: Env, path: string, ref: string): Promise<{ text: string; sha: string }> {
+  const res = await fetch(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/${encodeURIComponent(ref)}/${path}`);
+  if (res.status === 404) throw new NotFound(path);
+  if (!res.ok) throw new Error(`Could not read ${path}: HTTP ${res.status}`);
+  return { text: await res.text(), sha: '' };
+}
+class NotFound extends Error {}
+
 /** Like readFile, but a missing file comes back as null (so it can be created). */
 export async function readFileIfAny(env: Env, path: string): Promise<{ text: string; sha: string } | null> {
+  if (!env.GITHUB_TOKEN) return readPublic(env, path, 'main').catch((e) => { if (e instanceof NotFound) return null; throw e; });
   const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}?ref=main`, { method: 'HEAD', headers: apiHeaders(env) });
   if (res.status === 404) return null;
   return readFile(env, path);

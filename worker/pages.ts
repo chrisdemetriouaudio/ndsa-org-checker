@@ -174,7 +174,7 @@ function removeControl(org: Org) {
 <input name="reason" placeholder="Why? For example: closed in 2025" required aria-label="Reason for removing ${esc(org.name)}"><button class="danger">Remove</button></form></details>`;
 }
 
-export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary): string {
+export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary, readOnly = false): string {
   const rows = [...orgs].sort((a, b) => a.name.localeCompare(b.name));
   const pending = rows.filter((o) => !state.orgs[o.id] && o.review?.status !== 'Closed');
   const flagged = rows.filter((o) => state.orgs[o.id] && FLAGGED.includes(state.orgs[o.id].status));
@@ -187,10 +187,11 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary):
   const body = `
 <div class="top"><div><h1>Admin</h1><p class="quiet" style="margin:0">Neuro Support Checker · signed in as ${esc(admin.name)}</p></div>
 <div><a href="/">Directory</a> &nbsp; <button class="plain" id="out">Sign out</button></div></div>
+${readOnly ? `<div class="msg bad"><strong>Look only, for now.</strong> This site cannot save changes until its GitHub key is added (Phase 6 in the vault has the steps). Until then, make changes on the old admin page.</div>` : ''}
 
 <div class="card"><strong>At a glance:</strong> ${live.length} listed · ${flagged.length} to review · ${pending.length} being checked · ${closed.length} removed · average score ${avg ?? '—'}. Last daily check: ${dateWords(state.updated)}.</div>
 
-<div class="card"><strong>Found in the charity registers:</strong> organisations that may belong here, waiting for a person to check. <a href="/admin/candidates">Review candidates</a></div>
+<div class="card"><strong>Found in the charity registers:</strong> new organisations are added, turned away or parked automatically every morning. Nothing needs you, but you can look. <a href="/admin/candidates">See candidates</a></div>
 
 <h2>Add an organisation</h2>
 <form data-api="/admin/api/add" data-kind="one" class="card">
