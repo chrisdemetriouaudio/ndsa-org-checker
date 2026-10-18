@@ -24,7 +24,11 @@ table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:8px 6px
 td.ticks{white-space:nowrap;letter-spacing:2px}.score{font-weight:700;border-radius:8px;padding:1px 9px;white-space:nowrap;--h:0;background:hsl(var(--h) 70% 92%);color:hsl(var(--h) 75% 26%)}
 @media (prefers-color-scheme:dark){.score{background:hsl(var(--h) 45% 20%);color:hsl(var(--h) 70% 72%)}}
 details>summary{cursor:pointer;color:var(--accent)}.inline{display:flex;gap:8px;margin-top:6px}.inline input{flex:1}
-.table-wrap{overflow-x:auto}`;
+.table-wrap{overflow:auto;max-height:calc(100vh - 24px);border:1px solid var(--line);border-radius:10px;margin-inline:calc(50% - min(720px, 50vw - 16px))}
+.table-wrap td.for{min-width:170px}
+.table-wrap thead th{position:sticky;top:0;z-index:2;background:var(--card);box-shadow:inset 0 -2px 0 var(--line)}
+.table-wrap th.tick{font-size:.75rem;font-weight:600;line-height:1.2;text-align:center;min-width:64px}.table-wrap td.tick{text-align:center}
+.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--bg);min-width:180px}.table-wrap thead th:first-child{z-index:3;background:var(--card)}`;
 
 /** Every page: same shell, strict headers are added by the router. Scripts carry the request's nonce. */
 export function layout(title: string, body: string, nonceValue: string, script = ''): string {
@@ -136,7 +140,11 @@ run('add', 'add-msg', addPasskey, 'Adding the passkey');`);
 type Row = Summary['orgs'][string];
 const LEVEL: Record<string, 'green' | 'amber' | 'red' | 'none'> = { g: 'green', a: 'amber', r: 'red', n: 'none' };
 const scoreBadge = (s?: Row) => (s?.score == null ? '<span class="quiet">—</span>' : `<span class="score" style="--h:${scoreHue(s.score)}">${s.score}</span>`);
-const tickRow = (s: Row | undefined, labels: string[]) => [...(s?.ticks ?? '')].map((c, i) => `<span title="${esc(`${labels[i] ?? ''}${s!.notes[i] ? `: ${s!.notes[i]}` : ''}`)}">${TICK[LEVEL[c] ?? 'none']}</span>`).join('');
+/** One cell per tick, under its own frozen column title. */
+const tickCells = (s: Row | undefined, labels: string[]) => labels.map((label, i) => {
+  const c = s?.ticks[i] ?? 'n';
+  return `<td class="tick" title="${esc(`${label}${s?.notes[i] ? `: ${s.notes[i]}` : ''}`)}">${TICK[LEVEL[c] ?? 'none']}</td>`;
+}).join('');
 
 function options(list: string[], selected?: string) {
   return list.map((v) => `<option${v === selected ? ' selected' : ''}>${esc(v)}</option>`).join('');
@@ -220,11 +228,11 @@ ${removeControl(o)}</div>`;
   }).join('') : '<p>Nothing to review.</p>'}
 
 <h2>All organisations (${live.length})</h2>
-<p class="quiet">Hover over a tick to see what it measured. ${header.length ? `Ticks, in order: ${header.map(esc).join(' · ')}.` : ''}</p>
-<div class="table-wrap"><table><thead><tr><th>Organisation</th><th>Score</th><th>Status</th><th>Ticks</th><th>For</th><th>Checked</th><th></th></tr></thead><tbody>
+<p class="quiet">Hover over a tick to see what it found. The column titles stay in view as you scroll.</p>
+<div class="table-wrap"><table><thead><tr><th>Organisation</th><th>Score</th><th>Status</th>${header.map((h) => `<th class="tick">${esc(h)}</th>`).join('')}<th>For</th><th>Checked</th><th></th></tr></thead><tbody>
 ${live.map((o) => {
     const s = state.orgs[o.id];
-    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td><td class="ticks">${tickRow(s, state.labels)}</td><td>${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}<br><span class="quiet">${o.coverage === 'local' ? `Local · ${esc(o.postcode ?? 'no postcode')}` : 'Across the nation'}</span>${detailsControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
+    return `<tr><td><a href="${esc(o.url)}">${esc(o.name)}</a><br><span class="quiet">${esc(o.area)}</span></td><td>${scoreBadge(s)}</td><td>${esc(s.status)}</td>${tickCells(s, header)}<td class="for">${o.audiences?.length ? o.audiences.map(esc).join(', ') : '<span class="quiet">not stated</span>'}<br><span class="quiet">${o.coverage === 'local' ? `Local · ${esc(o.postcode ?? 'no postcode')}` : 'Across the nation'}</span>${detailsControl(o)}</td><td>${dateWords(s.lastChecked)}</td><td>${removeControl(o)}</td></tr>`;
   }).join('')}
 </tbody></table></div>
 

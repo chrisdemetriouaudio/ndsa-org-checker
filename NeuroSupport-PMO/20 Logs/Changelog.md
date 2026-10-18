@@ -10,7 +10,13 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Checker reads the live charity register · live
+> [!success]+ 🚀 18 Oct 2026 · Admin table: frozen column titles · live
+> - **Column titles stay in view** while you scroll the organisations.
+> - **Each tick has its own titled column** (Web address, Website answers, and so on).
+> - **Organisation names stay pinned** on the left when you swipe sideways on a phone.
+> - **Wider table** on big screens, so rows are half as tall.
+
+> [!success]- 🚀 18 Oct 2026 · Checker reads the live charity register · live
 > - **Live register (England and Wales):** today's record instead of this morning's download. Key added and tested.
 > - **Says why:** the reason a charity was removed, e.g. "ceased to exist" or "merged".
 > - **New warning:** an interim manager put in by the Charity Commission shows amber.
