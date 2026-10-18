@@ -948,6 +948,6 @@ To decide: use the **admin page** (https://neurosupport.labs.chrisdemetriou.com/
 > | [Zigzag Leeds Autism Support](https://www.zigzagautismservices.co.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 
 > [!note]- 3 closed (archived, not deleted)
-> - **ADHD Foundation:** Closed by Chris on 18 Oct 2026: Not active
+> - **ADHD Foundation:** Closed by Chris on 18 Oct 2026: No longer active.
 > - **Autism Alliance UK:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 5 Jul 2023
 > - **Dyslexia Action:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 16 Aug 2023 (the name now belongs to a training business)
