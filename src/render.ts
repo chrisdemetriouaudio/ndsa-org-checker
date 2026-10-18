@@ -238,6 +238,7 @@ export function renderSite(orgs: Org[], state: State): string {
 @media (prefers-color-scheme:dark){:root{--bg:#161615;--card:#1f1f1d;--ink:#eeece6;--quiet:#a9a69e;--line:#34332f;--accent:#8db8e3;--note:#3a3120;--green:#7fd19b;--amber:#f2c25b;--red:#f28b82;--green-bg:#1d3324;--amber-bg:#3a3120;--red-bg:#3d2220}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em}
 main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;margin:0 0 4px}
+.masthead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}.admin-link{font-size:.95rem;white-space:nowrap}
 .lead{color:var(--quiet);margin:0 0 24px}ul{list-style:none;padding:0;margin:0}#list{display:grid;gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -277,7 +278,7 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 </head>
 <body>
 <main>
-<h1>Neuro Support Checker</h1>
+<header class="masthead"><h1>Neuro Support Checker</h1><span id="admin-slot"></span></header>
 <p class="lead">Support for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and more, across the UK.</p>
 <section id="checker" class="checker" hidden aria-labelledby="checker-title">
 <h2 id="checker-title">Is it still running?</h2>

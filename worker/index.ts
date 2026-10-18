@@ -58,7 +58,7 @@ async function directory(env: Env, n: string): Promise<Response> {
   if (!res.ok) throw new Error(`Could not read the directory page: HTTP ${res.status}`);
   const page = (await res.text())
     .replace('<script>', `<script nonce="${n}">`)
-    .replace('</footer>', ' · <a href="/admin">Admin sign in</a></footer>');
+    .replace('<span id="admin-slot"></span>', '<a class="admin-link" href="/admin">Admin sign in</a>');
   return html(page, n, { 'cache-control': 'public, max-age=60' });
 }
 
