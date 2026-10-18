@@ -3,41 +3,55 @@ import { AREAS, FOCUS, KINDS, MAX_PER_ADD } from '../src/neworg.ts';
 import { dateWords, scoreHue, TICK } from '../src/render.ts';
 import { FLAGGED, type Org, type Summary } from '../src/types.ts';
 import type { Admin } from './auth.ts';
-import { DISPLAY_HEAD_JS, DISPLAY_JS, DISPLAY_PANEL, DISPLAY_TOGGLE, displayCss } from '../src/display.ts';
+import { DISPLAY_HEAD_JS, DISPLAY_JS, DISPLAY_PANEL, DISPLAY_TOGGLE, displayCss, LOGO, THEME_CSS } from '../src/display.ts';
 
 export const esc = (t: unknown) => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const STYLE = `
-:root{--bg:#fbfaf7;--card:#fff;--ink:#1d1d1b;--quiet:#5c5b57;--line:#e3e0d8;--accent:#2f5d8a;--accent-ink:#fff;--note:#fff4d6;--bad:#b3261e;--good:#2e7d4f}
-@media (prefers-color-scheme:dark){:root{--bg:#161615;--card:#1f1f1d;--ink:#eeece6;--quiet:#a9a69e;--line:#34332f;--accent:#8db8e3;--accent-ink:#10202f;--note:#3a3120;--bad:#f28b82;--good:#7fd19b}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em}
-main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}h1{font-size:1.7rem;margin:0 0 4px}h2{font-size:1.25rem;margin:32px 0 10px;padding-bottom:4px;border-bottom:1px solid var(--line)}
-.quiet{color:var(--quiet)}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
-a{color:var(--accent)}button,.btn{font:inherit;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:8px 16px;cursor:pointer}
-button.plain{background:transparent;color:var(--accent)}button.danger{border-color:var(--bad);background:transparent;color:var(--bad)}
-input,select,textarea{font:inherit;width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+${THEME_CSS}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 var(--body-font);letter-spacing:.01em}
+h1,h2,h3{font-family:var(--display);line-height:1.25;letter-spacing:-.005em}
+.bar{background:var(--hero);color:var(--hero-ink);border-bottom:4px solid var(--sun)}
+.bar-in{max-width:1000px;margin:0 auto;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px 12px;flex-wrap:wrap}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--hero-ink);text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.1rem}
+.brand .logo{width:36px;height:36px}.brand:hover{text-decoration:underline;text-underline-offset:.2em}
+.bar :focus-visible{outline-color:var(--hero-ink)}.bar .prefs-toggle{margin-left:auto}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}h1{font-size:2rem;font-weight:800;margin:0 0 4px;letter-spacing:var(--tight)}
+h2{font-size:1.35rem;font-weight:800;margin:40px 0 12px;letter-spacing:var(--tight)}
+h2::before{content:"";display:block;width:40px;height:5px;border-radius:99px;background:var(--sun);margin-bottom:10px}
+.card>h2:first-child::before{display:none}
+.quiet{color:var(--quiet)}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px 24px;margin:16px 0;box-shadow:0 1px 0 var(--line)}
+a{color:var(--accent);text-underline-offset:.18em}
+button,.btn{font:inherit;font-weight:700;min-height:44px;border-radius:999px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:6px 20px;cursor:pointer}
+button:disabled{opacity:.6;cursor:progress}
+button.plain{background:var(--card);color:var(--accent)}button.danger{border-color:var(--bad);background:var(--card);color:var(--bad)}
+input:not([type=checkbox]):not([type=radio]),select,textarea{font:inherit;width:100%;min-height:44px;padding:9px 14px;border:1.5px solid var(--edge);border-radius:12px;background:var(--card);color:var(--ink)}
+input[type=checkbox]{accent-color:var(--accent);width:20px;height:20px;margin:0}
+::placeholder{color:var(--quiet);opacity:1}
 textarea{min-height:150px;font-family:ui-monospace,Menlo,monospace;font-size:.9rem}
-label{display:block;font-weight:600;margin:12px 0 4px}.checks{display:flex;flex-wrap:wrap;gap:4px 16px}.checks label{font-weight:400;display:flex;gap:6px;align-items:center;margin:0}.checks input{width:auto}
+label{display:block;font-weight:700;margin:12px 0 4px}.checks{display:flex;flex-wrap:wrap;gap:4px 16px}.checks label{font-weight:400;display:flex;gap:8px;align-items:center;margin:0;min-height:36px}.checks input{width:auto}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}@media(max-width:640px){.row{grid-template-columns:1fr}}
-.msg{border-radius:8px;padding:8px 12px;margin:12px 0}.msg.ok{background:color-mix(in srgb,var(--good) 15%,transparent)}.msg.bad{background:color-mix(in srgb,var(--bad) 15%,transparent)}
+.msg{border-radius:12px;padding:10px 14px;margin:12px 0;border-left:6px solid}.msg.ok{border-left-color:var(--good);background:var(--green-bg)}.msg.bad{border-left-color:var(--bad);background:var(--red-bg)}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:600}
-td.ticks{white-space:nowrap;letter-spacing:2px}.score{font-weight:700;border-radius:8px;padding:1px 9px;white-space:nowrap;--h:0;background:hsl(var(--h) 70% 92%);color:hsl(var(--h) 75% 26%)}
-@media (prefers-color-scheme:dark){.score{background:hsl(var(--h) 45% 20%);color:hsl(var(--h) 70% 72%)}}
-details>summary{cursor:pointer;color:var(--accent)}.inline{display:flex;gap:8px;margin-top:6px}.inline input{flex:1}
-.table-wrap{overflow:auto;max-height:calc(100vh - 24px);border:1px solid var(--line);border-radius:10px;margin-inline:calc(50% - min(720px, 50vw - 16px))}
+table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:700}
+td.ticks{white-space:nowrap;letter-spacing:2px}.score{font-weight:800;border-radius:999px;padding:1px 10px;white-space:nowrap}
+details>summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:32px}.inline{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}.inline input{flex:1;min-width:0}
+.table-wrap{overflow:auto;max-height:calc(100vh - 24px);border:1px solid var(--line);border-radius:18px;background:var(--card);margin-inline:calc(50% - min(720px, 50vw - 16px))}
 .table-wrap td.for{min-width:170px}
-.table-wrap thead th{position:sticky;top:0;z-index:2;background:var(--card);box-shadow:inset 0 -2px 0 var(--line)}
-.table-wrap th.tick{font-size:.75rem;font-weight:600;line-height:1.2;text-align:center;min-width:64px}.table-wrap td.tick{text-align:center}
-.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--bg);min-width:180px}.table-wrap thead th:first-child{z-index:3;background:var(--card)}
-.displaybar{display:flex;justify-content:flex-end;margin:-12px 0 8px}
+.table-wrap thead th{position:sticky;top:0;z-index:2;background:var(--tint-2);box-shadow:inset 0 -2px 0 var(--edge)}
+.table-wrap th.tick{font-size:.75rem;font-weight:700;line-height:1.2;text-align:center;min-width:64px}.table-wrap td.tick{text-align:center}
+.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--card);min-width:180px}.table-wrap thead th:first-child{z-index:3;background:var(--tint-2)}
+.table-wrap tbody tr:hover td{background:var(--bg)}
+.glance{background:var(--tint);border-color:transparent}
+:root[data-contrast="high"] .bar{border-bottom:3px solid var(--ink)}:root[data-contrast="high"] .msg{border:2px solid var(--ink)}
 ${displayCss('/fonts/')}`;
 
 /** Every page: same shell, strict headers are added by the router. Scripts carry the request's nonce. */
 export function layout(title: string, body: string, nonceValue: string, script = ''): string {
   return `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>${esc(title)}</title><script nonce="${nonceValue}">${DISPLAY_HEAD_JS}</script><style>${STYLE}</style></head>
-<body><main><div class="displaybar">${DISPLAY_TOGGLE}</div>${body}</main>${DISPLAY_PANEL}<script nonce="${nonceValue}">${DISPLAY_JS}${script ? `\n${script}` : ''}</script></body></html>`;
+<body><header class="bar"><div class="bar-in"><a class="brand" href="/">${LOGO}<span>Neuro Support Checker</span></a>${DISPLAY_TOGGLE}</div></header><main>${body}</main>${DISPLAY_PANEL}<script nonce="${nonceValue}">${DISPLAY_JS}${script ? `\n${script}` : ''}</script></body></html>`;
 }
 
 const POST_JS = `
@@ -192,7 +206,7 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary, 
 <div><a href="/">Directory</a> &nbsp; <button class="plain" id="out">Sign out</button></div></div>
 ${readOnly ? `<div class="msg bad"><strong>Look only, for now.</strong> This site cannot save changes until its GitHub key is added (Phase 6 in the vault has the steps). Until then, make changes on the old admin page.</div>` : ''}
 
-<div class="card"><strong>At a glance:</strong> ${live.length} listed · ${flagged.length} to review · ${pending.length} being checked · ${closed.length} removed · average score ${avg ?? '—'}. Last daily check: ${dateWords(state.updated)}.</div>
+<div class="card glance"><strong>At a glance:</strong> ${live.length} listed · ${flagged.length} to review · ${pending.length} being checked · ${closed.length} removed · average score ${avg ?? '—'}. Last daily check: ${dateWords(state.updated)}.</div>
 
 <div class="card"><strong>Found in the charity registers:</strong> new organisations are added, turned away or parked automatically every morning. Nothing needs you, but you can look. <a href="/admin/candidates">See candidates</a></div>
 
