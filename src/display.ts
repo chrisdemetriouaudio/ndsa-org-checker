@@ -46,8 +46,8 @@ export function displayCss(fonts: string): string {
 :root[data-contrast="high"] .card,:root[data-contrast="high"] .checker,:root[data-contrast="high"] .result,:root[data-contrast="high"] .table-wrap,:root[data-contrast="high"] .prefs-panel,:root[data-contrast="high"] input,:root[data-contrast="high"] select,:root[data-contrast="high"] textarea{border:2px solid var(--ink)!important;box-shadow:none!important}
 :root[data-contrast="high"] .score{background:var(--bg)!important;color:var(--ink)!important;outline:2px solid var(--ink)}
 :root[data-contrast="high"] .deco{display:none}
-.logo{width:42px;height:42px;flex:none}.logo-bg{fill:var(--sun)}.logo-dot{fill:var(--coral)}.logo-tick{stroke:#12504c}
-:root[data-contrast="high"] .logo-bg{fill:var(--bg);stroke:var(--ink);stroke-width:3}:root[data-contrast="high"] .logo-tick{stroke:var(--ink)}:root[data-contrast="high"] .logo-dot{fill:var(--ink)}
+.logo{width:42px;height:42px;flex:none}.logo-bg{fill:var(--sun)}.logo-fold{stroke:#12504c}.logo-dot{fill:var(--mint)}.logo-tick{stroke:#12504c}
+:root[data-contrast="high"] .logo-bg{fill:var(--bg);stroke:var(--ink);stroke-width:5}:root[data-contrast="high"] .logo-fold{stroke:var(--ink)}:root[data-contrast="high"] .logo-tick{stroke:var(--bg)}:root[data-contrast="high"] .logo-dot{fill:var(--ink)}
 :root[data-contrast="high"] a{text-decoration:underline;text-decoration-thickness:2px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .prefs-toggle{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 16px;font:600 .95rem var(--body-font);color:var(--ink);cursor:pointer;background:var(--card);border:1.5px solid var(--edge);border-radius:99px}
@@ -103,7 +103,10 @@ ${Object.keys(ICON_PATHS).map((k) => `.ic-${k}{--i:var(--ic-${k})}`).join('')}
 @media (forced-colors:active){.ic{forced-color-adjust:none;background:CanvasText}}`;
 
 /** The site's mark: a tick on a sun-yellow tile, with a coral dot. Decoration only (the name is always next to it). */
-export const LOGO = '<svg class="logo" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect class="logo-bg" width="40" height="40" rx="13"/><circle class="logo-dot" cx="31" cy="9" r="4.5"/><path class="logo-tick" d="M11 21.5l6 6 12.5-14" fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+/** The brain mark (a 100×84 drawing): a rounded yellow brain with deep-green folds. Used by the logo, the hero and the finder's avatar. */
+export const BRAIN_PATH = 'M30 74C18 74 10 66 10 56C4 52 2 44 6 37C3 28 9 18 19 16C22 8 32 4 41 7C47 2 57 2 63 7C72 4 82 9 85 18C94 21 98 31 95 40C99 48 96 58 88 62C87 71 78 77 69 75C64 81 54 82 48 77C42 80 34 79 30 74Z';
+export const BRAIN_FOLDS = 'M50 10C46 20 54 28 49 38C45 46 52 54 48 64M21 30C29 28 34 34 32 42M71 21C66 29 74 34 70 42M17 56C25 52 31 56 33 62M82 51C74 50 67 55 67 63';
+export const LOGO = `<svg class="logo" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><g transform="translate(0 3) scale(.37)"><path class="logo-bg" d="${BRAIN_PATH}"/><path class="logo-fold" d="${BRAIN_FOLDS}" fill="none" stroke-width="7" stroke-linecap="round"/></g><circle class="logo-dot" cx="31.5" cy="31" r="8"/><path class="logo-tick" d="M27.5 31l2.8 2.8 5-5.6" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 /** In <head>: applies the saved settings before the page draws, so there is no flash of the wrong look. */
 export const DISPLAY_HEAD_JS = `(function(){try{var p=JSON.parse(localStorage.getItem(${JSON.stringify(KEY)})||"{}")||{};var r=document.documentElement;["theme","text","font","spacing","contrast"].forEach(function(k){if(typeof p[k]==="string"&&/^[a-z]+$/.test(p[k]))r.setAttribute("data-"+k,p[k]);});}catch(e){}})();`;

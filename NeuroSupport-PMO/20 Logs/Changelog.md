@@ -17,6 +17,8 @@ updated: 2026-10-18
 > - **Labels mean what an organisation is mainly for** (name, and the start of its register description), not every passing mention. 41 corrected today.
 > - **Audited:** every condition and "Who is it for?" button shows only matching organisations.
 > - **Fixed:** a stray file of mine stopped one daily save; the save step now copes.
+> - **Brain logo:** a yellow brain with green folds and a mint tick, in the logo, the hero and the finder.
+> - **"How this works"** is now a section on the page (where the list comes from, how we check, the score, who decides, privacy), not a link to GitHub.
 > - **Credit in the footer** of every page: "© 2026 · Designed and built by Chris Demetriou", linking to chrisdemetriou.com.
 > - **Name clean-up:** quotation marks and stray punctuation are removed from every name ("'spectrum Wasp'" is now Spectrum WASP), every morning and when adding. A–Z ignores punctuation, so nothing can jump the queue.
 

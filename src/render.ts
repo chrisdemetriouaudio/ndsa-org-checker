@@ -7,7 +7,7 @@ import type { Level, Signal } from './signals.ts';
 
 export { dateWords };
 import { FLAGGED, type Org, type OrgState, type State, type Status } from './types.ts';
-import { DISPLAY_HEAD_JS, DISPLAY_JS, DISPLAY_PANEL, DISPLAY_TOGGLE, displayCss, ICON_CSS, LOGO, THEME_CSS } from './display.ts';
+import { DISPLAY_HEAD_JS, DISPLAY_JS, DISPLAY_PANEL, DISPLAY_TOGGLE, displayCss, ICON_CSS, LOGO, THEME_CSS, BRAIN_PATH, BRAIN_FOLDS } from './display.ts';
 
 const REPO = 'https://github.com/chrisdemetriouaudio/neuro-support-checker';
 
@@ -212,14 +212,15 @@ const ICONS = {
 
 /** Friendly shapes in the top band: sun, coral and mint, with a big tick. Hidden in high contrast and on phones. */
 const HERO_SHAPES = `<svg class="deco shapes" viewBox="0 0 320 260" aria-hidden="true" focusable="false">
-<circle class="s-sun" cx="188" cy="112" r="88"/><circle class="s-coral" cx="92" cy="196" r="52"/>
-<rect class="s-mint" x="214" y="158" width="88" height="88" rx="28" transform="rotate(12 258 202)"/><circle class="s-mint" cx="62" cy="64" r="15"/>
-<path class="s-tick" d="M146 114l28 28 54-62" fill="none" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+<circle class="s-coral" cx="92" cy="196" r="52"/><circle class="s-mint" cx="62" cy="64" r="15"/>
+<g transform="translate(92 24) scale(1.9)"><path class="s-sun" d="${BRAIN_PATH}"/><path class="s-fold" d="${BRAIN_FOLDS}" fill="none" stroke-width="4.5" stroke-linecap="round"/></g>
+<rect class="s-mint" x="214" y="158" width="88" height="88" rx="28" transform="rotate(12 258 202)"/>
+<path class="s-tick" d="M236 202l14 14 28-32" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const wave = (cls: string) => `<svg class="wave ${cls}" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 56V26C200 4 420 0 720 22s520 34 720 6V56Z"/></svg>`;
 
 /** The finder's avatar: the logo as a tiny picture (img-src allows data:). */
-const AVATAR = `url("data:image/svg+xml,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='13' fill='#f3c457'/><circle cx='31' cy='9' r='4.5' fill='#e8805f'/><path d='M11 21.5l6 6 12.5-14' fill='none' stroke='#12504c' stroke-width='4.2' stroke-linecap='round' stroke-linejoin='round'/></svg>")}")`;
+const AVATAR = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='13' fill='#e3f1ec'/><g transform='translate(3 6) scale(.34)'><path d='${BRAIN_PATH}' fill='#f3c457'/><path d='${BRAIN_FOLDS}' fill='none' stroke='#12504c' stroke-width='7' stroke-linecap='round'/></g></svg>`)}")`;
 
 /*
  * Mobile first: one calm column with a sticky search bar. From 1024px wide: search, finder and filters in a sticky
@@ -263,13 +264,15 @@ ul{list-style:none;padding:0;margin:0}
 .facts strong{font-family:var(--display);font-weight:800;font-size:var(--fs-md);color:var(--hero-ink);line-height:1}
 .shapes{display:none}
 @media (min-width:860px){.shapes{display:block;position:absolute;right:var(--sp-5);top:84px;width:300px;height:auto}.hero-body{margin-top:var(--sp-7)}.hero .wrap{padding-bottom:120px}}
-.s-sun{fill:var(--sun)}.s-coral{fill:var(--coral)}.s-mint{fill:var(--mint)}.s-tick{stroke:var(--hero)}
+.s-sun{fill:var(--sun)}.s-fold{stroke:var(--hero)}.s-coral{fill:var(--coral)}.s-mint{fill:var(--mint)}.s-tick{stroke:var(--hero)}
 .wave{position:absolute;left:0;right:0;width:100%;height:48px;pointer-events:none}
 .wave.down{bottom:-1px;fill:var(--bg)}.wave.up{top:-47px;fill:var(--hero);transform:scaleX(-1)}
 main{display:block}
 /* ---------- Shared pieces ---------- */
 .sec-head{display:flex;align-items:center;gap:var(--sp-3)}
 .sec-head h2{font-size:var(--fs-lg)}
+.how{margin-top:var(--sp-7);margin-bottom:var(--sp-7)}.how-grid{display:grid;gap:var(--sp-4);margin-top:var(--sp-4)}@media (min-width:760px){.how-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1100px){.how-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.how-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:var(--sp-5)}.how-card h3{margin:0 0 var(--sp-2);font-size:var(--fs-md, 1.125rem)}.how-card p{margin:0;max-width:65ch}
 .ico{flex:none;display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;color:#1c2b2a}
 .ico svg{width:24px;height:24px}.ico.sun{background:var(--sun)}.ico.mint{background:var(--mint)}.ico.coral{background:var(--coral)}
 .lead{color:var(--quiet);max-width:var(--measure)}
@@ -597,6 +600,17 @@ ${cards}
 </div>
 </div>
 </section>
+<section class="how wrap" id="how" aria-labelledby="how-title">
+<div class="sec-head"><span class="ico sun">${ICONS.chat}</span><h2 id="how-title" tabindex="-1">How this works</h2></div>
+<div class="how-grid">
+<div class="how-card"><h3>Where the list comes from</h3><p>The three official UK charity registers: England and Wales, Scotland, and Northern Ireland. Every morning we look for organisations that support people with ${CONDITIONS.length} conditions, including autism, ADHD, dyslexia, learning disability, Down syndrome and brain injury. A new one is added only if it clearly offers support and its website works.</p></div>
+<div class="how-card"><h3>How we check it is still running</h3><p>Every 1 to 3 days we visit each website once, politely. We look for a notice saying it has closed, a web address that has gone or is for sale, or a move to a new address. We also check the charity register: removed, insolvent, in administration, or accounts overdue.</p></div>
+<div class="how-card"><h3>What the score means</h3><p>The score, out of 100, shows how sure we are that an organisation is still running. Green means sure, amber means worth checking, red means it may have closed. The ticks on each card show what was checked and what we found.</p></div>
+<div class="how-card"><h3>A person decides every closure</h3><p>The checks only suggest. Services that look closed are hidden from the list until a person has checked them. Nobody is removed by a computer alone.</p></div>
+<div class="how-card"><h3>Your privacy</h3><p>No account, no tracking. A postcode is only used to find your council area and work out distances; it is not stored. Display settings are saved on your own device.</p></div>
+<div class="how-card"><h3>Spotted a mistake?</h3><p>Use "Report a problem" on any listing, and we will look at it.</p></div>
+</div>
+</section>
 </main>
 <a href="#top" id="to-top" class="to-top" hidden><span class="ic ic-up" aria-hidden="true"></span><span class="tt">Back to top</span></a>
 <footer class="site-foot">
@@ -604,7 +618,7 @@ ${wave('up')}
 <div class="wrap">
 <div class="foot-grid">
 <div><div class="brand">${LOGO}<strong>Neuro Support Checker</strong></div><p class="tagline">Support for autism, ADHD, dyslexia and more, across the UK.</p></div>
-<div><h2>About this site</h2><p>Prototype. Services that look closed are hidden until a person checks them. <a href="${REPO}">How this works</a>.</p></div>
+<div><h2>About this site</h2><p>Prototype. Services that look closed are hidden until a person checks them. <a href="#how">How this works</a>.</p></div>
 <div><h2>Sources</h2><p>Sources include the Charity Commission for England and Wales, the Charity Commission for Northern Ireland and the Scottish Charity Register: © Crown Copyright and database right ${new Date().getFullYear()}. Contains information from the Scottish Charity Register supplied by the Office of the Scottish Charity Regulator and licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>.</p></div>
 </div>
 <div class="foot-base"><span>Checked every 1 to 3 days. Last check: ${dateWords(state.updated)}.</span><a href="#top"><span class="ic ic-up" aria-hidden="true"></span>Back to top</a></div>
