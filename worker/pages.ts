@@ -17,10 +17,11 @@ h1,h2,h3{font-family:var(--display);line-height:1.25;letter-spacing:-.005em}
 .brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--hero-ink);text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.1rem}
 .brand .logo{width:36px;height:36px}.brand:hover{text-decoration:underline;text-underline-offset:.2em}
 .bar :focus-visible{outline-color:var(--hero-ink)}.bar .prefs-toggle{margin-left:auto}
-main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}h1{font-size:1.9rem;font-weight:800;margin:0 0 4px}
-h2{font-size:1.3rem;font-weight:800;margin:36px 0 12px;padding-bottom:6px;border-bottom:3px solid var(--line)}
-.card>h2:first-child{border-bottom:0;padding-bottom:0}
-.quiet{color:var(--quiet)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin:12px 0}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 64px}h1{font-size:2rem;font-weight:800;margin:0 0 4px;letter-spacing:var(--tight)}
+h2{font-size:1.35rem;font-weight:800;margin:40px 0 12px;letter-spacing:var(--tight)}
+h2::before{content:"";display:block;width:40px;height:5px;border-radius:99px;background:var(--sun);margin-bottom:10px}
+.card>h2:first-child::before{display:none}
+.quiet{color:var(--quiet)}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px 24px;margin:16px 0;box-shadow:0 1px 0 var(--line)}
 a{color:var(--accent);text-underline-offset:.18em}
 button,.btn{font:inherit;font-weight:700;min-height:44px;border-radius:999px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:6px 20px;cursor:pointer}
 button:disabled{opacity:.6;cursor:progress}

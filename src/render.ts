@@ -244,7 +244,7 @@ ul{list-style:none;padding:0;margin:0}
 .hero{background:var(--hero);color:var(--hero-ink);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-210px;top:120px;background:color-mix(in srgb,var(--mint) 13%,transparent)}
 .hero::after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;left:-75px;top:-75px;background:color-mix(in srgb,var(--sun) 16%,transparent)}
-.hero .wrap{position:relative;z-index:1;padding-top:var(--sp-4);padding-bottom:104px}
+.hero .wrap{position:relative;z-index:1;padding-top:var(--sp-4);padding-bottom:96px}
 .hero :focus-visible,.site-foot :focus-visible{outline-color:var(--hero-ink)}
 .masthead{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-3);flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:var(--sp-3);min-width:0}
@@ -253,7 +253,7 @@ ul{list-style:none;padding:0;margin:0}
 .mast-tools{display:flex;gap:var(--sp-2);align-items:center;flex-wrap:wrap;margin-left:auto}
 .admin-link{display:inline-flex;align-items:center;min-height:44px;font-size:var(--fs-sm);font-weight:700;white-space:nowrap;color:var(--hero-ink);border:1.5px solid var(--hero-ink);border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-4);text-decoration:none}
 .admin-link:hover{background:var(--hero-ink);color:var(--hero)}
-.hero-body{position:relative;z-index:1;max-width:36rem;margin-top:var(--sp-6)}
+.hero-body{position:relative;z-index:1;max-width:36rem;margin-top:var(--sp-5)}
 .kicker{display:inline-flex;align-items:center;gap:var(--sp-2);font-weight:800;font-size:var(--fs-sm);color:var(--hero-ink);background:color-mix(in srgb,var(--hero-ink) 12%,var(--hero));border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-3);margin:0 0 var(--sp-4)}
 .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sun)}
 .hero-lead{font:800 var(--fs-hero)/1.15 var(--display);letter-spacing:var(--tight);margin:0 0 var(--sp-5);color:var(--hero-ink);text-wrap:balance;overflow-wrap:break-word}
@@ -402,6 +402,27 @@ background:radial-gradient(closest-side,var(--card) calc(100% - 7px),transparent
 .score.na{color:var(--quiet)}
 @media (min-width:600px){.result h3{font-size:var(--fs-xl)}.result .score{width:96px;height:96px;font-size:2rem}}
 @media (max-width:599.98px){.result>.top{grid-template-columns:minmax(0,1fr)}.result>.top .score{justify-self:start}}
+#list .paged{display:none!important}
+.pager{display:flex;flex-direction:column;align-items:center;gap:var(--sp-3);margin-top:var(--sp-6);text-align:center}
+#page-count{color:var(--quiet);font-weight:800}
+.pager .btn{background:var(--card);color:var(--accent);min-width:min(100%,16rem)}
+.pager .btn:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.to-top{position:fixed;right:var(--sp-4);bottom:var(--sp-4);z-index:30;display:inline-flex;align-items:center;gap:var(--sp-2);min-height:48px;padding:0 var(--sp-5);border-radius:var(--r-pill);background:var(--accent);color:var(--accent-ink);font-weight:800;text-decoration:none;box-shadow:0 10px 24px -12px rgba(0,0,0,.55)}
+.to-top:hover{background:var(--ink);color:var(--bg)}
+@media (max-width:599.98px){.to-top{width:52px;height:52px;padding:0;justify-content:center}.to-top .ic{width:1.4em;height:1.4em}.to-top .tt{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}}
+.active{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2) var(--sp-3);margin-bottom:var(--sp-4);padding:var(--sp-3) var(--sp-4);background:var(--card);border:2px solid var(--accent);border-radius:var(--r-lg)}
+.active-label{font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:var(--sp-2);min-width:0}
+.chip-x{display:inline-flex;align-items:center;gap:var(--sp-2);min-height:44px;padding:var(--sp-1) var(--sp-2) var(--sp-1) var(--sp-4);border-radius:22px;border:0;background:var(--tag-bg);color:var(--tag-ink);font:inherit;font-size:var(--fs-sm);font-weight:800;cursor:pointer;max-width:100%;text-align:left}
+.chip-x span{flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--card);color:var(--tag-ink);font-size:.75rem}
+.chip-x:hover{background:var(--accent);color:var(--accent-ink)}
+.clear-all{font:inherit;font-weight:800;font-size:var(--fs-sm);min-height:44px;padding:var(--sp-1) var(--sp-4);border-radius:var(--r-pill);border:2px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;margin-left:auto}
+.clear-all:hover{background:var(--accent);color:var(--accent-ink)}
+.disclose{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:var(--sp-2);min-height:44px;cursor:pointer;font:inherit;color:inherit;letter-spacing:inherit;border-radius:8px}
+.disclose:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.chev{flex:none;width:28px;height:28px;border-radius:50%;background:var(--card);position:relative}
+.chev::after{content:"";position:absolute;left:9px;top:7px;width:8px;height:8px;border:solid var(--accent);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.disclose[aria-expanded="true"] .chev::after{top:11px;transform:rotate(-135deg)}
 #more{margin-top:var(--sp-5);display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2)}
 .empty{text-align:center;background:var(--card);border:2px dashed var(--edge);border-radius:var(--r-lg);padding:var(--sp-7) var(--sp-5)}
 .empty .ic{width:56px;height:56px;color:var(--accent)}
@@ -420,6 +441,7 @@ background:radial-gradient(closest-side,var(--card) calc(100% - 7px),transparent
 @media (min-width:860px){.foot-grid{grid-template-columns:1.2fr 1fr 1.6fr;gap:var(--sp-7)}}
 /* ---------- Desktop: sticky left column ---------- */
 @media (min-width:1024px){
+.active{position:sticky;top:var(--sp-3);z-index:6;box-shadow:0 12px 24px -20px rgba(10,40,38,.6)}
 .dir{display:grid;grid-template-columns:minmax(19rem,23rem) minmax(0,1fr);gap:var(--sp-6);align-items:start}
 .side{display:flex;flex-direction:column;gap:var(--sp-5);align-self:stretch}
 .filters{display:flex;flex-direction:column;gap:var(--sp-4);position:sticky;top:0;z-index:5;background:var(--bg);padding:var(--sp-4) 0;margin-top:calc(-1 * var(--sp-4))}
@@ -440,9 +462,13 @@ background:radial-gradient(closest-side,var(--card) calc(100% - 7px),transparent
 :root[data-contrast="high"] .card h2 a{text-decoration:underline;background:none}
 :root[data-contrast="high"] .checker{border:2px solid var(--ink)}
 :root[data-contrast="high"] .bubble.bot{border:1.5px solid var(--ink)}
+:root[data-contrast="high"] .chip-x,:root[data-contrast="high"] .chev,:root[data-contrast="high"] .to-top{outline:1.5px solid var(--ink)}
 `;
 
 /** "Serves: X" without the label (the card shows the label itself). */
+/** Cards shown at first; "Show 12 more" adds the next 12 (all stay on the page for search and filters). */
+const PAGE = 12;
+
 const servesValue = (org: Org) => servesText(org).replace(/^Serves: /, '');
 
 export function renderSite(orgs: Org[], state: State): string {
@@ -450,7 +476,7 @@ export function renderSite(orgs: Org[], state: State): string {
   const condCount = new Map<string, number>();
   for (const { org } of shown) for (const c of conditionsOf(org).labels) condCount.set(c, (condCount.get(c) ?? 0) + 1);
   const condButtons = [...condCount.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  const cards = shown.map(({ org, s }) => {
+  const cards = shown.map(({ org, s }, i) => {
     const report = `${REPO}/issues/new?title=${encodeURIComponent(`Problem with ${org.name}`)}&body=${encodeURIComponent(`Listing: ${org.name} (${org.url})\n\nWhat went wrong:\n`)}`;
     const checking = s.status === 'Needs a check' ? '<p class="note">We are re-checking this service.</p>' : '';
     const freshness = s.status === 'Confirmed' ? `Confirmed by the organisation` : `Last checked ${dateWords(s.lastChecked)}`;
@@ -460,7 +486,7 @@ export function renderSite(orgs: Org[], state: State): string {
     const cs = conditionsOf(org);
     const badge = hue === null ? '<span class="score na" title="How sure we are it is still running">—</span>'
       : `<span class="score" style="--h:${hue};--s:${s.score}" title="How sure we are it is still running">${s.score}<small>/100</small></span>`;
-    return `<li class="card" data-cond="${esc(cs.labels.join('|'))}" data-general="${cs.general ? 1 : ''}" data-aud="${esc((org.audiences ?? []).join(' '))}" data-cov="${org.coverage ?? 'national'}" data-nations="${esc((org.nations ?? []).join('|'))}"${place}>
+    return `<li class="card${i >= PAGE ? ' paged' : ''}" data-cond="${esc(cs.labels.join('|'))}" data-general="${cs.general ? 1 : ''}" data-aud="${esc((org.audiences ?? []).join(' '))}" data-cov="${org.coverage ?? 'national'}" data-nations="${esc((org.nations ?? []).join('|'))}"${place}>
   <div class="top"><h2><a href="${esc(org.url)}">${esc(org.name)}</a></h2>${badge}</div>
   <p class="meta">${esc(org.kind)} · ${esc(org.area)}</p>
   <div class="facts-list"><p class="who for"><span class="k">For</span> <span>${esc(who)}</span></p>
@@ -488,6 +514,7 @@ ${ICON_CSS}
 ${SITE_CSS}
 ${displayCss('fonts/')}
 </style>
+<noscript><style>#list .card.paged{display:grid!important}</style></noscript>
 </head>
 <body>
 <a class="skip" href="#browse">Skip to the directory</a>
@@ -534,10 +561,12 @@ ${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false"
 </div>
 </div>
 <section id="finder" class="finder panel" aria-labelledby="finder-title">
-<div class="sec-head"><span class="ico coral">${ICONS.chat}</span><h2 id="finder-title">Not sure where to start?</h2></div>
+<div class="sec-head"><span class="ico coral">${ICONS.chat}</span><h2 id="finder-title"><button type="button" class="disclose" id="finder-toggle" aria-expanded="true" aria-controls="finder-body">Not sure where to start?<span class="chev" aria-hidden="true"></span></button></h2></div>
 <p class="hint" style="margin-top:0">Answer 3 quick questions by tapping a button.</p>
+<div id="finder-body">
 <div id="chat" aria-live="polite"></div>
 <div id="choices"></div>
+</div>
 </section>
 <form id="near" class="near panel" hidden>
 <label for="pc"><span class="ic ic-pin" aria-hidden="true"></span>Near you</label>
@@ -549,15 +578,18 @@ ${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false"
 </div>
 <div class="results">
 <div class="results-head deco"><p class="scorekey"><span class="ends">0 <span class="bar" aria-hidden="true"></span> 100</span><span>Red: less sure. Green: more sure.</span></p></div>
+<div id="active" class="active" hidden aria-live="polite"><span class="active-label">Showing:</span><span id="chips" class="chips"></span><button type="button" id="clear-all" class="clear-all">Clear all</button></div>
 <ul id="list">
 ${cards}
 </ul>
 <div id="empty" class="empty" hidden><span class="ic ic-nomatch" aria-hidden="true"></span><h3>Nothing matches yet</h3><p>Try fewer words, or show everyone.</p><button type="button" id="reset" class="btn">Clear search and filters</button></div>
+<div id="pager" class="pager" hidden><p id="page-count"></p><button type="button" id="show-more" class="btn">Show 12 more</button></div>
 <p id="more" class="lead" hidden><span></span> <button type="button" class="linkish">Show them too</button></p>
 </div>
 </div>
 </section>
 </main>
+<a href="#top" id="to-top" class="to-top" hidden><span class="ic ic-up" aria-hidden="true"></span><span class="tt">Back to top</span></a>
 <footer class="site-foot">
 ${wave('up')}
 <div class="wrap">
@@ -572,6 +604,13 @@ ${wave('up')}
 <script>
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];
 const countEl=document.getElementById('count'),empty=document.getElementById('empty');
+// Paging: only the first PAGE matches show; "Show more" adds PAGE more. Filters reset it to the first page.
+const PAGE=${PAGE};let limit=PAGE;const pager=document.getElementById('pager'),pageCount=document.getElementById('page-count'),moreBtn=document.getElementById('show-more');
+const page=()=>{const kids=[...document.getElementById('list').children];let total=0;
+for(const li of kids){if(li.classList.contains('group'))continue;if(li.hidden){li.classList.remove('paged');continue;}li.classList.toggle('paged',++total>limit);}
+let head=null,any=false;for(const li of kids){if(li.classList.contains('group')){if(head)head.classList.toggle('paged',!any);head=li;any=false;}else if(!li.hidden&&!li.classList.contains('paged'))any=true;}if(head)head.classList.toggle('paged',!any);
+pager.hidden=!total;pageCount.textContent='Showing '+Math.min(limit,total)+' of '+total;moreBtn.hidden=total<=limit;moreBtn.textContent='Show '+Math.min(PAGE,total-limit)+' more';};
+moreBtn.addEventListener('click',()=>{const before=limit;limit+=PAGE;page();const vis=[...document.querySelectorAll('#list .card')].filter(li=>!li.hidden&&!li.classList.contains('paged'));const first=vis[before];if(first)first.querySelector('h2 a').focus();});
 const icon=(k)=>{const s=document.createElement('span');s.className='ic ic-'+k;s.setAttribute('aria-hidden','true');return s;};
 let aud='',cond='',showUnstated=false;
 const more=document.getElementById('more');
@@ -598,8 +637,8 @@ for(const [g,label] of GROUPS)heads[g].textContent=label()+' · '+groups[g].leng
 list.replaceChildren(...GROUPS.flatMap(([g])=>groups[g].length?[heads[g],...groups[g]]:[]),...order.filter(li=>li.hidden));
 nearMsg.hidden=false;nearMsg.textContent=groups.serving.length+' serve '+here.district+', '+groups.wide.length+' work across '+here.country+', '+groups.unknown.length+' have no recorded area, and '+groups.other.length+' list other areas.';}
 else if(Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
-more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';
-const n=items.filter(li=>!li.hidden).length;countEl.textContent=n===items.length?n+' shown':n+' of '+items.length+' shown';empty.hidden=n>0;};
+chipsUpdate(t);more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';
+const n=items.filter(li=>!li.hidden).length;countEl.textContent=n===items.length?n+' listed':n+' found';empty.hidden=n>0;limit=PAGE;page();};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
 const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
 fetch('/api/postcode?pc=SW1A',{method:'HEAD'}).then(r=>{if(r.ok)near.hidden=false;}).catch(()=>{});
@@ -636,8 +675,18 @@ catch(err){checkOut.replaceChildren(mk('p',err.message,'note'));}finally{go.disa
 // Button finder: three questions, buttons only. It sets the same filters as the controls below.
 const chat=document.getElementById('chat'),choices=document.getElementById('choices');
 const CONDS=${JSON.stringify(condButtons.map(([c]) => c))};
+const AUD_LABEL=${JSON.stringify(AUDIENCE_LABEL)};
+// Every active filter shows as a chip with ✕ above the results, plus "Clear all": nobody gets stuck in a filter.
+function chipsUpdate(t){const box=document.getElementById('active'),chips=document.getElementById('chips');const list=[];
+if(cond)list.push(['Support with: '+cond.charAt(0).toUpperCase()+cond.slice(1),()=>{cond='';apply();}]);
+if(aud)list.push(['For: '+(AUD_LABEL[aud]||aud),()=>setAud('')]);
+if(here)list.push(['Near: '+here.label,()=>clear.click()]);
+if(t)list.push(['Search: "'+q.value.trim()+'"',()=>{q.value='';apply();}]);
+chips.replaceChildren(...list.map(([label,fn])=>{const b=document.createElement('button');b.type='button';b.className='chip-x';b.setAttribute('aria-label','Remove filter: '+label);b.append(label+' ');const x=document.createElement('span');x.setAttribute('aria-hidden','true');x.textContent='✕';b.append(x);b.onclick=fn;return b;}));
+box.hidden=!list.length;}
+document.getElementById('clear-all').addEventListener('click',()=>{q.value='';start();});
 const say=(who,text)=>{const p=document.createElement('p');p.className='bubble '+who;p.textContent=text;chat.append(p);};
-const ask=(question,options)=>{say('bot',question);choices.replaceChildren(...options.map(([label,fn,ic])=>{const b=document.createElement('button');b.type='button';b.textContent=label;if(ic)b.prepend(icon(ic));b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
+const ask=(question,options)=>{say('bot',question);if(chat.children.length>2)options=[...options,['Start again',()=>start(),'restart']];choices.replaceChildren(...options.map(([label,fn,ic])=>{const b=document.createElement('button');b.type='button';b.textContent=label;if(ic)b.prepend(icon(ic));b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
 const setAud=(a)=>{aud=a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x.dataset.a===a));apply();};
 const show=()=>{apply();const n=items.filter(li=>!li.hidden).length;
 say('bot',n?'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.':'Nothing matches all of that yet. Try a wider distance, or "Anyone".');
@@ -648,6 +697,10 @@ const forWho=()=>ask('Who is the support for?',[['A child or young person',()=>{
 const start=()=>{chat.replaceChildren();cond='';setAud('');here=null;clear.hidden=true;nearMsg.hidden=true;apply();
 ask('What would you like support with?',[...CONDS.map(c=>[c.charAt(0).toUpperCase()+c.slice(1),()=>{cond=c;apply();forWho();}]),['Not sure, or more than one',()=>{cond='';apply();forWho();}]]);};
 start();
+const ft=document.getElementById('finder-toggle'),fb=document.getElementById('finder-body'),wide=matchMedia('(min-width:1024px)');
+const setFinder=(open)=>{ft.setAttribute('aria-expanded',String(open));fb.hidden=!open;};
+setFinder(wide.matches);ft.addEventListener('click',()=>setFinder(fb.hidden));wide.addEventListener('change',(e)=>{if(e.matches)setFinder(true);});
+const toTop=document.getElementById('to-top');const topCheck=()=>{toTop.hidden=scrollY<1200;};addEventListener('scroll',topCheck,{passive:true});topCheck();
 document.getElementById('reset').addEventListener('click',()=>{q.value='';cond='';if(here)clear.click();setAud('');q.focus();});
 q.addEventListener('input',apply);
 for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
