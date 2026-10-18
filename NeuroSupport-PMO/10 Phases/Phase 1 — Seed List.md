@@ -7,7 +7,7 @@ updated: 2026-10-17
 # 🌱 Phase 1 — Seed List
 
 > [!info] At a glance
-> **What:** a starting list of UK neurodivergent support organisations to check.
+> **What:** a starting list of UK support organisations to check (mostly autism, ADHD and dyslexia; the full 18 conditions came in Phase 7).
 > **Status:** ✅ Done (17 Oct 2026). 44 organisations in `data/orgs.json`.
 > **Back to:** [[00 Dashboard]]
 

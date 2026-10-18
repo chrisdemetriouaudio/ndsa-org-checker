@@ -6,7 +6,7 @@ updated: 2026-10-17
 # 🧭 How this vault works
 
 > [!info] At a glance
-> **What:** the to-do list and history for the ND organisation checker.
+> **What:** the to-do list and history for Neuro Support Checker.
 > **Start here:** [[00 Dashboard]].
 > **Updated:** 17 Oct 2026
 

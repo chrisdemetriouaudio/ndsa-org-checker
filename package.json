@@ -2,7 +2,7 @@
   "name": "neuro-support-checker",
   "private": true,
   "type": "module",
-  "description": "Daily checks that neurodivergent support organisations are still active.",
+  "description": "Daily checks that UK support organisations for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and related conditions are still active.",
   "engines": {
     "node": ">=22.18"
   },

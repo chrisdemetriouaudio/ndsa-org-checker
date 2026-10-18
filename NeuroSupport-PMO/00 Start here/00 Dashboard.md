@@ -6,7 +6,7 @@ updated: 2026-10-18
 # 🎛️ Dashboard
 
 > [!info] At a glance
-> **What:** daily checks that UK neurodivergent (ND) support organisations are still running.
+> **What:** daily checks that UK support organisations for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and related conditions are still running.
 > **Status:** 🛠️ Prototype. 44 organisations checked every morning, free tools only.
 > **Admin page:** add, remove and review organisations at neurosupport.labs.chrisdemetriou.com/admin (passkey).
 > **Rule:** checks suggest a status. A person decides every closure.
@@ -73,7 +73,7 @@ More ideas: [[Backlog & Parked]].
 
 | Phase | What | Status |
 | --- | --- | --- |
-| [[Phase 1 — Seed List]] | 44 hand-picked ND organisations | ✅ Done |
+| [[Phase 1 — Seed List]] | 44 hand-picked organisations to start with | ✅ Done |
 | [[Phase 2 — Website & Register Checks]] | Daily website and charity register checks | ✅ Live (England and Wales register) |
 | [[Phase 3 — AI Reading & Review Page]] | AI reads each homepage; one-click review | 💭 Later |
 | [[Phase 4 — Verification Emails & Reports]] | Twice-yearly emails; "report a problem" | 💭 Later (report link done) |

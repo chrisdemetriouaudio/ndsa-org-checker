@@ -1,6 +1,6 @@
 # neuro-support-checker
 
-Daily checks that UK neurodivergent (ND) support organisations are still running. Checks suggest a status; a person decides every closure.
+Daily checks that UK support organisations for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and related conditions are still running (18 conditions, listed in `src/conditions.ts`). Checks suggest a status; a person decides every closure.
 
 ## How it fits together
 

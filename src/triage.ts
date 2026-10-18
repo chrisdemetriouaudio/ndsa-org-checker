@@ -55,7 +55,7 @@ export function triage(c: TriageInput): Triage {
   let score = 0;
 
   if (c.inName) { score += 60; reasons.push(`named for ${c.conditions[0]}`); }
-  else if (KNOWN_NAMES.test(c.name)) { score += 55; reasons.push('a known neurodivergence or learning-disability organisation'); }
+  else if (KNOWN_NAMES.test(c.name)) { score += 55; reasons.push('a known organisation for one of our conditions (for example Mencap, Headway, a Gateway club)'); }
 
   // Where the description first mentions one of our conditions (same exact-phrase rules as discovery).
   const firstMention = Math.min(...CONDITIONS.map((cond) => {

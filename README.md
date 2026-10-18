@@ -1,6 +1,6 @@
 # neuro-support-checker
 
-Keeps a directory of UK neurodivergent (ND) support organisations up to date. Every morning it visits each organisation's website and suggests a status. **A person decides every closure.**
+Keeps a directory of UK support organisations for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and related conditions up to date. Every morning it visits each organisation's website and suggests a status. **A person decides every closure.**
 
 - **Public directory:** https://chrisdemetriouaudio.github.io/neuro-support-checker/
 - **What it spots:** the web address no longer exists, the site is down 3 times in a week, "we have closed" wording, parked or for-sale domains, and moves to a new domain.
