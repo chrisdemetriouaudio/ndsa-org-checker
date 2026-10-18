@@ -46,3 +46,12 @@ test('name matches are marked, and a snippet shows the words found', () => {
   assert.match(m.snippet, /children with autism and their families/);
   assert.equal(matchConditions('Autism Fife', 'groups')!.inName, true);
 });
+
+import { primaryConditions } from '../src/conditions.ts';
+test('primary conditions: the name and the start of the description, not passing mentions', () => {
+  const late = ' We run weekly social groups, a parents\' coffee morning and holiday clubs across the city, and we welcome autistic people with or without a learning disability.';
+  assert.deepEqual(primaryConditions('Autistic Nottingham', 'Peer support run by autistic adults.' + late), ['autism']);
+  assert.deepEqual(primaryConditions('Brent Mencap', 'Support for people with a learning disability and their families. Some members are also autistic.'), ['autism', 'learning disability']);
+  assert.deepEqual(primaryConditions('Brent Mencap', 'Support for people with a learning disability and their families, with clubs, advice and advocacy across the borough every week. Many of our members are also autistic.'), ['learning disability']);
+  assert.deepEqual(primaryConditions('Riverside Trust', 'We run clubs and holidays for young people and families in the valley, with trained volunteers, a minibus and a small grant fund for trips. We welcome children with ADHD.'), ['ADHD']);
+});

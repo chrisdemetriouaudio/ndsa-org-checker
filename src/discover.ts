@@ -19,7 +19,7 @@ import { addMapPoints } from './geo.ts';
 import { ccewCoverage, ccniCoverage, oscrCoverage, postcodeIn, ukPostcode, type Coverage } from './place.ts';
 import { candidateToInput, NATIONS, planActions, siteOutcome, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
 import { checkSite } from './check.ts';
-import { matchConditions } from './conditions.ts';
+import { CONDITIONS, matchConditions, primaryConditions } from './conditions.ts';
 import { dateWords } from './dates.ts';
 import { normaliseUrl, serialiseOrgs, validateNew } from './neworg.ts';
 import { downloadOnce, forEachZipLine } from './register.ts';
@@ -333,6 +333,13 @@ export async function discover(): Promise<string[]> {
     if (!org.audiences?.length) {
       const found = inferAudiences(info.text, info.categories);
       if (found.length) org.audiences = found;
+    }
+    // Conditions: what it is mainly for (name, and the start of its register description), not every passing mention.
+    // Only for organisations whose conditions were set automatically (every focus word is a condition); hand-picked ones keep theirs.
+    const labels = new Set(CONDITIONS.map((c) => c.label));
+    if (org.focus.length && org.focus.every((f) => labels.has(f))) {
+      const main = primaryConditions(org.name, info.text.slice(info.text.indexOf(' · ') + 3));
+      if (main.length && main.join() !== org.focus.join()) org.focus = main;
     }
     // Scottish and Northern Irish charities found by their website get their register number, so the register check covers them.
     if (!org.charityNumber && info.number && /^(SC|NIC)\d{6}$/.test(info.number)) { org.charityNumber = info.number; delete org.registerNote; }

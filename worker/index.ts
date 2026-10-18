@@ -251,7 +251,7 @@ async function handle(req: Request, env: Env): Promise<Response> {
     await caches.default.put(cacheKey, res.clone());
     return res;
   }
-  // The dyslexia-friendly font for the Display settings (OpenDyslexic, Bitstream Vera licence) and the heading font
+  // The dyslexia-friendly font for the Display settings (OpenDyslexic, Bitstream Vera licence) and the site font
   // (Nunito, SIL Open Font License): both in site/fonts/ with their licences.
   const font = /^\/fonts\/(OpenDyslexic-(?:Regular|Bold)\.otf|Nunito-latin\.woff2)$/.exec(path);
   if (method === 'GET' && font) {

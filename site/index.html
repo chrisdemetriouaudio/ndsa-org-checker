@@ -149,7 +149,13 @@ label{font-weight:800}
 .scorekey .ends{display:flex;gap:var(--sp-2);align-items:center;font-weight:800;color:var(--ink)}
 .scorekey .bar{display:inline-block;width:120px;height:10px;border-radius:var(--r-pill);background:linear-gradient(90deg,hsl(0 var(--sc-ring)),hsl(20 var(--sc-ring)) 30%,hsl(40 var(--sc-ring)) 60%,hsl(85 var(--sc-ring)) 80%,hsl(130 var(--sc-ring)))}
 #list{display:grid;gap:var(--sp-5)}
-.group{font-family:var(--display);font-weight:800;font-size:var(--fs-base);color:var(--tag-ink);margin-top:var(--sp-4);padding:var(--sp-2) var(--sp-4);background:var(--tag-bg);border-radius:var(--r-sm);justify-self:start}
+.group{display:flex;align-items:center;gap:var(--sp-3);font-family:var(--display);font-weight:800;font-size:var(--fs-base);letter-spacing:var(--tight);line-height:1.3;color:var(--tag-ink);margin-top:var(--sp-3);padding:var(--sp-3) var(--sp-4);background:var(--tag-bg);border-radius:var(--r-md)}
+.group::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.group:first-child{margin-top:0}
+#more-general{margin:0 0 var(--sp-4)}#more-general span:empty{display:none}
+#more-general button{display:inline-flex;align-items:center;gap:var(--sp-2);min-height:48px;padding:var(--sp-2) var(--sp-5);border-radius:24px;border:2px dashed var(--accent);background:var(--tint-2);color:var(--accent);text-decoration:none;font-weight:800;text-align:left;max-width:100%}
+#more-general button::before{content:"+"/"";flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800}
+#more-general button:hover{border-style:solid}
 /* ---------- Organisation card ---------- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--sp-5) var(--sp-5) var(--sp-4);display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:var(--sp-4);align-items:start;box-shadow:0 1px 0 var(--line)}
 .card:hover{border-color:var(--edge)}
@@ -253,7 +259,7 @@ background:radial-gradient(closest-side,var(--card) calc(100% - 7px),transparent
 :root[data-contrast="high"] .card h2 a{text-decoration:underline;background:none}
 :root[data-contrast="high"] .checker{border:2px solid var(--ink)}
 :root[data-contrast="high"] .bubble.bot{border:1.5px solid var(--ink)}
-:root[data-contrast="high"] .chip-x,:root[data-contrast="high"] .chev,:root[data-contrast="high"] .to-top{outline:1.5px solid var(--ink)}
+:root[data-contrast="high"] .group,:root[data-contrast="high"] .chip-x,:root[data-contrast="high"] .chev,:root[data-contrast="high"] .to-top{outline:1.5px solid var(--ink)}
 
 
 @font-face{font-family:"Nunito";src:url("fonts/Nunito-latin.woff2") format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
@@ -375,6 +381,7 @@ background:radial-gradient(closest-side,var(--card) calc(100% - 7px),transparent
 <div class="results">
 <div class="results-head deco"><p class="scorekey"><span class="ends">0 <span class="bar" aria-hidden="true"></span> 100</span><span>Red: less sure. Green: more sure.</span></p></div>
 <div id="active" class="active" hidden aria-live="polite"><span class="active-label">Showing:</span><span id="chips" class="chips"></span><button type="button" id="clear-all" class="clear-all">Clear all</button></div>
+<p id="more-general" class="lead" hidden><span></span> <button type="button" class="linkish"></button></p>
 <ul id="list">
 <li class="card" data-cond="autism" data-general="" data-aud="children families" data-cov="local" data-nations="England" data-lat="53.13" data-lon="-1.143" data-serves="nottinghamshire|derbyshire|nottingham" data-from="register">
   <div class="top"><h2><a href="https://www.spectrumwasp.org">'spectrum Wasp'</a></h2><span class="score" style="--h:130;--s:100" title="How sure we are it is still running">100<small>/100</small></span></div>
@@ -9373,11 +9380,11 @@ const countEl=document.getElementById('count'),empty=document.getElementById('em
 const PAGE=12;let limit=PAGE;const pager=document.getElementById('pager'),pageCount=document.getElementById('page-count'),moreBtn=document.getElementById('show-more');
 const page=()=>{const kids=[...document.getElementById('list').children];let total=0;
 for(const li of kids){if(li.classList.contains('group'))continue;if(li.hidden){li.classList.remove('paged');continue;}li.classList.toggle('paged',++total>limit);}
-let head=null,any=false;for(const li of kids){if(li.classList.contains('group')){if(head)head.classList.toggle('paged',!any);head=li;any=false;}else if(!li.hidden&&!li.classList.contains('paged'))any=true;}if(head)head.classList.toggle('paged',!any);
+let head=null,vis=0,on=0;const done=()=>{if(head)head.classList.toggle('paged',vis>0&&!on);};for(const li of kids){if(li.classList.contains('group')){done();head=li;vis=on=0;}else if(!li.hidden){vis++;if(!li.classList.contains('paged'))on++;}}done();
 pager.hidden=!total;pageCount.textContent='Showing '+Math.min(limit,total)+' of '+total;moreBtn.hidden=total<=limit;moreBtn.textContent='Show '+Math.min(PAGE,total-limit)+' more';};
 moreBtn.addEventListener('click',()=>{const before=limit;limit+=PAGE;page();const vis=[...document.querySelectorAll('#list .card')].filter(li=>!li.hidden&&!li.classList.contains('paged'));const first=vis[before];if(first)first.querySelector('h2 a').focus();});
 const icon=(k)=>{const s=document.createElement('span');s.className='ic ic-'+k;s.setAttribute('aria-hidden','true');return s;};
-let aud='',cond='',showUnstated=false;
+let aud='',cond='',showUnstated=false,generalFor='';
 const more=document.getElementById('more');
 let here=null;
 const list=document.getElementById('list');const order=[...items];
@@ -9385,9 +9392,12 @@ const heading=()=>{const h=document.createElement('li');h.className='group';retu
 const miles=(a,b)=>{const r=(d)=>d*Math.PI/180,h=Math.sin(r(b.lat-a.lat)/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(r(b.lon-a.lon)/2)**2;return 3958.8*2*Math.asin(Math.sqrt(h));};
 const GROUPS=[['serving',()=>'Serves your area ('+here.district+')'],['wide',()=>'Works across '+here.country],['unknown',()=>'Area not recorded – may still serve you (nearest first)'],['other',()=>'Lists other areas – may not serve you (nearest first)']];
 const heads=Object.fromEntries(GROUPS.map(([g])=>[g,heading()]));
-const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;const groups={serving:[],wide:[],unknown:[],other:[]};
+// With a condition chosen: organisations for that condition first, then those for any neurodivergent condition, each under a heading.
+const specHead=heading(),genHead=heading();const condName=()=>cond.charAt(0).toUpperCase()+cond.slice(1);
+const specOf=(li)=>cond&&li.dataset.cond.split('|').includes(cond)?1:0;
+const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0,generalHidden=0;const groups={serving:[],wide:[],unknown:[],other:[]};
 for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
-const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;const condOk=!cond||li.dataset.general||li.dataset.cond.split('|').includes(cond);
+const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;const isSpec=!cond||li.dataset.cond.split('|').includes(cond);const condOk=isSpec||(li.dataset.general&&generalFor===cond);if(cond&&!isSpec&&li.dataset.general&&generalFor!==cond&&textOk&&audOk)generalHidden++;
 const d=li.querySelector('.dist');d.hidden=true;let group=null;
 if(here){const sv=(li.dataset.serves||'').split('|').filter(Boolean);const m=li.dataset.lat?miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon}):Infinity;li.dataset.m=m;
 const far=m===Infinity?'':(m<1?'based less than 1 mile away':'based about '+Math.round(m)+(Math.round(m)===1?' mile':' miles')+' away');
@@ -9397,14 +9407,19 @@ else if(!sv.length||li.dataset.from==='office'){group='unknown';d.textContent='A
 else{group='other';d.textContent='Lists other areas'+(far?' · '+far:'');}
 d.hidden=group==='wide';}
 li.hidden=!(textOk&&audOk&&condOk);if(here&&!li.hidden)groups[group].push(li);}
-if(here){for(const g of ['serving','unknown','other'])groups[g].sort((x,y)=>x.dataset.m-y.dataset.m);
+if(here){for(const g of ['serving','unknown','other'])groups[g].sort((x,y)=>(specOf(y)-specOf(x))||(x.dataset.m-y.dataset.m));groups.wide.sort((x,y)=>specOf(y)-specOf(x));
 for(const [g,label] of GROUPS)heads[g].textContent=label()+' · '+groups[g].length;
 list.replaceChildren(...GROUPS.flatMap(([g])=>groups[g].length?[heads[g],...groups[g]]:[]),...order.filter(li=>li.hidden));
 nearMsg.hidden=false;nearMsg.textContent=groups.serving.length+' serve '+here.district+', '+groups.wide.length+' work across '+here.country+', '+groups.unknown.length+' have no recorded area, and '+groups.other.length+' list other areas.';}
-else if(Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
-chipsUpdate(t);more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';
+else if(cond){const shownNow=order.filter(li=>!li.hidden),sp=shownNow.filter(specOf),ge=shownNow.filter(li=>!specOf(li));
+specHead.textContent=sp.length?'For '+cond+' · '+sp.length:'Nothing listed just for '+cond+' yet';
+genHead.textContent='For neurodivergent people in general (may help with '+cond+') · '+ge.length;
+list.replaceChildren(specHead,...sp,...(ge.length?[genHead,...ge]:[]),...order.filter(li=>li.hidden));}
+else if(specHead.isConnected||genHead.isConnected||Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
+chipsUpdate(t);const mg=document.getElementById('more-general');mg.hidden=!generalHidden;if(generalHidden){mg.querySelector('span').textContent='';mg.querySelector('button').textContent='Also show '+generalHidden+(generalHidden===1?' organisation':' organisations')+' for neurodivergent people in general';}more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';
 const n=items.filter(li=>!li.hidden).length;countEl.textContent=n===items.length?n+' listed':n+' found';empty.hidden=n>0;limit=PAGE;page();};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
+document.querySelector('#more-general button').addEventListener('click',()=>{generalFor=cond;apply();});
 const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
 fetch('/api/postcode?pc=SW1A',{method:'HEAD'}).then(r=>{if(r.ok)near.hidden=false;}).catch(()=>{});
 near.addEventListener('submit',async(e)=>{e.preventDefault();const pc=document.getElementById('pc').value.trim();if(!pc)return;
@@ -9454,7 +9469,8 @@ const say=(who,text)=>{const p=document.createElement('p');p.className='bubble '
 const ask=(question,options)=>{say('bot',question);if(chat.children.length>2)options=[...options,['Start again',()=>start(),'restart']];choices.replaceChildren(...options.map(([label,fn,ic])=>{const b=document.createElement('button');b.type='button';b.textContent=label;if(ic)b.prepend(icon(ic));b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
 const setAud=(a)=>{aud=a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x.dataset.a===a));apply();};
 const show=()=>{apply();const n=items.filter(li=>!li.hidden).length;
-say('bot',n?'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.':'Nothing matches all of that yet. Try a wider distance, or "Anyone".');
+const sp=cond?items.filter(li=>!li.hidden&&specOf(li)).length:0;
+say('bot',!n&&!cond?'Nothing matches all of that yet. Try a wider distance, or "Anyone".':cond?(sp?'Here '+(sp===1?'is 1 organisation':'are '+sp+' organisations')+' for '+cond+'. They are listed below.':'Nothing is listed just for '+cond+' yet.')+' Organisations for neurodivergent people in general may also help: use the button above the list to show them.':'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.');
 const again=document.createElement('button');again.type='button';again.textContent='Start again';again.prepend(icon('restart'));again.onclick=start;choices.replaceChildren(again);
 if(n)document.getElementById('list').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});};
 const where=()=>ask('Where should it be?',[['Near a postcode',()=>{say('bot','Type your postcode in the "Near you" box below, then press Search. Nothing is hidden: the ones that serve your area come first.');near.hidden=false;document.getElementById('pc').focus();const again=document.createElement('button');again.type='button';again.textContent='Start again';again.prepend(icon('restart'));again.onclick=start;choices.replaceChildren(again);apply();},'pin'],['Anywhere in the UK',()=>{here=null;show();},'globe']]);
