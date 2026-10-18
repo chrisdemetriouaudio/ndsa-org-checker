@@ -15,6 +15,9 @@ updated: 2026-10-18
 > - **Register tie-breaker:** when the words leave it unclear, the register's own tick-boxes decide. Advice or advocacy tips it in; grants, housing or research only tip it out.
 > - **7-day deadline:** anything still unclear a week after it was found is parked, never added.
 > - **Dashboard line** each morning: added, turned away, parked. The daily alert no longer asks you to review.
+> - **Directory wording:** "1 more check coming" now says "Confirmed by them: not asked yet" (that check is Phase 4, not built).
+> - **Gentler:** a website is never visited twice in one day, even if the run is started again by hand.
+> - **Register downloads retry** up to 3 times. Fixed: Northern Ireland's file failed once on 18 Oct 2026 (a passing DNS fault); yesterday's list was kept.
 
 > [!success]- 🚀 18 Oct 2026 · Admin table: frozen column titles · live
 > - **Column titles stay in view** while you scroll the organisations.

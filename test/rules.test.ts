@@ -185,6 +185,7 @@ test('healthy, steady sites are visited every 3 days; anything else daily', () =
   assert.equal(isDue(steady, '2026-10-17'), false);
   assert.equal(isDue({ ...steady, lastChecked: '2026-10-14' }, '2026-10-17'), true);
   assert.equal(isDue(undefined, '2026-10-17'), true);
+  assert.equal(isDue({ ...steady, status: 'Needs a check', lastChecked: '2026-10-17' }, '2026-10-17'), false); // already visited today
   assert.equal(isDue({ ...steady, status: 'Needs a check' }, '2026-10-17'), true);
   assert.equal(isDue({ ...steady, signals: [{ kind: 'evidence', level: 'amber' }] }, '2026-10-17'), true);
   assert.equal(isDue({ ...steady, history: Array(5).fill(0) }, '2026-10-17'), true); // new: daily for 2 weeks

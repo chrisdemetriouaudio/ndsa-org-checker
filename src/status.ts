@@ -49,6 +49,7 @@ const SETTLING_DAYS = 14;
  */
 export function isDue(prev: { status: Status; since: string; lastChecked: string | null; history: unknown[]; signals?: { kind: string; level: string }[] } | undefined, today: string): boolean {
   if (!prev?.lastChecked) return true;
+  if (prev.lastChecked === today) return false; // never twice in one day, even if the run is started again by hand
   if (prev.status !== 'Looks active' && prev.status !== 'Confirmed') return true;
   if (prev.signals?.some((x) => x.kind === 'evidence' && (x.level === 'amber' || x.level === 'red'))) return true;
   if (prev.history.length < SETTLING_DAYS) return true;

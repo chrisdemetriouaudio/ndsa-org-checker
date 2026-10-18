@@ -173,9 +173,10 @@ const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 function siteChecks(s: OrgState): string {
   const shown = signalsOf(s).filter((x) => x.level !== 'none');
-  const pending = signalsOf(s).length - shown.length;
+  const pending = signalsOf(s).filter((x) => x.level === 'none');
   const chips = shown.map((x) => `<li class="chk ${x.level}" title="${esc(x.detail)}"><span aria-hidden="true">${x.level === 'green' ? '✓' : '!'}</span> ${esc(x.label)}</li>`).join('');
-  const more = pending ? `<li class="chk none">${pending} more check${pending === 1 ? '' : 's'} coming</li>` : '';
+  // Say what has not been checked, and why (e.g. "Confirmed by them: not asked yet"), rather than promising it.
+  const more = pending.map((x) => `<li class="chk none" title="${esc(x.detail)}"><span aria-hidden="true">○</span> ${esc(x.label)}: ${x.key === 'confirmed' ? 'not asked yet' : 'not checked yet'}</li>`).join('');
   return `<ul class="checks" aria-label="Checks">${chips}${more}</ul>`;
 }
 

@@ -52,8 +52,20 @@ export function downloadOnce(url: string): Promise<string> {
     file = (async () => {
       tmp ??= mkdtempSync(join(tmpdir(), 'nsc-'));
       const path = join(tmp, `file-${downloads.size}`);
-      const res = await fetch(url, { headers: { 'user-agent': 'neuro-support-checker/0.1 (+https://github.com/chrisdemetriouaudio/neuro-support-checker)' } });
-      if (!res.ok || !res.body) throw new Error(`Download failed (${url}): HTTP ${res.status}`);
+      // Up to 3 tries, a minute apart: a register's site or the runner's DNS sometimes has a bad moment.
+      let res: Response | null = null;
+      for (let attempt = 1; ; attempt++) {
+        try {
+          res = await fetch(url, { headers: { 'user-agent': 'neuro-support-checker/0.1 (+https://github.com/chrisdemetriouaudio/neuro-support-checker)' } });
+          if (res.ok && res.body) break;
+          if (res.status < 500 && res.status !== 429) break;
+        } catch (e) {
+          if (attempt >= 3) throw e;
+        }
+        if (attempt >= 3) break;
+        await new Promise((r) => setTimeout(r, 60_000));
+      }
+      if (!res?.ok || !res.body) throw new Error(`Download failed (${url}): HTTP ${res?.status}`);
       await pipeline(Readable.fromWeb(res.body as never), createWriteStream(path));
       return path;
     })();
