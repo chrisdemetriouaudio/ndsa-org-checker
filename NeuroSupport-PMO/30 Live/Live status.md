@@ -7,8 +7,8 @@ updated: 2026-10-18
 
 > [!info] At a glance
 > **Last check:** 18 Oct 2026, 904 services.
-> **To review:** 6 (5 likely closed, 1 need a check).
-> **Fine:** 895 look active, 0 confirmed. **Closed:** 3.
+> **To review:** 5 (4 likely closed, 1 need a check).
+> **Fine:** 895 look active, 0 confirmed. **Closed:** 4.
 > This page rewrites itself after every daily check. Edits made here are lost.
 
 > [!info]- How to read the ticks and the score (tap to open)
@@ -31,7 +31,6 @@ updated: 2026-10-18
 - 🔴 **Close ADHD Liberty:** proven closed by an official record. Score ⚫ 0.
 - 🔴 **Close Grooops Dyslexia Aware Counselling:** proven closed by an official record. Score ⚫ 0.
 - 🔴 **Check Bemix:** likely closed since 17 Oct 2026. Score 🔴 40.
-- 🔴 **Check Dyspraxia Foundation:** likely closed since 17 Oct 2026. Score 🔴 40.
 - 🔴 **Check Rotherham Advocacy Partnerships:** likely closed since 17 Oct 2026. Score 🔴 40.
 - 🟡 **Check Pulp Friction Smoothie Bar CIO:** needs a check since 18 Oct 2026. Score 🟢 94.
 
@@ -40,7 +39,6 @@ updated: 2026-10-18
 | [ADHD Liberty](https://www.adhdliberty.org) | ⚫ 0 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1197012 is dissolved (register of 18 Oct 2026) |
 | [Grooops Dyslexia Aware Counselling](https://www.grooops.org) | ⚫ 0 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1168098 is dissolved (register of 18 Oct 2026) |
 | [Bemix](https://www.bemix.org) | 🔴 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1205783 is in administration (register of 18 Oct 2026) |
-| [Dyspraxia Foundation](https://dyspraxiafoundation.org.uk) | 🔴 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1058352 is marked insolvent (register of 18 Oct 2026) |
 | [Rotherham Advocacy Partnerships](https://www.rotherhamadvocacy.org.uk) | 🔴 40 | ✅ | ✅ | ✅ | ✅ | ✅ | 🔴 | ⚪ | Proof: Charity 1080025 is marked insolvent (register of 18 Oct 2026) |
 | [Pulp Friction Smoothie Bar CIO](https://www.pulpfrictioncic.org.uk) | 🟢 94 | ✅ | ✅ | ✅ | ✅ | 🔴 | ✅ | ⚪ | Website now goes to pulpfrictioncio.org.uk |
 
@@ -947,7 +945,8 @@ To decide: use the **admin page** (https://neurosupport.labs.chrisdemetriou.com/
 > | [Your Voice Advocacy Project](https://www.yourvoiceadvocacy.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 > | [Zigzag Leeds Autism Support](https://www.zigzagautismservices.co.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 
-> [!note]- 3 closed (archived, not deleted)
+> [!note]- 4 closed (archived, not deleted)
 > - **ADHD Foundation:** Closed by Chris on 18 Oct 2026: No longer active.
 > - **Autism Alliance UK:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 5 Jul 2023
 > - **Dyslexia Action:** Closed by Chris on 17 Oct 2026: Removed from the charity register on 16 Aug 2023 (the name now belongs to a training business)
+> - **Dyspraxia Foundation:** Closed by Chris on 18 Oct 2026: No longer active.

@@ -15,8 +15,8 @@ updated: 2026-10-18
 <!-- live:start -->
 > [!info] Live (updated by the daily check)
 > **Last check:** 18 Oct 2026.
-> **To review:** 6. See [[Live status]].
-> **Fine:** 895 · **Closed:** 3 · **Average score:** 99 out of 100
+> **To review:** 5. See [[Live status]].
+> **Fine:** 895 · **Closed:** 4 · **Average score:** 99 out of 100
 <!-- live:end -->
 
 <!-- candidates:start -->
