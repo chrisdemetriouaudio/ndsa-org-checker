@@ -375,17 +375,26 @@ export async function discover(): Promise<string[]> {
   const { reject, check, note } = planActions(candidates, freshKeys);
   for (const c of reject) decided[c.key] = { decision: 'rejected', by: 'automatic triage', date: today, reason: c.triage!.reasons.join('; ') };
 
+  // A website that already failed today is not visited again today (and does not count as another failed day).
+  const failedToday = new Set(check.filter((c) => previous.get(c.key)?.siteFailedOn === today).map((c) => c.key));
+  const visit = check.filter((c) => !failedToday.has(c.key));
   const siteResults = new Map<string, CheckResult>();
-  const verdicts = check.length ? await checkSites(check, today, siteResults) : new Map<string, SiteVerdict>();
+  const verdicts = visit.length ? await checkSites(visit, today, siteResults) : new Map<string, SiteVerdict>();
   const added: Candidate[] = [];
   const addedIds: string[] = [];
   const firstChecks = new Map<string, CheckResult>(); // new organisation id -> the visit that just passed
   const orgs = [...listed];
   const taken = new Set(orgs.map((o) => o.id));
   for (const c of check) {
+    if (failedToday.has(c.key)) {
+      const prev = previous.get(c.key)!;
+      Object.assign(c, { siteFails: prev.siteFails, siteFailedOn: prev.siteFailedOn, triage: prev.triage });
+      continue;
+    }
     const r = siteResults.get(c.key);
     const o = r ? siteOutcome(c, r, previous.get(c.key)?.siteFails ?? 0) : { action: 'review' as const, why: 'not checked', fails: 0 };
     c.siteFails = o.fails || undefined;
+    c.siteFailedOn = o.fails ? today : undefined;
     if (o.action === 'reject') {
       decided[c.key] = { decision: 'rejected', by: 'automatic triage', date: today, reason: [...c.triage!.reasons, o.why].join('; ') };
       reject.push(c);

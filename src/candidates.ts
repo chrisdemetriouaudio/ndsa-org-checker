@@ -31,6 +31,7 @@ export interface Candidate {
   triage?: Triage;
   firstSeen?: string; // date discovery first found it
   siteFails?: number; // days in a row its website check has failed
+  siteFailedOn?: string; // the last day it failed: a website is visited at most once a day, so a second run that day counts nothing
 }
 
 export interface Decision { decision: 'added' | 'rejected'; by: string; date: string; reason?: string }
