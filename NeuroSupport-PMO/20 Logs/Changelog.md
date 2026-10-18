@@ -1,6 +1,6 @@
 ---
 title: Changelog
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # 📜 Changelog
@@ -10,7 +10,15 @@ updated: 2026-10-17
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · 830 organisations added; Near you by council area · live
+> [!success]+ 🚀 18 Oct 2026 · Checker reads the live charity register · live
+> - **Live register (England and Wales):** today's record instead of this morning's download, once the API key is added.
+> - **Says why:** the reason a charity was removed, e.g. "ceased to exist" or "merged".
+> - **New warning:** an interim manager put in by the Charity Commission shows amber.
+> - **Grant-makers:** says when a charity mainly gives grants rather than running services.
+> - **Name search:** if the register does not list the website, it looks for the exact name. A name match never proves a closure.
+> - **Without the key:** works as before, from the morning's files.
+
+> [!success]- 🚀 18 Oct 2026 · 830 organisations added; Near you by council area · live
 > - **Directory:** 869 organisations (was 41). Each card says who it serves.
 > - **Automatic triage:** clear ones added (website checked), clear misfits turned down with reasons, 222 unclear ones wait.
 > - **Near you:** finds who serves your council area, then who is based nearby, then nationwide ones.
