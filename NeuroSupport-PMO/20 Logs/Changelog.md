@@ -10,7 +10,14 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Removing works first time · live
+> [!success]+ 🚀 18 Oct 2026 · All three registers in the score; tidy-up · live
+> - **Scotland and Northern Ireland** now feed the "Charity register" tick: 104 organisations got their numbers (101 green, 3 overdue accounts).
+> - **Fixed:** three runs in one day counted as three days of a website not answering. 82 candidates put back.
+> - **Old address bridged:** ndsa.labs runs today's code with its own keys until the keys move.
+> - **Data:** Autism Hampshire's base, and who Autistica, Autistic UK and Neurodivergence Wales are for.
+> - **Wording:** the project describes its real scope (18 conditions), not "neurodivergent".
+
+> [!success]- 🚀 18 Oct 2026 · Removing works first time · live
 > - **Fixed:** removing an organisation looked like it did nothing the first time. It had saved, but the page showed GitHub's older copy for a few seconds.
 > - **Now:** the page reads the exact version just saved, and says "Removed ✓" straight away. Same for restore, "still running" and editing details.
 > - **Also:** a second change straight after the first no longer trips over the delay (tries up to 3 times).

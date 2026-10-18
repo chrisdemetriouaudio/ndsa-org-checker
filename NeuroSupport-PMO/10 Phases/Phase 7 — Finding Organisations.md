@@ -1,21 +1,20 @@
 ---
 phase: 7
 status: in progress
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # 🔎 Phase 7 — Finding Organisations
 
 > [!info] At a glance
 > **What:** find UK organisations that support people with the 18 conditions in scope, in all 4 nations.
-> **How:** a script reads free official data, matches exact phrases, and puts candidates on a review list. A person adds them.
-> **Status:** 🛠️ Stage 1 live. 18 Oct 2026: 830 added automatically, 682 turned down, 222 left for a person, 318 have no website.
+> **How:** every morning a script reads the three free UK registers, matches exact phrases, and decides each find itself: add (website checked), turn away, or park.
+> **Status:** ✅ Stage 1 live (18 Oct 2026): 860 added automatically, 690 turned away, 104 parked, 318 have no website, 93 still settling. Nobody has to review them.
 > **Back to:** [[00 Dashboard]] · counts in [[Candidates]]
 
 ## 👉 Your actions
 
-- [ ] **Look at the 222 unclear ones** when you have time: Admin → Review candidates (shows only those by default).
-- [ ] **Add informal groups and peer networks by hand** (Add an organisation). No register lists them.
+- Nothing right now.
 
 ## 🛠️ For Claude
 
@@ -25,11 +24,14 @@ updated: 2026-10-17
 
 ## 💭 Later
 
-- [ ] **Scotland and Northern Ireland register checks** for the daily score (the data is now downloaded weekly anyway).
+- [ ] **Add informal groups and peer networks by hand** if you know of any (Add an organisation). No register lists them.
 
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Nobody reviews candidates:** register tie-breaker, park after 7 days; 5 care and housing providers turned away (18 Oct 2026).
+> - [x] **Scotland and Northern Ireland register checks** in the daily score (18 Oct 2026).
+> - [x] **A failing website counts once a day,** however many runs (fixed 18 Oct 2026; 82 put back).
 > - [x] **Automatic triage:** each candidate gets a relevance score with reasons: add, unclear, or turned down (18 Oct 2026).
 > - [x] **Turned down automatically:** care and housing providers, schools, grant-makers, overseas work, general services.
 > - [x] **980 borderline ones read and decided by Claude** (618 kept, 362 turned down); saved as overrides the rules respect.

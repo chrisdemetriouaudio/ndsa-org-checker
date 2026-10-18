@@ -23,6 +23,7 @@ updated: 2026-10-18
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Scotland and Northern Ireland registers in the score:** 104 organisations got their numbers; 101 green, 3 overdue accounts (18 Oct 2026).
 > - [x] **Live register through the Charity Commission API** (key added and tested): removal reasons, interim managers, grant-makers, what it does, where it works, other names, name search (18 Oct 2026).
 > - [x] **Scottish (OSCR) and Northern Ireland (CCNI) registers** added (18 Oct 2026).
 > - [x] **Closed Autism Alliance UK and Dyslexia Action** on register proof (17 Oct 2026).

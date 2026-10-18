@@ -7,8 +7,8 @@ updated: 2026-10-18
 
 > [!info] At a glance
 > **What:** daily checks that UK support organisations for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and related conditions are still running.
-> **Status:** 🛠️ Prototype. 44 organisations checked every morning, free tools only.
-> **Admin page:** add, remove and review organisations at neurosupport.labs.chrisdemetriou.com/admin (passkey).
+> **Status:** ✅ Working prototype. 901 organisations checked every morning; new ones found and decided automatically. Free tools only.
+> **Admin page:** for now, sign in at ndsa.labs.chrisdemetriou.com/admin (your passkey is there). It moves to neurosupport.labs.chrisdemetriou.com/admin once 2 keys move (below).
 > **Rule:** checks suggest a status. A person decides every closure.
 > New here? Read [[How this vault works]] (1 minute).
 
@@ -22,18 +22,19 @@ updated: 2026-10-18
 <!-- candidates:start -->
 > [!info] New organisations (decided automatically every morning)
 > **18 Oct 2026:** added 1 · turned away 0 · parked 0.
-> **Still settling:** 11 (websites being retried, or found in the last 7 days) · **Parked in total:** 186. Nothing here needs you.
+> **Still settling:** 93 (websites being retried, or found in the last 7 days) · **Parked in total:** 104. Nothing here needs you.
 <!-- candidates:end -->
 
 ## 👉 Your actions
 
+- [ ] **Move 2 keys to the new site** (about 10 minutes). Steps: [[Phase 6 — Admin Front Door]].
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
-- [ ] **Decide ADHD Foundation and Dyspraxia Foundation** on the admin page when ready.
 
 ## 🛠️ For Claude
 
-- Nothing right now.
+- [ ] **After the keys move:** check sign-in on the new site, then send the old address to the new one.
+- [ ] **Then, with your OK:** delete the old Worker and its database.
 
 ## ⏳ Waiting
 
@@ -41,13 +42,17 @@ updated: 2026-10-18
 
 ## 💭 Optional
 
-- Nothing right now.
+- 💭 **Decide on Phase 4:** e-mail each organisation twice a year to confirm it is still running? It would fill the last tick. See [[Phase 4 — Verification Emails & Reports]].
+- 💭 **Decide on Phase 5:** a pilot with a partner charity (Wade's call).
 
 More ideas: [[Backlog & Parked]].
 
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **ADHD Foundation and Dyspraxia Foundation removed** by you (18 Oct 2026).
+> - [x] **All three UK registers in the daily score:** Scotland and Northern Ireland too (18 Oct 2026).
+> - [x] **Removing works first time** on both the old and new admin pages (18 Oct 2026).
 > - [x] **Tried the button finder, "Near you" and "Who is it for?"** (you, 18 Oct 2026).
 > - [x] **Watching the repo on GitHub** for flag alerts (you, 18 Oct 2026).
 > - [x] **Unclear candidates decided automatically:** register tie-breaker, parked after 7 days. Nothing waits on you (18 Oct 2026).

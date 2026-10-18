@@ -13,9 +13,7 @@ updated: 2026-10-18
 
 ## 👉 Your actions
 
-- [ ] **Try "Near you"** on the directory with your own postcode.
-- [ ] **Fix base postcodes that look wrong** on the admin page (Edit details). Autism Hampshire's register postcode is in Kent.
-- [ ] **Set "Who for"** for Autistica, Autistic UK and Neurodivergence Wales (Edit details).
+- Nothing right now.
 
 ## 🛠️ For Claude
 
@@ -24,6 +22,9 @@ updated: 2026-10-18
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **You tried the finder, "Near you" and "Who is it for?"** (18 Oct 2026).
+> - [x] **Autism Hampshire's base fixed** to PO15 7AH, from its own contact page (18 Oct 2026).
+> - [x] **"Who for" set** from their own websites: Autistica (all), Autistic UK (adults), Neurodivergence Wales (all) (18 Oct 2026).
 > - [x] **"Serves:" on every card,** from the registers' areas of operation (18 Oct 2026).
 > - [x] **Near you, by council area:** serves your council first, then based within N miles, then nationwide. BL8 2RZ: 10 serve Bury, 20 nearby, 187 across England.
 > - [x] **Button finder:** 3 questions, buttons only: what for, who for, where. The list updates after each answer (18 Oct 2026).

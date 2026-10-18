@@ -13,7 +13,6 @@ updated: 2026-10-17
 ## 💭 Later (ideas, not planned yet)
 
 - [ ] **Check Companies House** for dissolved charitable companies (free API key).
-- [ ] **Check Scotland and Northern Ireland registers** (OSCR and CCNI downloads, both free).
 - [ ] **Check domain expiry dates** through the free .uk registry lookup (RDAP).
 - [ ] **AI reads each homepage monthly:** try Cloudflare Workers AI's free daily allowance first.
 - [ ] **Test the score against the register:** run website checks on removed and active charities; count catches and false alarms.
@@ -21,7 +20,6 @@ updated: 2026-10-17
 - [ ] **Track admin decisions against suggestions** (target: agree 9 times in 10).
 - [ ] **Twice-yearly verification e-mail** to each organisation, with one-click replies.
 - [ ] **Weekly e-mail digest to Wade** instead of GitHub issue alerts.
-- [ ] **Grow the list** from the charity register download (search: autism, ADHD, dyslexia). The download is already in place.
 - [ ] **Export in Open Referral UK format** so other directories can reuse the data.
 
 ## 🅿️ Parked (on hold on purpose)
@@ -31,5 +29,7 @@ updated: 2026-10-17
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Scotland and Northern Ireland registers** checked daily (18 Oct 2026).
+> - [x] **Grow the list:** done as Phase 7, from all three registers (18 Oct 2026).
 > - [x] **Review page:** done as the admin page (17 Oct 2026).
 > - [x] **"Report a problem" link** on every directory listing (opens a GitHub issue, 17 Oct 2026).

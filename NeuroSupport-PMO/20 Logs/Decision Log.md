@@ -10,6 +10,11 @@ updated: 2026-10-18
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 18 Oct 2026 · Keep the old address running until the keys move
+> - **Decided:** ndsa.labs runs today's code with its own keys and admin list, as a bridge.
+> - **Decided:** once the 2 keys are on the new site and sign-in works there, the old address forwards to the new one; the old Worker and database are deleted only with Chris's OK.
+> - **Why:** Cloudflare never shows a saved key, so Claude cannot copy them; Chris still signs in at the old address.
+
 > [!question]- 18 Oct 2026 · Nobody reviews candidates: unclear ones are parked after 7 days
 > - **Decided:** the register's own "how it works" tick-boxes break ties. Advice or advocacy tips in; grants, housing or research only tip out.
 > - **Decided:** care providers never tip in, even if they tick "advice".
