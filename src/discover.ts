@@ -21,7 +21,7 @@ import { candidateToInput, NATIONS, planActions, siteOutcome, type Candidate, ty
 import { checkSite } from './check.ts';
 import { CONDITIONS, matchConditions, primaryConditions } from './conditions.ts';
 import { dateWords } from './dates.ts';
-import { normaliseUrl, serialiseOrgs, validateNew } from './neworg.ts';
+import { cleanName, normaliseUrl, serialiseOrgs, validateNew } from './neworg.ts';
 import { downloadOnce, forEachZipLine } from './register.ts';
 import type { CheckResult, Org, State } from './types.ts';
 
@@ -327,6 +327,8 @@ export async function discover(): Promise<string[]> {
   // Fill in who listed organisations are for, where they have nothing yet and a register says.
   let filled = 0;
   for (const org of listed) {
+    const tidy = cleanName(org.name); // no quotation marks or stray punctuation round a name
+    if (tidy && tidy !== org.name) { org.name = tidy; filled++; }
     const info = about.get(org.id);
     if (!info) continue;
     const before = JSON.stringify(org);

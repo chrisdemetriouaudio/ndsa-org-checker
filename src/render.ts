@@ -1,3 +1,4 @@
+import { sortKey } from './neworg.ts';
 import { AUDIENCE_LABEL, AUDIENCES } from './audience.ts';
 import { CONDITIONS, matchConditions } from './conditions.ts';
 import { areaKey } from './place.ts';
@@ -27,7 +28,7 @@ function rows(orgs: Org[], state: State): Row[] {
   return orgs
     .filter((org) => state.orgs[org.id])
     .map((org) => ({ org, s: state.orgs[org.id] }))
-    .sort((a, b) => a.org.name.localeCompare(b.org.name));
+    .sort((a, b) => sortKey(a.org.name).localeCompare(sortKey(b.org.name)));
 }
 
 export function countByStatus(orgs: Org[], state: State): Record<Status, number> {
@@ -78,7 +79,7 @@ export function renderLivePage(orgs: Org[], state: State): string {
   const flagged = all.filter((r) => FLAGGED.includes(r.s.status))
     .sort((a, b) => Number(b.s.proven) - Number(a.s.proven) || (a.s.score ?? 0) - (b.s.score ?? 0));
   const fine = all.filter((r) => !FLAGGED.includes(r.s.status) && r.s.status !== 'Closed')
-    .sort((a, b) => (a.s.score ?? 0) - (b.s.score ?? 0) || a.org.name.localeCompare(b.org.name));
+    .sort((a, b) => (a.s.score ?? 0) - (b.s.score ?? 0) || sortKey(a.org.name).localeCompare(sortKey(b.org.name)));
   const closed = all.filter((r) => r.s.status === 'Closed');
   const updated = state.updated?.slice(0, 10) ?? null;
   const headers = categoryHeaders(all);

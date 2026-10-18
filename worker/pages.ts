@@ -1,5 +1,5 @@
 import { AUDIENCE_LABEL, AUDIENCES } from '../src/audience.ts';
-import { AREAS, FOCUS, KINDS, MAX_PER_ADD } from '../src/neworg.ts';
+import { AREAS, FOCUS, KINDS, MAX_PER_ADD, sortKey } from '../src/neworg.ts';
 import { dateWords, scoreHue, TICK } from '../src/render.ts';
 import { FLAGGED, type Org, type Summary } from '../src/types.ts';
 import type { Admin } from './auth.ts';
@@ -192,7 +192,7 @@ function removeControl(org: Org) {
 }
 
 export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary, readOnly = false): string {
-  const rows = [...orgs].sort((a, b) => a.name.localeCompare(b.name));
+  const rows = [...orgs].sort((a, b) => sortKey(a.name).localeCompare(sortKey(b.name)));
   const pending = rows.filter((o) => !state.orgs[o.id] && o.review?.status !== 'Closed');
   const flagged = rows.filter((o) => state.orgs[o.id] && FLAGGED.includes(state.orgs[o.id].status));
   const closed = rows.filter((o) => o.review?.status === 'Closed');

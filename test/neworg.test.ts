@@ -67,3 +67,15 @@ test('all-capitals register names are tidied, acronyms kept', () => {
   assert.equal(tidyName('AUTISM WALES CIO'), 'Autism Wales CIO');
   assert.equal(tidyName('Already Fine Name'), 'Already Fine Name');
 });
+
+import { cleanName, sortKey } from '../src/neworg.ts';
+test('names lose wrapping quotes and stray punctuation, keep apostrophes, brackets and +, start with a capital', () => {
+  assert.equal(cleanName("'spectrum Wasp'"), 'Spectrum Wasp');
+  assert.equal(tidyName("'SPECTRUM WASP'"), 'Spectrum WASP');
+  assert.equal(cleanName('“Autism Hampshire”'), 'Autism Hampshire');
+  assert.equal(cleanName('** Bright  Sparks -'), 'Bright Sparks');
+  assert.equal(cleanName("Children's Autism Group (Kent)"), "Children's Autism Group (Kent)");
+  assert.equal(cleanName('Jigsaw +'), 'Jigsaw +');
+  assert.equal(cleanName('"The" Group'), 'The Group');
+  assert.ok(sortKey("'spectrum WASP'") > sortKey('Autism Hampshire')); // punctuation never puts a name first
+});

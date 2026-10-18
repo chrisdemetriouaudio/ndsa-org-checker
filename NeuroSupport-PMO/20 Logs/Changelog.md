@@ -17,6 +17,7 @@ updated: 2026-10-18
 > - **Labels mean what an organisation is mainly for** (name, and the start of its register description), not every passing mention. 41 corrected today.
 > - **Audited:** every condition and "Who is it for?" button shows only matching organisations.
 > - **Fixed:** a stray file of mine stopped one daily save; the save step now copes.
+> - **Name clean-up:** quotation marks and stray punctuation are removed from every name ("'spectrum Wasp'" is now Spectrum WASP), every morning and when adding. A–Z ignores punctuation, so nothing can jump the queue.
 
 > [!success]- 🚀 18 Oct 2026 · Filters you can always undo · live
 > - **"Showing:" bar** above the results: every active filter (condition, who for, near, search) as a chip with ✕, plus **Clear all**. It stays in view as you scroll.

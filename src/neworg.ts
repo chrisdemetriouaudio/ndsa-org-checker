@@ -61,7 +61,7 @@ export function slug(name: string): string {
 /** Checks one new entry against the list. Returns the entry ready to save, or what is wrong in plain words. */
 export function validateNew(input: NewOrgInput, existing: Org[], takenIds: Set<string>): { org?: Org; problems: string[] } {
   const problems: string[] = [];
-  const name = clean(input.name, 120);
+  const name = cleanName(clean(input.name, 120));
   if (name.length < 2) problems.push('Add the organisation’s name.');
   const url = normaliseUrl(input.url);
   if (!url) problems.push('Add a working website address, like https://www.example.org.uk.');
@@ -132,11 +132,31 @@ export function applyReview(orgs: Org[], id: string, action: ReviewAction, by: s
   return { orgs: next };
 }
 
-const ACRONYMS = new Set(['ADHD', 'OCD', 'DLD', 'DCD', 'UK', 'NI', 'CIO', 'SCIO', 'CIC', 'PMLD', 'SEN', 'SEND', 'ABI', 'TBI', 'NHS', 'YMCA', 'ADD', 'LD']);
+const ACRONYMS = new Set(['WASP', 'ADHD', 'OCD', 'DLD', 'DCD', 'UK', 'NI', 'CIO', 'SCIO', 'CIC', 'PMLD', 'SEN', 'SEND', 'ABI', 'TBI', 'NHS', 'YMCA', 'ADD', 'LD']);
 const SMALL = new Set(['and', 'of', 'the', 'for', 'in', 'with', 'on', 'at', 'to', 'a', 'an', 'by', 'or']);
 
 /** Register names are often ALL CAPITALS: "BRENT MENCAP" → "Brent Mencap", keeping ADHD, UK, CIO and the like. */
-export function tidyName(name: string): string {
+/**
+ * What a register (or a person) sometimes wraps round a name: quotation marks, leading punctuation that would jump
+ * the A–Z list ("'spectrum WASP'", "* Group"), trailing dashes or commas, doubled spaces. Apostrophes inside a name
+ * (Children's), brackets and a "+" stay. The first letter is a capital.
+ */
+export function cleanName(name: string): string {
+  let s = name.normalize('NFC')
+    .replace(/[\u2018\u2019\u201A\u201B\u2032`´]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u2033]/g, '"')
+    .replace(/"/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  s = s.replace(/^[^\p{L}\p{N}(]+/u, '').replace(/[\s'*_~#,;:–—-]+$/u, '');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/** For sorting A–Z: letters and numbers only, so punctuation never decides the order. */
+export const sortKey = (name: string) => name.normalize('NFKD').replace(/[^\p{L}\p{N} ]/gu, '').trim().toLowerCase();
+
+export function tidyName(raw: string): string {
+  const name = cleanName(raw);
   const letters = name.replace(/[^A-Za-z]/g, '');
   if (letters.length < 4 || letters !== letters.toUpperCase()) return name;
   return name.toLowerCase().split(/(\s+|-|\/|\()/).map((w, i) => {
