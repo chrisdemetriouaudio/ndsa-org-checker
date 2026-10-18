@@ -1143,22 +1143,22 @@
       ]
     },
     "adhd-foundation": {
-      "status": "Likely closed",
+      "status": "Closed",
       "reasons": [
-        "Proof: Charity 1120898 is in administration (register of 18 Oct 2026)"
+        "Closed by Chris on 18 Oct 2026: Not active"
       ],
-      "since": "2026-10-17",
+      "since": "2026-10-18",
       "lastChecked": "2026-10-18",
-      "proven": false,
-      "score": 40,
+      "proven": true,
+      "score": 0,
       "signals": [
         {
           "key": "address",
           "label": "Web address",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "Web address exists",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -1166,8 +1166,8 @@
           "label": "Website answers",
           "weight": 15,
           "strength": "weak",
-          "level": "amber",
-          "detail": "Website down on 2 of the last 2 checks",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -1175,8 +1175,8 @@
           "label": "No closing notice",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "No closing wording on the homepage",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -1184,8 +1184,8 @@
           "label": "Not for sale",
           "weight": 15,
           "strength": "strong",
-          "level": "green",
-          "detail": "Domain is not parked or for sale",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
@@ -1193,8 +1193,8 @@
           "label": "Same address",
           "weight": 5,
           "strength": "weak",
-          "level": "green",
-          "detail": "Website stays at its own address",
+          "level": "none",
+          "detail": "Not checked yet",
           "kind": "evidence"
         },
         {
