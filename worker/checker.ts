@@ -31,6 +31,9 @@ export interface CheckReport {
     live: boolean; // from the live register just now, not this morning's download
     removalReason: string | null;
     grantMaker: boolean | null; // mainly gives grants rather than running services itself
+    does: string[]; // live register only: how it helps
+    where: string[]; // live register only: council areas, region or countries it works in
+    otherNames: string[];
   } | null;
   listed: { name: string } | null;
   checked: string;
@@ -181,6 +184,7 @@ export async function checkOne(env: Env, rawUrl: string, rawNumber: string): Pro
     charity: entry ? {
       register: SOURCE_NAME[entry[0]], number: entry[1], name: entry[2], link: registerLink(entry), status: entry[3] === 'X' ? 'Removed' : 'Registered',
       matched, live: !!live, removalReason: live?.extra.removalReason ?? null, grantMaker: live?.extra.grantMaker ?? null,
+      does: live?.extra.does ?? [], where: live?.extra.where ?? [], otherNames: live?.extra.otherNames ?? [],
     } : null,
     listed: listedName ? { name: listedName } : null,
     checked: new Date().toISOString(),

@@ -26,7 +26,7 @@ async function ask<T>(env: Env, path: string): Promise<T | null> {
 export async function liveCharity(env: Env, number: string): Promise<{ entry: LookupEntry; extra: CcewExtra } | null> {
   if (!/^\d{5,8}$/.test(number)) return null; // Scottish (SC…) and Northern Irish numbers are not on this register
   const [details, grants] = await Promise.all([
-    ask<CcewDetails>(env, `charitydetails/${number}/0`),
+    ask<CcewDetails>(env, `allcharitydetailsV2/${number}/0`),
     ask<{ primary_purpose_grant_making: boolean | null }>(env, `checkprimarygrants/${number}/0`),
   ]);
   if (!details?.reg_charity_number) return null;

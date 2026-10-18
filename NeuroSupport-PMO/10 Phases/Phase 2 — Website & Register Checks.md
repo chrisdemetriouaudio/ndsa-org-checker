@@ -29,7 +29,7 @@ updated: 2026-10-18
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
-> - [x] **Live register through the Charity Commission API,** ready for the key: removal reasons, interim managers, grant-makers, name search (18 Oct 2026).
+> - [x] **Live register through the Charity Commission API,** ready for the key: removal reasons, interim managers, grant-makers, what it does, where it works, other names, name search (18 Oct 2026).
 > - [x] **Scottish (OSCR) and Northern Ireland (CCNI) registers** added (18 Oct 2026).
 > - [x] **Closed Autism Alliance UK and Dyslexia Action** on register proof (17 Oct 2026).
 > - [x] **Charity register connected** through the free daily download; no API key needed (17 Oct 2026).

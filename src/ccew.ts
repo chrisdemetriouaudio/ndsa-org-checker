@@ -6,7 +6,7 @@ import type { LookupEntry } from './lookupKeys.ts';
 
 export const CCEW_API = 'https://api.charitycommission.gov.uk/register/api';
 
-/** GetCharityDetails: the fields we read. reg_status is "R" (registered) or "RM" (removed). */
+/** GetAllCharityDetailsV2: the fields we read. reg_status is "R" (registered) or "RM" (removed). */
 export interface CcewDetails {
   reg_charity_number: number;
   charity_name: string;
@@ -21,6 +21,11 @@ export interface CcewDetails {
   reporting_status: string | null;
   latest_acc_fin_year_end_date: string | null;
   web: string | null;
+  who_what_where?: { classification_code: number; classification_type: string; classification_desc: string }[] | null;
+  CharityAoOLocalAuthority?: { local_authority: string; metropolitan_county: string | null; welsh_ind: boolean | null }[] | null;
+  CharityAoORegion?: { region: string }[] | null;
+  CharityAoOCountryContinent?: { country: string; continent: string }[] | null;
+  other_names?: { other_name: string; name_type: string }[] | null;
 }
 
 /** One row of GetSearchCharityByName. */
@@ -37,6 +42,9 @@ export interface CcewExtra {
   removalReason: string | null;
   interimManager: string | null; // date appointed, or '' when the date is not given
   grantMaker: boolean | null;
+  does: string[]; // how it helps, in the register's words: "Provides services", "Provides advocacy / advice / information"
+  where: string[]; // where it works: up to 10 council areas, else a region such as "Throughout England", else countries
+  otherNames: string[]; // working names and old names
 }
 
 const day = (s: string | null | undefined) => (s ? s.slice(0, 10) : '');
@@ -54,7 +62,19 @@ export function detailsExtra(d: CcewDetails, grantMaker: boolean | null): CcewEx
     removalReason: d.removal_reason?.trim() || null,
     interimManager: d.interim_manager_ind ? day(d.date_of_interim_manager_appt) : null,
     grantMaker,
+    does: (d.who_what_where ?? []).filter((c) => c.classification_type === 'How' && c.classification_code !== 310).map((c) => c.classification_desc.trim()),
+    where: whereItWorks(d),
+    otherNames: [...new Set((d.other_names ?? []).map((n) => n.other_name.replace(/\s+/g, ' ').trim()).filter(Boolean))].slice(0, 5),
   };
+}
+
+/** Council areas if the charity named them (at most 10), otherwise its region, otherwise the countries it works in. */
+export function whereItWorks(d: CcewDetails): string[] {
+  const councils = (d.CharityAoOLocalAuthority ?? []).map((a) => a.local_authority.trim()).filter(Boolean);
+  if (councils.length) return [...new Set(councils)];
+  const regions = (d.CharityAoORegion ?? []).map((r) => r.region.trim()).filter(Boolean);
+  if (regions.length) return [...new Set(regions)];
+  return [...new Set((d.CharityAoOCountryContinent ?? []).map((c) => c.country.trim()).filter(Boolean))].slice(0, 10);
 }
 
 /** A name with the parts charities add and drop freely taken off, for comparing two names. */

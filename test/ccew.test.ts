@@ -52,3 +52,23 @@ test('a name search only counts an exact match of the main charity, registered f
   assert.equal(pickByName(found.slice(0, 1), 'ADHD Foundation')?.reg_charity_number, 1);
   assert.equal(pickByName(found, 'Autism Hampshire'), null);
 });
+
+test('all-details extras: how it helps, where it works, other names', () => {
+  const d = details({
+    who_what_where: [
+      { classification_code: 105, classification_type: 'What', classification_desc: 'Disability' },
+      { classification_code: 306, classification_type: 'How', classification_desc: 'Provides services' },
+      { classification_code: 307, classification_type: 'How', classification_desc: 'Provides advocacy / advice / information' },
+      { classification_code: 310, classification_type: 'How', classification_desc: 'Other charitable activities' },
+    ],
+    CharityAoOLocalAuthority: [{ local_authority: 'Bury', metropolitan_county: 'Greater Manchester', welsh_ind: false }, { local_authority: 'Bolton', metropolitan_county: 'Greater Manchester', welsh_ind: false }],
+    CharityAoORegion: [{ region: 'Throughout England' }],
+    other_names: [{ other_name: 'Dyslexia  Action', name_type: 'W' }, { other_name: 'Dyslexia Action', name_type: 'O' }],
+  });
+  const x = detailsExtra(d, null);
+  assert.deepEqual(x.does, ['Provides services', 'Provides advocacy / advice / information']);
+  assert.deepEqual(x.where, ['Bury', 'Bolton']);
+  assert.deepEqual(x.otherNames, ['Dyslexia Action']);
+  assert.deepEqual(detailsExtra(details({ CharityAoORegion: [{ region: 'Throughout England' }] }), null).where, ['Throughout England']);
+  assert.deepEqual(detailsExtra(details({}), null).where, []);
+});

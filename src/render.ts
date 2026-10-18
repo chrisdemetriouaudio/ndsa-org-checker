@@ -372,6 +372,9 @@ const ul=mk('ul',null,'ticks');for(const s of j.signals){const li=mk('li');li.ap
 const reg=mk('p',null,'meta');const c=j.charity;if(c){reg.append('Charity register: ');const a=mk('a',c.name+' ('+c.number+')');a.href=c.link;a.rel='noopener';a.target='_blank';reg.append(a,' · '+c.status+(c.removalReason?' ('+c.removalReason.toLowerCase()+')':'')+' · '+c.register+(c.live?', checked live':''));}else reg.append('We could not match this website to a charity on the registers. If it is a charity, add its number above for a stronger check.');card.append(reg);
 if(c&&c.matched==='name')card.append(mk('p','Matched by name only, because the register does not list this website. Check it is the same charity'+(c.status==='Removed'?'; until then this does not count as proof it has closed.':'.'),'note'));
 if(c&&c.grantMaker)card.append(mk('p','The register says this charity mainly gives grants, rather than running services itself.','hint'));
+if(c&&c.otherNames&&c.otherNames.length)card.append(mk('p','Also known as: '+c.otherNames.join(' · '),'meta'));
+if(c&&c.does&&c.does.length)card.append(mk('p','What it does, says the register: '+c.does.join(' · '),'meta'));
+if(c&&c.where&&c.where.length)card.append(mk('p','Where it works, says the register: '+c.where.join(', '),'meta'));
 card.append(mk('p',j.listed?'In our directory as '+j.listed.name+'.':'Not in our directory yet.','meta'));
 card.append(mk('p','Checked just now. One check can be caught out by a website having a bad day; the directory below is checked over a week.','hint'));
 checkOut.replaceChildren(card);}
