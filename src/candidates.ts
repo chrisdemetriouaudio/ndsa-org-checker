@@ -27,6 +27,7 @@ export interface Candidate {
   coverage?: Coverage;
   serves?: string[]; // council areas or regions it serves, from the register
   about?: string; // the start of the register's description (400 characters), for rules and people
+  how?: string; // the register's tick-boxes for how it works, e.g. "Provides services; Makes grants to individuals"
   triage?: Triage;
   firstSeen?: string; // date discovery first found it
   siteFails?: number; // days in a row its website check has failed

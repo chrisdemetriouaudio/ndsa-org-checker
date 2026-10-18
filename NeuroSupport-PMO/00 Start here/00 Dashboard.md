@@ -19,10 +19,14 @@ updated: 2026-10-18
 > **Fine:** 870 · **Closed:** 2 · **Average score:** 99 out of 100
 <!-- live:end -->
 
+<!-- candidates:start -->
+> [!info] New organisations (decided automatically every morning)
+> Filled in by tomorrow morning's run. Nothing here needs you.
+<!-- candidates:end -->
+
 ## 👉 Your actions
 
 - [ ] **Try the button finder, "Near you" and "Who is it for?"** on the directory. See [[Phase 8 — Finding Support Easily]].
-- [ ] **Look at the 222 unclear candidates** when you have time (Admin → Review candidates). The rest were decided automatically.
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
 - [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
@@ -45,6 +49,7 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Unclear candidates decided automatically:** register tie-breaker, parked after 7 days. Nothing waits on you (18 Oct 2026).
 > - [x] **Checker reads the live Charity Commission register** (key added and tested, 18 Oct 2026).
 > - [x] **Scottish and Northern Ireland registers** used by the checker and the daily search (18 Oct 2026).
 > - [x] **830 organisations added automatically, 682 turned down with reasons** (18 Oct 2026).

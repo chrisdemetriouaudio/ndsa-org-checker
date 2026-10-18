@@ -10,7 +10,13 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Admin table: frozen column titles · live
+> [!success]+ 🚀 18 Oct 2026 · New organisations decided without you · live
+> - **Turned away 5** care, housing and care-provider bodies that were waiting (L'Arche, Langdon Housing, Avenues London, Hansel Foundation, ARC).
+> - **Register tie-breaker:** when the words leave it unclear, the register's own tick-boxes decide. Advice or advocacy tips it in; grants, housing or research only tip it out.
+> - **7-day deadline:** anything still unclear a week after it was found is parked, never added.
+> - **Dashboard line** each morning: added, turned away, parked. The daily alert no longer asks you to review.
+
+> [!success]- 🚀 18 Oct 2026 · Admin table: frozen column titles · live
 > - **Column titles stay in view** while you scroll the organisations.
 > - **Each tick has its own titled column** (Web address, Website answers, and so on).
 > - **Organisation names stay pinned** on the left when you swipe sideways on a phone.

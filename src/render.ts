@@ -149,9 +149,9 @@ export function renderDashboardBlock(orgs: Org[], state: State): string {
   ].join('\n');
 }
 
-export function replaceBetweenMarkers(doc: string, block: string): string {
-  const start = '<!-- live:start -->';
-  const end = '<!-- live:end -->';
+export function replaceBetweenMarkers(doc: string, block: string, name = 'live'): string {
+  const start = `<!-- ${name}:start -->`;
+  const end = `<!-- ${name}:end -->`;
   const a = doc.indexOf(start);
   const b = doc.indexOf(end);
   if (a === -1 || b === -1 || b < a) return doc;

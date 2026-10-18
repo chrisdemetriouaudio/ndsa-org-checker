@@ -276,7 +276,7 @@ export function candidatesPage(n: string, admin: Admin, decided: string[], repo:
 <div class="card">
 <div class="row"><div><label for="f-nation">Nation</label><select id="f-nation"><option value="">All nations</option><option>England</option><option>Wales</option><option>Scotland</option><option>Northern Ireland</option></select></div>
 <div><label for="f-cond">Condition</label><select id="f-cond"><option value="">All conditions</option></select></div></div>
-<div class="row"><div><label for="f-verdict">Show</label><select id="f-verdict"><option value="review">Needs a person</option><option value="no-website">Would be added, but no website</option><option value="">All waiting</option></select></div><div></div></div>
+<div class="row"><div><label for="f-verdict">Show</label><select id="f-verdict"><option value="review">Needs a person</option><option value="no-website">Would be added, but no website</option><option value="parked">Parked (website gone, or unclear after a week)</option><option value="">All waiting</option></select></div><div></div></div>
 <div class="row"><div><label for="f-aud">Who for</label><select id="f-aud"><option value="">Everyone</option>${AUDIENCES.map((a) => `<option value="${a}">${esc(AUDIENCE_LABEL[a])}</option>`).join('')}</select></div><div></div></div>
 <div class="row"><div><label for="f-q">Search</label><input id="f-q" type="search" placeholder="Name, place or words"></div>
 <div><label>&nbsp;</label><label style="font-weight:400;display:flex;gap:8px;align-items:center"><input type="checkbox" id="f-named" style="width:auto"> Only ones named for a condition</label>

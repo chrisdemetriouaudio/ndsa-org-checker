@@ -1,6 +1,6 @@
 /**
  * Finds UK organisations that may support people with the conditions in src/conditions.ts, for a person
- * to review. Nothing found here goes on the directory until an admin adds it.
+ * to settle. Clear ones are added, misfits turned away, and anything still unclear after a week is parked: nobody has to review them.
  *
  * Stage 1 sources (all free, Open Government Licence):
  *  - England and Wales: Charity Commission daily extract (charity + area of operation)
@@ -13,7 +13,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inferAudiences } from './audience.ts';
-import { triage, type Verdict } from './triage.ts';
+import { PARK_UNCLEAR_AFTER_DAYS, triage, type Verdict } from './triage.ts';
+import { replaceBetweenMarkers } from './render.ts';
 import { addMapPoints } from './geo.ts';
 import { ccewCoverage, ccniCoverage, oscrCoverage, postcodeIn, ukPostcode, type Coverage } from './place.ts';
 import { candidateToInput, NATIONS, planActions, siteOutcome, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
@@ -117,12 +118,14 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     areas.set(number, list);
   });
   const who = new Map<string, string[]>(); // the register's "who it helps" categories
+  const how = new Map<string, string[]>(); // and its "how it works" ones: services, advice, grants...
   await forEachZipLine(`${CCEW}/publicextract.charity_classification.zip`, (line) => {
-    if (!line.includes('"Who"') || !line.includes('"linked_charity_number":0')) return;
+    if (!(line.includes('"Who"') || line.includes('"How"')) || !line.includes('"linked_charity_number":0')) return;
     const r = jsonLine(line);
     const number = r && String(r.registered_charity_number);
-    if (!r || !number || !text.has(number) || r.classification_type !== 'Who') return;
-    who.set(number, [...(who.get(number) ?? []), tidy(r.classification_description)]);
+    if (!r || !number || !text.has(number)) return;
+    const into = r.classification_type === 'Who' ? who : r.classification_type === 'How' ? how : null;
+    into?.set(number, [...(into.get(number) ?? []), tidy(r.classification_description)]);
   });
   for (const [number, c] of found) {
     const list = areas.get(number) ?? [];
@@ -132,6 +135,7 @@ async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candid
     c.postcode = postcodes.get(number) ?? null;
     c.coverage = ccewCoverage(list.map((a) => a.description));
     c.serves = list.filter((a) => a.type !== 'Country').map((a) => a.description).slice(0, 30);
+    c.how = (how.get(number) ?? []).join('; ') || undefined;
   }
   for (const [number, id] of listed.byNumber) {
     if (!text.has(number)) continue;
@@ -165,7 +169,7 @@ async function fromScotland(listed: Listed, about: About): Promise<Candidate[]> 
       key: `oscr:${r['Charity Number']}`, source: 'oscr' as const, number: r['Charity Number'], name, website,
       nations: ['Scotland' as Nation], area: tidy(r['Main Operating Location']) || tidy(r['Geographical Spread']) || 'Scotland',
       form: tidy(r['Constitutional Form']).replace(/\s*\(.*\)$/, '') || 'Scottish charity',
-      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), postcode, coverage, serves, about: description.slice(0, 400), ...m,
+      audiences: inferAudiences(`${name} · ${description}`, tidy(r['Beneficiaries'])), postcode, coverage, serves, about: description.slice(0, 400), how: tidy(r['Activities']) || undefined, ...m,
     }];
   });
 }
@@ -190,11 +194,24 @@ async function fromNorthernIreland(listed: Listed, about: About): Promise<Candid
     return [{
       key: `ccni:${r['Reg charity number']}`, source: 'ccni' as const, number: r['Reg charity number'], name, website,
       nations: ['Northern Ireland' as Nation], area: 'Northern Ireland', form: tidy(r['Type of governing document']) || 'NI charity',
-      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), postcode, coverage, serves, about: description.slice(0, 400), ...m,
+      audiences: inferAudiences(`${name} · ${tidy(r['What the charity does'])}`, helps), postcode, coverage, serves, about: description.slice(0, 400), how: tidy(r['How the charity works']) || undefined, ...m,
     }];
   });
 }
 
+
+/** Parks every candidate still unclear PARK_UNCLEAR_AFTER_DAYS after it was first found. Returns how many it parked. */
+export function parkStale(candidates: Candidate[], today: string): number {
+  let n = 0;
+  for (const c of candidates) {
+    if (c.triage?.verdict !== 'review' || !c.firstSeen) continue;
+    const days = (Date.parse(today) - Date.parse(c.firstSeen)) / 86_400_000;
+    if (days < PARK_UNCLEAR_AFTER_DAYS) continue;
+    c.triage = { ...c.triage, verdict: 'parked', reasons: [...c.triage.reasons, `still unclear ${PARK_UNCLEAR_AFTER_DAYS} days after it was found, so parked (never added)`] };
+    n++;
+  }
+  return n;
+}
 
 /** Drops ones already listed or already decided, and the same organisation registered in two nations. */
 export function shortlist(all: Candidate[], listed: Org[], decided: Record<string, Decision>): Candidate[] {
@@ -222,7 +239,7 @@ function summary(candidates: Candidate[], failed: string[], today: string, added
     '> [!info] At a glance',
     `> **Found:** ${candidates.length} possible organisations on ${dateWords(today)}, from the charity registers of all 4 nations.`,
     `> **Named for a condition:** ${candidates.filter((c) => c.inName).length}. The rest mention one in their description.`,
-    `> **Not added yet.** An admin reviews them on the admin page before anything goes on the directory.`,
+    `> **Decided automatically every morning:** clear ones added (website checked), misfits turned away, anything unclear after ${PARK_UNCLEAR_AFTER_DAYS} days parked. Nobody has to review them.`,
     ...(failed.length ? [`> 🔴 **Could not read:** ${failed.join(', ')}. Those nations may be missing.`] : []),
     '> This page rewrites itself each time discovery runs (every morning).',
     '',
@@ -232,8 +249,8 @@ function summary(candidates: Candidate[], failed: string[], today: string, added
     added.length ? `**Added to the directory automatically (${added.length}):** named for a condition, with a working website.` : '- Nothing was added automatically.',
     ...added.map((c) => `- ✅ ${c.name} (${c.nations.join(', ')}): ${c.conditions.join(', ')}`),
     '',
-    newForReview.length ? `**New, waiting for review (${newForReview.length}):** Admin → Review candidates → "New only".` : '- No new ones waiting for review.',
-    ...newForReview.slice(0, 30).map((c) => `- 👉 ${c.name} (${c.nations.join(', ')}): ${c.conditions.join(', ')}`),
+    newForReview.length ? `**New and still settling (${newForReview.length}):** decided within ${PARK_UNCLEAR_AFTER_DAYS} days. You can look at them in Admin → Review candidates, but you do not have to.` : '- No new ones still settling.',
+    ...newForReview.slice(0, 30).map((c) => `- ⏳ ${c.name} (${c.nations.join(', ')}): ${c.conditions.join(', ')}`),
     ...(newForReview.length > 30 ? [`- …and ${newForReview.length - 30} more on the review page.`] : []),
     '',
     '## 🗺️ By nation and condition', '',
@@ -274,11 +291,8 @@ function alertText(today: string, added: Candidate[], review: Candidate[], verdi
     `**New organisations found on ${dateWords(today)}**`, '',
     ...(note ? [`🔴 ${note}`, ''] : []),
     ...(added.length ? [`Added to the directory automatically (${added.length}):`, ...added.map((c) => `- ✅ **${c.name}** (${c.nations.join(', ')}): ${c.conditions.join(', ')}. ${c.website}`), ''] : []),
-    ...(review.length ? [`Waiting for review on the admin page (${review.length}):`, ...review.slice(0, 40).map((c) => {
-      const why = c.triage?.reasons.at(-1) ?? 'needs a look';
-      return `- 👉 **${c.name}** (${c.nations.join(', ')}): ${why}.`;
-    }), ...(review.length > 40 ? [`- …and ${review.length - 40} more.`] : []), ''] : []),
-    'Review: https://neurosupport.labs.chrisdemetriou.com/admin/candidates',
+    ...(review.length ? [`Also found ${review.length} that are not clear yet. They are decided automatically within ${PARK_UNCLEAR_AFTER_DAYS} days; nothing to do.`, ''] : []),
+    'All candidates: https://neurosupport.labs.chrisdemetriou.com/admin/candidates',
   ].join('\n');
 }
 
@@ -344,7 +358,7 @@ export async function discover(): Promise<string[]> {
   const overrides = await read<Record<string, { verdict: Verdict; by: string; date: string; reason?: string }>>('data/triage-overrides.json', {});
   for (const c of candidates) {
     c.firstSeen = previous.get(c.key)?.firstSeen ?? (previousFile ? today : baseline);
-    const t = triage({ name: c.name, description: c.about ?? c.snippet, inName: c.inName, conditions: c.conditions, website: c.website });
+    const t = triage({ name: c.name, description: c.about ?? c.snippet, inName: c.inName, conditions: c.conditions, website: c.website, how: c.how });
     const o = overrides[c.key];
     c.triage = o ? {
       ...t,
@@ -376,7 +390,7 @@ export async function discover(): Promise<string[]> {
       continue;
     }
     if (o.action === 'park' || o.action === 'review') {
-      c.triage = { ...c.triage!, verdict: o.action === 'park' ? 'no-website' : 'review', reasons: [...c.triage!.reasons, `website check: ${o.why}`] };
+      c.triage = { ...c.triage!, verdict: o.action === 'park' ? 'parked' : 'review', reasons: [...c.triage!.reasons, `website check: ${o.why}`] };
       continue;
     }
     if (o.action === 'add-moved') {
@@ -399,18 +413,25 @@ export async function discover(): Promise<string[]> {
   if (added.length || reject.length) await writeFile(path('data/candidate-decisions.json'), `${JSON.stringify(decided, null, 2)}\n`);
   const gone = new Set([...reject, ...added].map((c) => c.key));
   candidates = candidates.filter((c) => !gone.has(c.key));
+  // Nobody has to decide: anything still unclear a week after it was found is parked (never added).
+  const parkedToday = parkStale(candidates, today);
   const reviewLeft = candidates.filter((c) => freshKeys.has(c.key) && c.triage?.verdict === 'review');
 
   await writeFile(path('data/candidates.json'), `{"updated":"${today}","baseline":"${baseline}","candidates":[\n${candidates.map((c) => JSON.stringify(c)).join(',\n')}\n]}\n`);
   await writeFile(path('NeuroSupport-PMO/30 Live/Candidates.md'), summary(candidates, failed, today, added, reviewLeft, note));
-  if (added.length || reviewLeft.length || note) {
+  if (added.length || note) {
     await mkdir(path('out'), { recursive: true });
     await writeFile(path('out/discover-alert.md'), alertText(today, added, reviewLeft, verdicts, note));
   }
+  const dashboardFile = path('NeuroSupport-PMO/00 Start here/00 Dashboard.md');
+  const dashboard = await readFile(dashboardFile, 'utf8').catch(() => '');
+  const parked = candidates.filter((c) => c.triage?.verdict === 'parked').length;
+  const waiting = candidates.filter((c) => c.triage?.verdict === 'review').length;
+  if (dashboard) await writeFile(dashboardFile, replaceBetweenMarkers(dashboard, `> [!info] New organisations (decided automatically every morning)\n> **${dateWords(today)}:** added ${added.length} · turned away ${reject.length} · parked ${parkedToday}.\n> **Still settling:** ${waiting} (websites being retried, or found in the last ${PARK_UNCLEAR_AFTER_DAYS} days) · **Parked in total:** ${parked}. Nothing here needs you.`, 'candidates'));
   for (const n of NATIONS) console.log(`${n}: ${candidates.filter((c) => c.nations.includes(n)).length}`);
   const left: Record<string, number> = {};
   for (const c of candidates) left[c.triage!.verdict] = (left[c.triage!.verdict] ?? 0) + 1;
-  console.log(`Added ${added.length}, turned down ${reject.length}. Left: ${JSON.stringify(left)}. New today: ${fresh.length}.${failed.length ? ` Failed: ${failed.join(', ')}` : ''}`);
+  console.log(`Added ${added.length}, turned down ${reject.length}, parked ${parkedToday}. Left: ${JSON.stringify(left)}. New today: ${fresh.length}.${failed.length ? ` Failed: ${failed.join(', ')}` : ''}`);
   if (failed.length) process.exitCode = 1;
   return addedIds;
 }

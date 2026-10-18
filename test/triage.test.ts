@@ -21,3 +21,17 @@ test('providers, schools, grant-makers and overseas work are turned down', () =>
 test('a clear one without a website cannot be added', () => {
   assert.equal(t('Autism Fife', 'Support groups for autistic adults and their families.', true, null), 'no-website');
 });
+
+test('the register breaks ties: advice tips it in, grants or housing tip it out, providers never tip in', () => {
+  const v = (description: string, how: string, name = 'Riverside Trust') =>
+    triage({ name, description, inName: false, conditions: ['autism'], website: 'https://x.org.uk', how });
+  const unclear = 'Helping people with autism in our area.';
+  assert.equal(v(unclear, '').verdict, 'review');
+  assert.equal(v(unclear, 'Provides advocacy / advice / information; Provides services').verdict, 'add');
+  assert.equal(v(unclear, 'Makes grants to individuals').verdict, 'reject');
+  assert.equal(v(unclear, 'Accommodation/housing, Advice/advocacy/information').verdict, 'reject');
+  assert.equal(v(unclear, "'It makes grants, donations, loans, gifts or pensions to individuals'").verdict, 'reject');
+  assert.equal(v('Autism support delivered through our care homes and services.', 'Provides advocacy / advice / information').verdict === 'add', false);
+  // Clear ones are not changed by the tie-breaker.
+  assert.equal(v('Support groups for autistic adults and their families.', 'Makes grants to individuals', 'Autism Fife').verdict, 'add');
+});

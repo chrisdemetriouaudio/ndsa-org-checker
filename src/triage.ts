@@ -4,11 +4,12 @@
  *   review     – unclear; a person decides
  *   reject     – clearly not a signposting fit (care or housing provider, school, grant-maker, overseas...)
  *   no-website – would be added, but there is no website to check it against
+ *   parked     – left aside: its website is gone, or it was still unclear after PARK_UNCLEAR_AFTER_DAYS. Never added.
  * Pure and deterministic, so the same rules run on the backlog, every morning, and in tests.
  */
 import { CONDITIONS } from './conditions.ts';
 
-export type Verdict = 'add' | 'review' | 'reject' | 'no-website';
+export type Verdict = 'add' | 'review' | 'reject' | 'no-website' | 'parked';
 
 export interface Triage {
   score: number; // 0–100: how clearly it is a support organisation for our conditions
@@ -22,10 +23,13 @@ export interface TriageInput {
   inName: boolean; // a condition is in the name
   conditions: string[];
   website: string | null;
+  how?: string; // the register's own tick-boxes for how the charity works, e.g. "Provides services; Makes grants"
 }
 
 export const ADD_AT = 50;
 export const REJECT_AT = 15;
+/** Still unclear this many days after it was first found: parked, not added. Nobody has to decide it. */
+export const PARK_UNCLEAR_AFTER_DAYS = 7;
 
 /** Organisations whose name carries no condition but whose movement is about one. */
 const KNOWN_NAMES = /\b(mencap|people first|headway|gateway club|enable\b|autistic society|aspie|asd\w*|sen\b|send\b|neuro\w*)/i;
@@ -73,8 +77,31 @@ export function triage(c: TriageInput): Triage {
     if (re.test(text) || re.test(c.name)) { score -= penalty; reasons.push(why); }
   }
 
+  // Tie-breaker: when the words alone leave it unclear, the register's own tick-boxes for how it works decide.
+  const between = score > REJECT_AT && score < ADD_AT;
+  if (between && c.how) {
+    const how = registerHow(c.how);
+    const providerFlag = reasons.some((r) => NOT_A_FIT.some(([, , why]) => why === r));
+    if (how.housing) { score -= 20; reasons.push('the register says it provides accommodation or housing'); }
+    else if (how.grants && !how.services && !how.advice) { score -= 30; reasons.push('the register says it gives grants rather than running services'); }
+    else if (how.research && !how.services && !how.advice) { score -= 20; reasons.push('the register says it mainly does research'); }
+    else if (how.advice && !providerFlag) { score += 15; reasons.push('the register says it gives advice, advocacy or information'); }
+  }
+
   score = Math.max(0, Math.min(100, score));
   let verdict: Verdict = score >= ADD_AT ? 'add' : score <= REJECT_AT ? 'reject' : 'review';
   if (verdict === 'add' && !c.website) verdict = 'no-website';
   return { score, verdict, reasons };
+}
+
+/** The register's "how it works" tick-boxes (any of the three UK registers), as plain yes/no facts. */
+export function registerHow(text: string) {
+  const t = text.toLowerCase();
+  return {
+    services: /provides services|carries out activities or services itself|counselling\/support|sport\/recreation|playgroup/.test(t),
+    advice: /advice|advocacy/.test(t),
+    grants: /grant|other finance|welfare\/benevolent|loans/.test(t),
+    research: /research/.test(t),
+    housing: /accommodation\/housing/.test(t),
+  };
 }

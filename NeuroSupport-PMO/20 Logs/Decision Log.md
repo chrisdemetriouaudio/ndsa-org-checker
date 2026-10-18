@@ -1,6 +1,6 @@
 ---
 title: Decision Log
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # ⚖️ Decision Log
@@ -9,6 +9,13 @@ updated: 2026-10-17
 > **What:** choices we made, and why, so we don't argue them again.
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
+
+> [!question]- 18 Oct 2026 · Nobody reviews candidates: unclear ones are parked after 7 days
+> - **Decided:** the register's own "how it works" tick-boxes break ties. Advice or advocacy tips in; grants, housing or research only tip out.
+> - **Decided:** care providers never tip in, even if they tick "advice".
+> - **Decided:** still unclear after 7 days = parked, never added. Websites that stay gone are parked too.
+> - **Decided:** the tie-breaker uses the free daily register files, not the API, so GitHub needs no extra key.
+> - **Why:** the owner has no time to review; parking is safe because it never adds anything unchecked.
 
 > [!question]- 18 Oct 2026 · Decide candidates automatically
 > - **Decided:** nobody can review 2,052 by hand. A relevance score with reasons decides: add, unclear, or turn down.

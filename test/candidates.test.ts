@@ -65,3 +65,11 @@ test('gone addresses are parked; temporary failures retry, then park on the thir
   assert.equal(siteOutcome(org, visit({ closedPhrases: ['has permanently closed'] }), 0).action, 'reject');
   assert.equal(siteOutcome(org, visit(), 0).action, 'add');
 });
+
+test('anything still unclear a week after it was found is parked, never added', async () => {
+  const { parkStale } = await import('../src/discover.ts');
+  const c = (firstSeen: string, verdict: 'review' | 'add') => ({ key: firstSeen + verdict, triage: { score: 30, verdict, reasons: [] }, firstSeen }) as never;
+  const list = [c('2026-10-10', 'review'), c('2026-10-15', 'review'), c('2026-10-01', 'add')];
+  assert.equal(parkStale(list, '2026-10-18'), 1);
+  assert.deepEqual(list.map((x: { triage: { verdict: string } }) => x.triage.verdict), ['parked', 'review', 'add']);
+});

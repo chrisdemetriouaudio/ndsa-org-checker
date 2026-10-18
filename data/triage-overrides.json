@@ -4898,5 +4898,35 @@
   "by": "Claude (read the description)",
   "date": "2026-10-18",
   "verdict": "add"
+ },
+ "ccew:1130445": {
+  "by": "Claude (read the description)",
+  "date": "2026-10-18",
+  "verdict": "reject",
+  "reason": "specialist social care provider"
+ },
+ "oscr:SC001514": {
+  "by": "Claude (read the description)",
+  "date": "2026-10-18",
+  "verdict": "reject",
+  "reason": "health and social care provider"
+ },
+ "ccew:264166": {
+  "by": "Claude (read the description)",
+  "date": "2026-10-18",
+  "verdict": "reject",
+  "reason": "residential communities (a care provider, not a signposting service)"
+ },
+ "ccew:1142743": {
+  "by": "Claude (read the description)",
+  "date": "2026-10-18",
+  "verdict": "reject",
+  "reason": "supported housing provider"
+ },
+ "ccew:285575": {
+  "by": "Claude (read the description)",
+  "date": "2026-10-18",
+  "verdict": "reject",
+  "reason": "umbrella body for care providers, not a service for people or families"
  }
 }
