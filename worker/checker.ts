@@ -123,10 +123,11 @@ export async function checkOne(env: Env, rawUrl: string, rawNumber: string): Pro
   const [result, charity, listed] = await Promise.all([
     visit(url, today),
     findCharity(env, host, number),
-    getJson<Record<string, [string, string]>>(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/data/listed.json`, 600),
+    getJson<Record<string, [string, string] | string>>(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/data/listed.json`, 600),
   ]);
   // Not matched by website? Our directory may know its number; or, if the site moved, the register may list the new address.
-  const listedHere = listed?.[hostKey(host)] ?? (result.movedTo ? listed?.[hostKey(result.movedTo)] : undefined);
+  const raw = listed?.[hostKey(host)] ?? (result.movedTo ? listed?.[hostKey(result.movedTo)] : undefined);
+  const listedHere: [string, string] | undefined = typeof raw === 'string' ? [raw, ''] : raw; // older files held just the name
   const viaDirectory = !charity && listedHere?.[1] ? await findCharity(env, host, listedHere[1]) : null;
   const moved = !charity && !viaDirectory && result.movedTo ? await findCharity(env, result.movedTo, null) : null;
   const entry = charity ?? viaDirectory ?? moved;
