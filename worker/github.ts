@@ -25,9 +25,12 @@ const encode = (text: string) => {
   return btoa(s);
 };
 
-/** Fresh read through the API, with the file's version (sha) for a safe update. */
-export async function readFile(env: Env, path: string): Promise<{ text: string; sha: string }> {
-  const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}?ref=main`, { headers: apiHeaders(env) });
+/**
+ * Read through the API, with the file's version (sha) for a safe update. `ref` defaults to main, which GitHub can
+ * serve slightly out of date for a few seconds after a save; a commit id is always exact.
+ */
+export async function readFile(env: Env, path: string, ref = 'main'): Promise<{ text: string; sha: string }> {
+  const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(ref)}`, { headers: apiHeaders(env) });
   if (!res.ok) throw new Error(`Could not read ${path}: HTTP ${res.status}`);
   const j = (await res.json()) as { content?: string; sha: string; download_url?: string };
   if (j.content) return { text: decode(j.content), sha: j.sha };
@@ -52,7 +55,7 @@ export async function updateJson<T>(env: Env, path: string, empty: T, message: s
   throw new SafeError('The list changed while saving. Please try again.');
 }
 
-/** Writes a file only if nobody changed it since `sha` was read (no sha = create). Returns false on a clash. */
+/** Writes a file only if nobody changed it since `sha` was read (no sha = create). Returns false on a clash. Notes the new commit in env.saved. */
 export async function writeFile(env: Env, path: string, text: string, sha: string | undefined, message: string): Promise<boolean> {
   const res = await fetch(`${API}/repos/${env.GITHUB_REPO}/contents/${path}`, {
     method: 'PUT',
@@ -61,13 +64,19 @@ export async function writeFile(env: Env, path: string, text: string, sha: strin
   });
   if (res.status === 409 || res.status === 422) return false;
   if (!res.ok) throw new Error(`Could not save ${path}: HTTP ${res.status}`);
+  const commit = ((await res.json().catch(() => ({}))) as { commit?: { sha?: string } }).commit?.sha;
+  if (env.saved && commit) env.saved.commit = env.saved.after = commit;
   return true;
 }
 
-/** Read–change–write with one retry if the file changed underneath us. */
+/**
+ * Read–change–write, tried up to 3 times if the file changed underneath us. The first try reads the version this
+ * admin saved last (if any), so a second change straight after the first does not trip over GitHub's short delay.
+ */
 export async function updateOrgs(env: Env, message: string, change: (orgs: Org[]) => Org[] | null): Promise<Org[] | null> {
-  for (let attempt = 0; attempt < 2; attempt++) {
-    const { text, sha } = await readFile(env, 'data/orgs.json');
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await new Promise((r) => setTimeout(r, 1500));
+    const { text, sha } = await readFile(env, 'data/orgs.json', attempt === 0 && env.saved?.after ? env.saved.after : 'main');
     const next = change(JSON.parse(text) as Org[]);
     if (!next) return null;
     if (await writeFile(env, 'data/orgs.json', serialiseOrgs(next), sha, message)) return next;

@@ -23,6 +23,8 @@ export interface Env {
   RESEND_API_KEY?: string;
   GITHUB_TOKEN?: string;
   CCEW_API_KEY?: string; // Charity Commission register API: optional, the checker works without it
+  /** Per request: the commit this admin last saved (read from a cookie), and the commit this request saves. */
+  saved?: { after: string | null; commit: string | null };
 }
 
 /** An error whose message is safe and useful to show the person. Anything else shows a plain apology. */

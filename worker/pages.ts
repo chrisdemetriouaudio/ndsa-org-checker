@@ -249,15 +249,22 @@ for (const form of document.querySelectorAll('form[data-api]')) {
     const body = Object.fromEntries([...fd.entries()].filter(([k]) => k !== 'focus' && k !== 'audiences'));
     body.focus = fd.getAll('focus');
     body.audiences = fd.getAll('audiences');
-    const out = form.querySelector('.out') || form.parentElement.querySelector('.out') || document.createElement('div');
+    let out = form.querySelector('.out') || form.parentElement.querySelector('.out');
+    if (!out) { out = document.createElement('div'); form.after(out); }
     const button = form.querySelector('button'); button.disabled = true;
+    const DONE = { remove: 'Removed ✓', restore: 'Restored ✓', 'still-running': 'Marked as still running ✓' };
+    say(out, 'Saving…', true);
     try {
       const r = await post(form.dataset.api, body);
-      if (r.problems && r.problems.length && out.isConnected) {
+      if (r.problems && r.problems.length) {
         say(out, (r.added ? r.added + ' added. ' : '') + 'Not added: ' + r.problems.join(' '), !r.added ? false : true);
         if (r.added) setTimeout(() => location.reload(), 2500);
-      } else location.reload();
-    } catch (e) { if (out.isConnected) say(out, e.message, false); else alert(e.message); }
+      } else {
+        say(out, (DONE[body.action] || 'Saved ✓') + ' Updating the list…', true);
+        const row = form.closest('tr, .card'); if (row && body.action) row.style.opacity = '.45';
+        setTimeout(() => location.reload(), 900);
+      }
+    } catch (e) { say(out, e.message, false); }
     finally { button.disabled = false; }
   };
 }

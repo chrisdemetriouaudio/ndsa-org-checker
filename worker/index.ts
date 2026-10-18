@@ -62,8 +62,15 @@ async function directory(env: Env, n: string): Promise<Response> {
   return html(page, n, { 'cache-control': 'public, max-age=60' });
 }
 
-async function adminHome(env: Env, admin: Admin, n: string): Promise<Response> {
-  const [orgsFile, stateFile] = await Promise.all([readFile(env, 'data/orgs.json'), readFile(env, 'data/summary.json')]);
+/** The commit this admin saved in the last few minutes, if any (see savedCookie). */
+const savedRef = (req: Request) => /(?:^|;\s*)__Host-nsc-saved=([0-9a-f]{40})/.exec(req.headers.get('cookie') ?? '')?.[1] ?? null;
+/** Remembers the commit a change created for 5 minutes, so the next page load shows that change straight away. */
+const savedCookie = (commit: string) => `__Host-nsc-saved=${commit}; Path=/; Max-Age=300; Secure; HttpOnly; SameSite=Strict`;
+
+async function adminHome(env: Env, admin: Admin, n: string, ref: string | null): Promise<Response> {
+  // Right after a change, read the exact version saved: "main" can lag behind it for a few seconds.
+  const orgsFile = await readFile(env, 'data/orgs.json', ref ?? 'main').catch(() => readFile(env, 'data/orgs.json'));
+  const stateFile = await readFile(env, 'data/summary.json');
   return html(adminPage(n, admin, JSON.parse(orgsFile.text), JSON.parse(stateFile.text) as Summary), n);
 }
 
@@ -258,7 +265,7 @@ async function handle(req: Request, env: Env): Promise<Response> {
       const has = await env.DB.prepare('SELECT 1 FROM passkeys WHERE email = ? LIMIT 1').bind(admin.email).first();
       return html(passkeySetupPage(n, admin, !!has), n);
     }
-    return adminHome(env, admin, n);
+    return adminHome(env, admin, n, savedRef(req));
   }
 
   if (method === 'GET' && path === '/admin/candidates') {
@@ -308,11 +315,14 @@ async function handle(req: Request, env: Env): Promise<Response> {
   }
 
   if (admin.level !== 'passkey') return json({ error: 'Please add a passkey first.' }, 403);
-  if (path === '/admin/api/add') return addOrgs(env, admin, body);
-  if (path === '/admin/api/review') return review(env, admin, body);
-  if (path === '/admin/api/candidates') return decideCandidates(env, admin, body);
-  if (path === '/admin/api/details') return setDetails(env, admin, body);
-  return json({ error: 'Not found.' }, 404);
+  const saving: Env = { ...env, saved: { after: savedRef(req), commit: null } };
+  const res = path === '/admin/api/add' ? await addOrgs(saving, admin, body)
+    : path === '/admin/api/review' ? await review(saving, admin, body)
+      : path === '/admin/api/candidates' ? await decideCandidates(saving, admin, body)
+        : path === '/admin/api/details' ? await setDetails(saving, admin, body)
+          : json({ error: 'Not found.' }, 404);
+  if (saving.saved?.commit) res.headers.append('set-cookie', savedCookie(saving.saved.commit));
+  return res;
 }
 
 export default {

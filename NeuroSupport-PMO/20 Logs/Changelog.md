@@ -10,7 +10,12 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · New organisations decided without you · live
+> [!success]+ 🚀 18 Oct 2026 · Removing works first time · live
+> - **Fixed:** removing an organisation looked like it did nothing the first time. It had saved, but the page showed GitHub's older copy for a few seconds.
+> - **Now:** the page reads the exact version just saved, and says "Removed ✓" straight away. Same for restore, "still running" and editing details.
+> - **Also:** a second change straight after the first no longer trips over the delay (tries up to 3 times).
+
+> [!success]- 🚀 18 Oct 2026 · New organisations decided without you · live
 > - **Turned away 5** care, housing and care-provider bodies that were waiting (L'Arche, Langdon Housing, Avenues London, Hansel Foundation, ARC).
 > - **Register tie-breaker:** when the words leave it unclear, the register's own tick-boxes decide. Advice or advocacy tips it in; grants, housing or research only tip it out.
 > - **7-day deadline:** anything still unclear a week after it was found is parked, never added.
