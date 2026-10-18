@@ -1,7 +1,7 @@
 /**
  * "Is it still running?" for one website (and an optional charity number), on demand.
  * Same rules as the daily checks: one polite visit (robots.txt respected, 200 KB at most), the charity register
- * via the morning's lookup files, and the same scoring. Results are cached for 30 minutes per website.
+ * via the morning's lookup files (or live, for England and Wales, when CCEW_API_KEY is set), and the same scoring. Results are cached for 30 minutes per website.
  */
 import { normaliseUrl } from '../src/neworg.ts';
 import { findPhrases, isMarketplace, movedTo, pageText, pageTitle, robotsDisallowsAll } from '../src/page.ts';
@@ -9,6 +9,8 @@ import { hostKey, hostShard, numberShard, registerLink, SOURCE_NAME, toRegisterE
 import { decideStatus } from '../src/status.ts';
 import type { CheckResult, Org } from '../src/types.ts';
 import type { Env } from './auth.ts';
+import { charityByName, liveCharity } from './ccew.ts';
+import { namesFromTitle } from '../src/ccew.ts';
 
 const UA = 'neuro-support-checker/0.1 (+https://github.com/chrisdemetriouaudio/neuro-support-checker)';
 const MAX_BYTES = 200_000;
@@ -23,7 +25,13 @@ export interface CheckReport {
   score: number | null;
   reasons: string[];
   signals: { label: string; level: string; detail: string }[];
-  charity: { register: string; number: string; name: string; link: string; status: string } | null;
+  charity: {
+    register: string; number: string; name: string; link: string; status: string;
+    matched: 'number' | 'website' | 'directory' | 'moved' | 'name';
+    live: boolean; // from the live register just now, not this morning's download
+    removalReason: string | null;
+    grantMaker: boolean | null; // mainly gives grants rather than running services itself
+  } | null;
   listed: { name: string } | null;
   checked: string;
 }
@@ -130,10 +138,28 @@ export async function checkOne(env: Env, rawUrl: string, rawNumber: string): Pro
   const listedHere: [string, string] | undefined = typeof raw === 'string' ? [raw, ''] : raw; // older files held just the name
   const viaDirectory = !charity && listedHere?.[1] ? await findCharity(env, host, listedHere[1]) : null;
   const moved = !charity && !viaDirectory && result.movedTo ? await findCharity(env, result.movedTo, null) : null;
-  const entry = charity ?? viaDirectory ?? moved;
+  let entry = charity ?? viaDirectory ?? moved;
+  let matched: NonNullable<CheckReport['charity']>['matched'] = number ? 'number' : charity ? 'website' : viaDirectory ? 'directory' : 'moved';
 
-  const org: Org = { id: 'check', name: entry?.[2] ?? host, url, area: '', kind: '', focus: [], charityNumber: entry?.[1] ?? null };
-  const register = entry ? { extractDate: today, entries: { [entry[1]]: toRegisterEntry(entry) } } : undefined;
+  // Still no match: ask the live register for a charity with exactly the name our directory or the page title gives.
+  let byName: string | null = null;
+  if (!entry && env.CCEW_API_KEY) {
+    for (const name of [...(listedHere?.[0] ? [listedHere[0]] : []), ...namesFromTitle(result.title)].slice(0, 2)) {
+      const found = await charityByName(env, name);
+      if (found) { byName = String(found.reg_charity_number); matched = 'name'; break; }
+    }
+  }
+  // England and Wales: today's record from the live register, which also says why a charity was removed.
+  const liveNumber = entry ? (entry[0] === 'e' ? entry[1] : null) : byName ?? (number && /^\d+$/.test(number) ? number : null);
+  const live = liveNumber ? await liveCharity(env, liveNumber) : null;
+  if (live) entry = live.entry;
+  // A name match is good enough to say "registered", but never to prove a closure: another charity may share the name.
+  const scored = entry && !(matched === 'name' && entry[3] === 'X') ? entry : null;
+
+  const org: Org = { id: 'check', name: entry?.[2] ?? host, url, area: '', kind: '', focus: [], charityNumber: scored?.[1] ?? null };
+  const register = scored
+    ? { extractDate: today, live: !!live, entries: { [scored[1]]: { ...toRegisterEntry(scored), removalReason: live?.extra.removalReason ?? null, interimManager: live?.extra.interimManager ?? null } } }
+    : undefined;
   const d = decideStatus(org, [result], today, register);
   const amber = d.signals.some((x) => x.kind === 'evidence' && x.level === 'amber');
   // One visit is enough to know an address does not exist at all, or that the site says it has closed.
@@ -152,7 +178,10 @@ export async function checkOne(env: Env, rawUrl: string, rawNumber: string): Pro
   return {
     url, finalUrl: result.finalUrl, title: result.title, verdict, headline, score: finalScore, reasons: d.reasons,
     signals: d.signals.map((x) => ({ label: x.label, level: x.level, detail: x.detail })),
-    charity: entry ? { register: SOURCE_NAME[entry[0]], number: entry[1], name: entry[2], link: registerLink(entry), status: entry[3] === 'X' ? 'Removed' : 'Registered' } : null,
+    charity: entry ? {
+      register: SOURCE_NAME[entry[0]], number: entry[1], name: entry[2], link: registerLink(entry), status: entry[3] === 'X' ? 'Removed' : 'Registered',
+      matched, live: !!live, removalReason: live?.extra.removalReason ?? null, grantMaker: live?.extra.grantMaker ?? null,
+    } : null,
     listed: listedName ? { name: listedName } : null,
     checked: new Date().toISOString(),
   };

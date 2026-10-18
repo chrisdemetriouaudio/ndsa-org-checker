@@ -369,7 +369,9 @@ if(j.score!=null){const b=mk('span',String(j.score),'score');b.style.setProperty
 card.append(mk('p',(j.title?j.title+' · ':'')+(j.finalUrl||j.url),'meta'));
 if(j.reasons&&j.reasons.length)card.append(mk('p',j.reasons.join('. ')+'.'));
 const ul=mk('ul',null,'ticks');for(const s of j.signals){const li=mk('li');li.append(TICK[s.level]+' ',mk('strong',s.label),': '+s.detail);ul.append(li);}card.append(ul);
-const reg=mk('p',null,'meta');if(j.charity){reg.append('Charity register: ');const a=mk('a',j.charity.name+' ('+j.charity.number+')');a.href=j.charity.link;a.rel='noopener';a.target='_blank';reg.append(a,' · '+j.charity.status+' · '+j.charity.register);}else reg.append('We could not match this website to a charity on the registers. If it is a charity, add its number above for a stronger check.');card.append(reg);
+const reg=mk('p',null,'meta');const c=j.charity;if(c){reg.append('Charity register: ');const a=mk('a',c.name+' ('+c.number+')');a.href=c.link;a.rel='noopener';a.target='_blank';reg.append(a,' · '+c.status+(c.removalReason?' ('+c.removalReason.toLowerCase()+')':'')+' · '+c.register+(c.live?', checked live':''));}else reg.append('We could not match this website to a charity on the registers. If it is a charity, add its number above for a stronger check.');card.append(reg);
+if(c&&c.matched==='name')card.append(mk('p','Matched by name only, because the register does not list this website. Check it is the same charity'+(c.status==='Removed'?'; until then this does not count as proof it has closed.':'.'),'note'));
+if(c&&c.grantMaker)card.append(mk('p','The register says this charity mainly gives grants, rather than running services itself.','hint'));
 card.append(mk('p',j.listed?'In our directory as '+j.listed.name+'.':'Not in our directory yet.','meta'));
 card.append(mk('p','Checked just now. One check can be caught out by a website having a bad day; the directory below is checked over a week.','hint'));
 checkOut.replaceChildren(card);}

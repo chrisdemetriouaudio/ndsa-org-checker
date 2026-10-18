@@ -22,6 +22,7 @@ export interface Env {
   GITHUB_REPO: string;
   RESEND_API_KEY?: string;
   GITHUB_TOKEN?: string;
+  CCEW_API_KEY?: string; // Charity Commission register API: optional, the checker works without it
 }
 
 /** An error whose message is safe and useful to show the person. Anything else shows a plain apology. */

@@ -94,14 +94,15 @@ export function registerSignal(org: Org, register?: Register): Pick<Signal, 'lev
   if (!n) return { level: 'none', detail: org.registerNote ?? 'No charity number yet' };
   if (!register?.extractDate) return { level: 'none', detail: 'Charity register not downloaded yet' };
   const e = register.entries[n];
-  const asOf = `(register of ${dateWords(register.extractDate)})`;
+  const asOf = register.live ? '(live charity register)' : `(register of ${dateWords(register.extractDate)})`;
   if (!e) return { level: 'amber', detail: `Charity number ${n} not found on the register ${asOf}` };
   if (e.status === 'Removed') {
-    return { level: 'red', provesClosure: true, detail: `Removed from the charity register on ${dateWords(e.removedOn)}` };
+    return { level: 'red', provesClosure: true, detail: `Removed from the charity register on ${dateWords(e.removedOn)}${e.removalReason ? ` (${e.removalReason.toLowerCase()})` : ''}` };
   }
   if (e.dissolved) return { level: 'red', provesClosure: true, detail: `Charity ${n} is dissolved ${asOf}` };
   if (e.inAdministration) return { level: 'red', detail: `Charity ${n} is in administration ${asOf}` };
   if (e.insolvent) return { level: 'red', detail: `Charity ${n} is marked insolvent ${asOf}` };
+  if (e.interimManager != null) return { level: 'amber', detail: `The Charity Commission has put in an interim manager${e.interimManager ? ` (${dateWords(e.interimManager)})` : ''}` };
   if (e.reporting && OVERDUE.has(e.reporting)) return { level: 'amber', detail: `Accounts overdue: "${e.reporting}" ${asOf}` };
   if (e.reporting === 'Suppressed') return { level: 'amber', detail: `Reporting suspended by the Charity Commission ${asOf}` };
   return { level: 'green', detail: `Registered charity ${n}, last accounts to ${dateWords(e.lastAccounts)}` };

@@ -19,6 +19,6 @@
     "EMAIL_FROM": "Neuro Support Checker <no-reply@chrisdemetriou.com>",
     "GITHUB_REPO": "chrisdemetriouaudio/neuro-support-checker"
   },
-  // Secrets (set with `npx wrangler secret put NAME`): RESEND_API_KEY, GITHUB_TOKEN
+  // Secrets (set with `npx wrangler secret put NAME`): RESEND_API_KEY, GITHUB_TOKEN, and optionally CCEW_API_KEY (Charity Commission register API)
   "observability": { "enabled": true }
 }
