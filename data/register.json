@@ -1,5 +1,5 @@
 {
-  "extractDate": "2026-10-17",
+  "extractDate": "2026-10-18",
   "entries": {
     "205244": {
       "number": "205244",
@@ -4609,6 +4609,18 @@
       "dissolved": false,
       "web": "https://www.hykehamsailability.com/"
     },
+    "1142535": {
+      "number": "1142535",
+      "name": "NORTHDALE HORTICULTURE",
+      "status": "Registered",
+      "removedOn": null,
+      "reporting": "Submission Received",
+      "lastAccounts": "2025-07-31",
+      "insolvent": false,
+      "inAdministration": false,
+      "dissolved": false,
+      "web": "www.northdale.org.uk"
+    },
     "1143147": {
       "number": "1143147",
       "name": "SIGNAL FAMILY SUPPORT LIMITED",
@@ -6828,6 +6840,18 @@
       "inAdministration": false,
       "dissolved": false,
       "web": "skyautismsupport.com"
+    },
+    "1180986": {
+      "number": "1180986",
+      "name": "CLAIR'S PARENTS MEETING PARENTS ADHD SUPPORT",
+      "status": "Registered",
+      "removedOn": null,
+      "reporting": "Submission Double Default",
+      "lastAccounts": "2022-03-31",
+      "insolvent": false,
+      "inAdministration": false,
+      "dissolved": false,
+      "web": "www.clairspmpadhd.org"
     },
     "1180998": {
       "number": "1180998",

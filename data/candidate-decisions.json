@@ -9094,5 +9094,23 @@
     "by": "automatic triage",
     "date": "2026-10-17",
     "reason": "the condition is what its description is about; offers support, advice, groups or activities"
+  },
+  "ccew:1180986": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for ADHD; the condition is what its description is about; offers support, advice, groups or activities"
+  },
+  "ccew:1142535": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition comes early in what it does; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026)"
+  },
+  "oscr:SC055277": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities"
   }
 }
