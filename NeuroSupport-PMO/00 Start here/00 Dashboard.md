@@ -21,7 +21,6 @@ updated: 2026-10-18
 
 ## 👉 Your actions
 
-- [ ] **Add the Charity Commission API key** to switch on live register checks. Steps: [[Phase 2 — Website & Register Checks]].
 - [ ] **Try the button finder, "Near you" and "Who is it for?"** on the directory. See [[Phase 8 — Finding Support Easily]].
 - [ ] **Look at the 222 unclear candidates** when you have time (Admin → Review candidates). The rest were decided automatically.
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
@@ -46,7 +45,7 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
-> - [x] **Checker can read the live Charity Commission register** once the key is added (18 Oct 2026).
+> - [x] **Checker reads the live Charity Commission register** (key added and tested, 18 Oct 2026).
 > - [x] **Scottish and Northern Ireland registers** used by the checker and the daily search (18 Oct 2026).
 > - [x] **830 organisations added automatically, 682 turned down with reasons** (18 Oct 2026).
 > - [x] **Near you finds who serves your council area,** not just who is based nearby (18 Oct 2026).
