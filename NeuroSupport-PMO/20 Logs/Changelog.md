@@ -10,7 +10,15 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Filters you can always undo · live
+> [!success]+ 🚀 18 Oct 2026 · New look, and filters that only show matches · live
+> - **New look** (warm and friendly, phone-first, spacious, deep green kept): rounded cards with a score ring, "Visit website" buttons, icons, a calm finder, and the admin pages to match. Font: Nunito (free licence).
+> - **No endless scroll:** 12 at a time, with "Show 12 more" and "Showing 12 of 363".
+> - **A condition shows only organisations for it.** General neurodiversity ones sit behind an "Also show…" button, under their own heading.
+> - **Labels mean what an organisation is mainly for** (name, and the start of its register description), not every passing mention. 41 corrected today.
+> - **Audited:** every condition and "Who is it for?" button shows only matching organisations.
+> - **Fixed:** a stray file of mine stopped one daily save; the save step now copes.
+
+> [!success]- 🚀 18 Oct 2026 · Filters you can always undo · live
 > - **"Showing:" bar** above the results: every active filter (condition, who for, near, search) as a chip with ✕, plus **Clear all**. It stays in view as you scroll.
 > - **"Start again"** at every step of the finder, not just the end.
 > - **Fixed:** after tapping a condition there was no way to see or undo it.

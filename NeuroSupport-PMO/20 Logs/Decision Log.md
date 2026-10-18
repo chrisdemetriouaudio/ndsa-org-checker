@@ -10,6 +10,11 @@ updated: 2026-10-18
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 18 Oct 2026 · Look and feel: warm, phone-first, spacious, deep green
+> - **Decided by Chris:** warm and friendly; designed for families and carers on phones; spacious cards; keep the deep green.
+> - **Decided:** no endless scroll (12 at a time); a condition filter shows only organisations for that condition.
+> - **Why:** the old page looked like a beginner exercise and scrolled forever.
+
 > [!question]- 18 Oct 2026 · Keep the old address running until the keys move
 > - **Decided:** ndsa.labs runs today's code with its own keys and admin list, as a bridge.
 > - **Decided:** once the 2 keys are on the new site and sign-in works there, the old address forwards to the new one; the old Worker and database are deleted only with Chris's OK.
