@@ -251,12 +251,13 @@ async function handle(req: Request, env: Env): Promise<Response> {
     await caches.default.put(cacheKey, res.clone());
     return res;
   }
-  // The dyslexia-friendly font for the Display settings (OpenDyslexic, Bitstream Vera licence: site/fonts/).
-  const font = /^\/fonts\/(OpenDyslexic-(?:Regular|Bold)\.otf)$/.exec(path);
+  // The dyslexia-friendly font for the Display settings (OpenDyslexic, Bitstream Vera licence) and the heading font
+  // (Nunito, SIL Open Font License): both in site/fonts/ with their licences.
+  const font = /^\/fonts\/(OpenDyslexic-(?:Regular|Bold)\.otf|Nunito-latin\.woff2)$/.exec(path);
   if (method === 'GET' && font) {
     const res = await fetch(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/site/fonts/${font[1]}`, { cf: { cacheTtl: 86400 } } as RequestInit);
     if (!res.ok) return new Response('Not found', { status: 404 });
-    return new Response(res.body, { headers: { 'content-type': 'font/otf', 'cache-control': 'public, max-age=604800', 'x-content-type-options': 'nosniff' } });
+    return new Response(res.body, { headers: { 'content-type': font[1].endsWith('.woff2') ? 'font/woff2' : 'font/otf', 'cache-control': 'public, max-age=604800', 'x-content-type-options': 'nosniff' } });
   }
   if ((method === 'GET' || method === 'HEAD') && path === '/api/postcode') {
     if (method === 'HEAD') return new Response(null, { status: 200 });
