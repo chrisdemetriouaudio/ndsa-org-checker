@@ -28,8 +28,8 @@ import type { CheckResult, Org, State } from './types.ts';
 export { NATIONS, type Candidate, type Decision, type Nation } from './candidates.ts';
 
 const CCEW = 'https://ccewuksprdoneregsadata1.blob.core.windows.net/data/json';
-const OSCR_ZIP = 'https://www.oscr.org.uk/download/charity-register';
-const CCNI_CSV = 'https://www.charitycommissionni.org.uk/api/charity-search/exportSearchResultsToCsv/?homePageId=c0884e5e-b621-4563-a378-2b313e15c74a&pageNumber=1&sortOption=Rank%3Basc&searchText=';
+export const OSCR_ZIP = 'https://www.oscr.org.uk/download/charity-register';
+export const CCNI_CSV = 'https://www.charitycommissionni.org.uk/api/charity-search/exportSearchResultsToCsv/?homePageId=c0884e5e-b621-4563-a378-2b313e15c74a&pageNumber=1&sortOption=Rank%3Basc&searchText=';
 
 /** RFC 4180 CSV: quoted fields may hold commas, quotes ("") and line breaks. */
 export function parseCsv(text: string): Record<string, string>[] {
@@ -84,7 +84,7 @@ const host = (url: string | null) => (url ? new URL(url).hostname.replace(/^www\
 /** Listed organisations, so register rows about them can fill in missing details (who they are for). */
 interface Listed { byNumber: Map<string, string>; byHost: Map<string, string> }
 /** What a register says about a listed organisation: free text and category labels. */
-type About = Map<string, { text: string; categories: string; postcode?: string | null; coverage?: Coverage; nations?: Nation[]; serves?: string[] }>;
+type About = Map<string, { text: string; categories: string; postcode?: string | null; coverage?: Coverage; nations?: Nation[]; serves?: string[]; number?: string }>;
 
 async function fromEnglandAndWales(listed: Listed, about: About): Promise<Candidate[]> {
   const found = new Map<string, Candidate>();
@@ -162,7 +162,7 @@ async function fromScotland(listed: Listed, about: About): Promise<Candidate[]> 
     const coverage = oscrCoverage(tidy(r['Geographical Spread']));
     const place = tidy(r['Main Operating Location']);
     const serves = coverage === 'national' ? ['Throughout Scotland'] : place && !/outwith/i.test(place) ? [place] : [];
-    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']), postcode, coverage, nations: ['Scotland'], serves });
+    if (listedId) about.set(listedId, { text: `${name} · ${description}`, categories: tidy(r['Beneficiaries']), postcode, coverage, nations: ['Scotland'], serves, number: tidy(r['Charity Number']) });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
@@ -188,7 +188,7 @@ async function fromNorthernIreland(listed: Listed, about: About): Promise<Candid
     const postcode = postcodeIn(r['Public address']);
     const coverage = ccniCoverage(`${name} · ${tidy(r['What the charity does'])}`);
     const serves = coverage === 'national' ? ['Throughout Northern Ireland'] : [];
-    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps, postcode, coverage, nations: ['Northern Ireland'], serves });
+    if (listedId) about.set(listedId, { text: `${name} · ${tidy(r['What the charity does'])}`, categories: helps, postcode, coverage, nations: ['Northern Ireland'], serves, number: `NIC${tidy(r['Reg charity number'])}` });
     const m = matchConditions(name, description);
     if (!m) return [];
     return [{
@@ -334,6 +334,8 @@ export async function discover(): Promise<string[]> {
       const found = inferAudiences(info.text, info.categories);
       if (found.length) org.audiences = found;
     }
+    // Scottish and Northern Irish charities found by their website get their register number, so the register check covers them.
+    if (!org.charityNumber && info.number && /^(SC|NIC)\d{6}$/.test(info.number)) { org.charityNumber = info.number; delete org.registerNote; }
     if (!org.postcode && info.postcode) org.postcode = info.postcode;
     if (!org.coverage && info.coverage) org.coverage = info.coverage;
     if (!org.nations?.length && info.nations?.length) org.nations = info.nations;

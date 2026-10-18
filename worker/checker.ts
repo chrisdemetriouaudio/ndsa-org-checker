@@ -115,8 +115,9 @@ async function visit(url: string, today: string): Promise<CheckResult> {
 
 async function findCharity(env: Env, host: string, number: string | null): Promise<LookupEntry | null> {
   if (number) {
-    const shard = await getJson<Record<string, LookupEntry>>(`${lookupBase(env)}/number/${numberShard(number)}.json`, 3600);
-    return shard?.[number] ?? null;
+    const key = number.replace(/^NIC/i, ''); // the lookup keeps Northern Irish numbers as the register file has them
+    const shard = await getJson<Record<string, LookupEntry>>(`${lookupBase(env)}/number/${numberShard(key)}.json`, 3600);
+    return shard?.[key] ?? null;
   }
   const shard = await getJson<Record<string, LookupEntry[]>>(`${lookupBase(env)}/host/${hostShard(host)}.json`, 3600);
   const list = shard?.[hostKey(host)] ?? [];
@@ -127,7 +128,7 @@ export async function checkOne(env: Env, rawUrl: string, rawNumber: string): Pro
   const url = normaliseUrl(rawUrl);
   if (!url) return { error: 'Please enter a website address, like www.example.org.uk.' };
   const number = rawNumber.trim() ? rawNumber.toUpperCase().replace(/\s/g, '') : null;
-  if (number && !/^(SC)?\d{5,8}$/.test(number)) return { error: 'A charity number looks like 1063184, or SC012345 in Scotland.' };
+  if (number && !/^(SC|NIC)?\d{5,8}$/.test(number)) return { error: 'A charity number looks like 1063184, SC012345 in Scotland, or NIC100002 in Northern Ireland.' };
   const today = new Date().toISOString().slice(0, 10);
   const host = new URL(url).hostname;
 

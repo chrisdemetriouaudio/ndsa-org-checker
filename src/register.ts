@@ -102,6 +102,23 @@ export async function refreshRegister() {
   const orgs = JSON.parse(await readFile(join(root, 'data/orgs.json'), 'utf8')) as Org[];
   const wanted = new Set(orgs.map((o) => o.charityNumber).filter(Boolean));
   const register = await downloadRegister((e) => wanted.has(e.number));
+  register.sources = ['e'];
+  // Scotland and Northern Ireland: the same files discovery reads each morning (downloaded once per run).
+  const { parseCsv, OSCR_ZIP, CCNI_CSV } = await import('./discover.ts');
+  const { oscrEntry, ccniEntry } = await import('./registersUk.ts');
+  try {
+    let text = '';
+    await forEachZipLine(OSCR_ZIP, (line) => { text += `${line}\n`; });
+    for (const r of parseCsv(text)) if (wanted.has(r['Charity Number']?.trim())) { const e = oscrEntry(r); register.entries[e.number] = e; }
+    register.sources.push('s');
+  } catch (e) { console.error('Scottish register not read today:', e); }
+  try {
+    for (const r of parseCsv(await readFile(await downloadOnce(CCNI_CSV), 'utf8'))) {
+      const e = ccniEntry(r);
+      if (wanted.has(e.number)) register.entries[e.number] = e;
+    }
+    register.sources.push('n');
+  } catch (e) { console.error('Northern Ireland register not read today:', e); }
   const missing = [...wanted].filter((n) => !register.entries[n as string]);
   await writeFile(join(root, 'data/register.json'), `${JSON.stringify(register, null, 2)}\n`);
   console.log(`Register of ${register.extractDate}: found ${Object.keys(register.entries).length} of ${wanted.size} charities.`);

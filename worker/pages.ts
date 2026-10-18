@@ -200,7 +200,7 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary):
 <div><label for="a-kind">Type</label><select id="a-kind" name="kind">${options(KINDS, 'Not sure')}</select></div></div>
 <div class="row"><div><label for="a-pc">Base postcode (optional)</label><input id="a-pc" name="postcode" placeholder="Where it is based, like SO23 9AA"></div>
 <div><label for="a-cov">Works</label><select id="a-cov" name="coverage"><option value="local">Locally (shown by distance)</option><option value="national">Across the nation</option></select></div></div>
-<label for="a-num">Charity number (England and Wales, optional)</label><input id="a-num" name="charityNumber" inputmode="numeric" placeholder="Leave blank if unsure">
+<label for="a-num">Charity number (optional)</label><input id="a-num" name="charityNumber" placeholder="e.g. 1063184, SC012345 or NIC100002. Leave blank if unsure">
 <label>Who it supports</label>${focusBoxes('a-f')}
 <label>Who it is for (tick all that apply; none = ages not stated)</label>${audienceBoxes('a-a')}
 <p><button>Add and check now</button></p><div class="out" hidden></div></form>

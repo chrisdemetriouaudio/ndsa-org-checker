@@ -35,10 +35,6 @@ export interface Candidate {
 
 export interface Decision { decision: 'added' | 'rejected'; by: string; date: string; reason?: string }
 
-const REGISTER_NOTE: Record<string, string> = {
-  oscr: 'A Scottish charity (Scottish register check not built yet)',
-  ccni: 'A Northern Ireland charity (Northern Ireland register check not built yet)',
-};
 
 /** The directory entry a candidate becomes (still checked by validateNew before saving). */
 export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name' | 'website' | 'area' | 'nations' | 'conditions'> & { audiences?: unknown; postcode?: unknown; coverage?: unknown; serves?: unknown }): NewOrgInput {
@@ -48,8 +44,7 @@ export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name'
     area: String(c.area ?? '') || (Array.isArray(c.nations) ? c.nations.join(', ') : ''),
     kind: 'Registered charity',
     focus: Array.isArray(c.conditions) ? c.conditions.map(String) : [],
-    charityNumber: c.source === 'ccew' ? String(c.number ?? '') : '',
-    registerNote: REGISTER_NOTE[c.source],
+    charityNumber: c.source === 'ccni' ? `NIC${String(c.number ?? '')}` : String(c.number ?? ''),
     audiences: cleanAudiences(c.audiences),
     postcode: String(c.postcode ?? ''),
     coverage: c.coverage === 'national' ? 'national' : 'local',

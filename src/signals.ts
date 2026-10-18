@@ -95,9 +95,13 @@ export function registerSignal(org: Org, register?: Register): Pick<Signal, 'lev
   if (!register?.extractDate) return { level: 'none', detail: 'Charity register not downloaded yet' };
   const e = register.entries[n];
   const asOf = register.live ? '(live charity register)' : `(register of ${dateWords(register.extractDate)})`;
+  if (!e && /^SC\d{6}$/.test(n) && register.sources?.includes('s')) {
+    // The Scottish file lists current charities only: a number missing from it has been removed.
+    return { level: 'red', detail: `Charity ${n} is no longer on the Scottish Charity Register ${asOf}` };
+  }
   if (!e) return { level: 'amber', detail: `Charity number ${n} not found on the register ${asOf}` };
   if (e.status === 'Removed') {
-    return { level: 'red', provesClosure: true, detail: `Removed from the charity register on ${dateWords(e.removedOn)}${e.removalReason ? ` (${e.removalReason.toLowerCase()})` : ''}` };
+    return { level: 'red', provesClosure: true, detail: `Removed from the charity register${e.removedOn ? ` on ${dateWords(e.removedOn)}` : ''}${e.removalReason ? ` (${e.removalReason.toLowerCase()})` : ''}` };
   }
   if (e.dissolved) return { level: 'red', provesClosure: true, detail: `Charity ${n} is dissolved ${asOf}` };
   if (e.inAdministration) return { level: 'red', detail: `Charity ${n} is in administration ${asOf}` };

@@ -27,13 +27,13 @@ test('too many new ones qualifying at once: none of the new ones are added, the 
 
 test('a candidate becomes a tidy directory entry', () => {
   assert.deepEqual(candidateToInput(make(7, { name: 'HEADWAY KENT' })), {
-    name: 'Headway Kent', url: 'https://group7.org.uk', area: 'Kent', kind: 'Registered charity', focus: ['autism'], charityNumber: '1000007', registerNote: undefined, audiences: [], postcode: '', coverage: 'local', nations: ['England'], serves: [],
+    name: 'Headway Kent', url: 'https://group7.org.uk', area: 'Kent', kind: 'Registered charity', focus: ['autism'], charityNumber: '1000007', audiences: [], postcode: '', coverage: 'local', nations: ['England'], serves: [],
   });
   assert.deepEqual(candidateToInput(make(9, { audiences: ['children', 'families'] })).audiences, ['children', 'families']);
   const scottish = candidateToInput(make(8, { source: 'oscr', number: 'SC012345', area: '' , nations: ['Scotland'] }));
-  assert.equal(scottish.charityNumber, '');
+  assert.equal(scottish.charityNumber, 'SC012345');
   assert.equal(scottish.area, 'Scotland');
-  assert.match(scottish.registerNote!, /Scottish charity/);
+  assert.equal(candidateToInput(make(6, { source: 'ccni', number: '100002', nations: ['Northern Ireland'] })).charityNumber, 'NIC100002');
 });
 
 import { relatedMove, siteOutcome } from '../src/candidates.ts';

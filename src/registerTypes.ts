@@ -17,5 +17,6 @@ export interface RegisterEntry {
 export interface Register {
   extractDate: string | null;
   live?: boolean; // read from the live register just now, not the daily download
+  sources?: string[]; // registers read in full: e (England and Wales), s (Scotland), n (Northern Ireland)
   entries: Record<string, RegisterEntry>;
 }
