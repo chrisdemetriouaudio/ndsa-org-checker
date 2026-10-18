@@ -46,6 +46,18 @@ jobs:
             git push
           fi
 
+      - name: Publish the checker's lookup (replaces the lookup branch, so history does not grow)
+        if: hashFiles('out/lookup/about.json') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out/lookup
+          git init -q -b lookup
+          git config user.name "neuro-support-checker"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -q -m "lookup $(date -u +%F)"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" lookup
+
       - name: Post new flags to the "Services to review" issue
         if: hashFiles('out/new-flags.md') != ''
         env:

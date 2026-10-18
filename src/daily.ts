@@ -2,10 +2,12 @@
  * The one morning run. In order:
  *  1. find new organisations in the four nations' registers (clear new ones are added),
  *  2. refresh the register snapshot for every listed charity (reuses step 1's download),
- *  3. visit the websites that are due and work out every status.
+ *  3. visit the websites that are due and work out every status,
+ *  4. rebuild the checker's website and charity-number lookup (published to the `lookup` branch).
  * Each register file is downloaded once. A failed step is reported and the rest still run.
  */
 import { discover } from './discover.ts';
+import { buildLookup } from './lookup.ts';
 import { refreshRegister } from './register.ts';
 import { runChecks } from './run.ts';
 
@@ -23,3 +25,4 @@ const step = async (name: string, fn: () => Promise<unknown>) => {
 await step('Find new organisations', discover);
 await step('Refresh the charity register', refreshRegister);
 await step('Check websites and work out statuses', () => runChecks());
+await step('Build the website and charity-number lookup for the checker', buildLookup);

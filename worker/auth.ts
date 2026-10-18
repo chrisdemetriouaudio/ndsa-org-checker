@@ -44,7 +44,7 @@ export async function audit(env: Env, email: string | null, action: string, deta
 }
 
 /** Fixed-window counter. Returns false once `limit` is passed in the window. */
-async function allow(env: Env, key: string, limit: number, windowSeconds: number): Promise<boolean> {
+export async function allow(env: Env, key: string, limit: number, windowSeconds: number): Promise<boolean> {
   const t = now();
   const row = await env.DB.prepare('SELECT window_start, count FROM rate_limits WHERE key = ?').bind(key).first<{ window_start: number; count: number }>();
   if (!row || t - row.window_start >= windowSeconds) {

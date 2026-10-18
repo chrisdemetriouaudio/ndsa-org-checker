@@ -98,6 +98,9 @@ export async function runChecks({ renderOnly = false, only }: RunOptions = {}) {
     }])),
   };
   await write(path('data/summary.json'), `${JSON.stringify(summary)}\n`);
+  // Website -> name of every listed organisation, so the checker can say "in our directory".
+  const listed = Object.fromEntries(orgs.filter((o) => o.review?.status !== 'Closed').map((o) => [new URL(o.url).hostname.toLowerCase().replace(/^www\./, ''), o.name]));
+  await write(path('data/listed.json'), `${JSON.stringify(listed)}\n`);
   await write(path('NeuroSupport-PMO/30 Live/Live status.md'), renderLivePage(orgs, state));
   await write(path('site/index.html'), renderSite(orgs, state));
 

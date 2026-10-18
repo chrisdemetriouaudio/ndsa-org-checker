@@ -261,6 +261,13 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 .bubble.me{margin-left:auto;background:var(--accent);color:var(--bg)}
 #choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}#choices button{font:inherit;font-size:.95rem;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:6px 14px;cursor:pointer}
 #choices button:hover,#choices button:focus-visible{background:var(--accent);color:var(--bg)}
+.checker{background:var(--card);border:2px solid var(--accent);border-radius:12px;padding:16px 18px;margin:8px 0 28px}.checker h2{margin:0 0 4px;font-size:1.3rem}
+.checker input{margin:4px 0 8px}.checker details{margin:4px 0}.checker summary{cursor:pointer;color:var(--accent);font-size:.95rem}
+#check-go{font:inherit;border:1px solid var(--accent);background:var(--accent);color:var(--bg);border-radius:8px;padding:8px 22px;cursor:pointer}
+.result{border-radius:10px;padding:12px 14px;margin-top:8px;border:1px solid var(--line)}.result .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.result h3{margin:0;font-size:1.15rem}
+.result.running{border-color:var(--green)}.result.check{border-color:var(--amber)}.result.closed{border-color:var(--red)}
+.result .ticks{list-style:none;padding:0;margin:8px 0;display:grid;gap:4px;font-size:.92rem}
+.browse{font-size:1.3rem;margin:8px 0 4px}
 .group{list-style:none;font-weight:600;color:var(--quiet);margin:12px 0 0;padding:0 4px}.linkish{font:inherit;background:none;border:0;color:var(--accent);text-decoration:underline;cursor:pointer;padding:0}
 .aud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}.aud span{color:var(--quiet);margin-right:4px}
 .aud button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
@@ -270,7 +277,21 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <body>
 <main>
 <h1>Neuro Support Checker</h1>
-<p class="lead">${shown.length} UK organisations supporting neurodivergent people. Websites are checked every 1 to 3 days, and daily if anything looks wrong. Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
+<p class="lead">Support for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and more, across the UK.</p>
+<section id="checker" class="checker" hidden aria-labelledby="checker-title">
+<h2 id="checker-title">Is it still running?</h2>
+<p class="hint" style="margin-top:0">Before you signpost someone, check the organisation's website. It takes a few seconds.</p>
+<form id="check-form">
+<label for="check-url">Website</label>
+<input id="check-url" inputmode="url" autocomplete="url" placeholder="For example: www.autism.org.uk" required>
+<details><summary>I know its charity number (optional)</summary>
+<label for="check-num">Charity number</label><input id="check-num" placeholder="For example: 269425, or SC012345 in Scotland"></details>
+<p><button id="check-go">Check</button></p>
+</form>
+<div id="check-out" aria-live="polite"></div>
+</section>
+<h2 class="browse">Browse the directory</h2>
+<p class="lead">${shown.length} UK organisations, checked every 1 to 3 days (daily if anything looks wrong). Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
 <label for="q" class="lead">Search by name, area or need</label>
 <input id="q" type="search" placeholder="For example: ADHD, Scotland, dyslexia">
 <section id="finder" class="finder" aria-labelledby="finder-title">
@@ -333,6 +354,26 @@ nearMsg.hidden=false;nearMsg.textContent='Finding '+pc+'…';
 try{const r=await fetch('/api/postcode?pc='+encodeURIComponent(pc));const j=await r.json();if(!r.ok)throw new Error(j.error||'Postcode not found');here=j;clear.hidden=false;apply();}
 catch(err){here=null;nearMsg.textContent=err.message;apply();}});
 clear.addEventListener('click',()=>{here=null;clear.hidden=true;nearMsg.hidden=true;document.getElementById('pc').value='';apply();});
+// "Is it still running?" — one website, checked now by the same rules as the daily checks.
+const checker=document.getElementById('checker'),checkOut=document.getElementById('check-out');
+fetch('/api/check',{method:'HEAD'}).then(r=>{if(r.ok)checker.hidden=false;}).catch(()=>{});
+const mk=(tag,text,cls)=>{const e=document.createElement(tag);if(text!=null)e.textContent=text;if(cls)e.className=cls;return e;};
+const TICK={green:'✅',amber:'🟡',red:'🔴',none:'⚪'};
+const hue=(s)=>{s=Math.max(0,Math.min(100,s));return Math.round(s<=60?s/60*40:40+(s-60)/40*90);};
+document.getElementById('check-form').addEventListener('submit',async(e)=>{e.preventDefault();
+const u=document.getElementById('check-url').value.trim(),n=document.getElementById('check-num').value.trim();const go=document.getElementById('check-go');
+checkOut.replaceChildren(mk('p','Checking '+u+'… this takes a few seconds.','hint'));go.disabled=true;
+try{const r=await fetch('/api/check?url='+encodeURIComponent(u)+(n?'&number='+encodeURIComponent(n):''));const j=await r.json();if(!r.ok)throw new Error(j.error||'The check did not work. Please try again.');
+const card=mk('div',null,'result '+j.verdict);const top=mk('div',null,'top');top.append(mk('h3',(j.verdict==='running'?'🟢 ':j.verdict==='check'?'🟡 ':'🔴 ')+j.headline));
+if(j.score!=null){const b=mk('span',String(j.score),'score');b.style.setProperty('--h',hue(j.score));b.append(mk('small','/100'));top.append(b);}card.append(top);
+card.append(mk('p',(j.title?j.title+' · ':'')+(j.finalUrl||j.url),'meta'));
+if(j.reasons&&j.reasons.length)card.append(mk('p',j.reasons.join('. ')+'.'));
+const ul=mk('ul',null,'ticks');for(const s of j.signals){const li=mk('li');li.append(TICK[s.level]+' ',mk('strong',s.label),': '+s.detail);ul.append(li);}card.append(ul);
+const reg=mk('p',null,'meta');if(j.charity){reg.append('Charity register: ');const a=mk('a',j.charity.name+' ('+j.charity.number+')');a.href=j.charity.link;a.rel='noopener';a.target='_blank';reg.append(a,' · '+j.charity.status+' · '+j.charity.register);}else reg.append('We could not match this website to a charity on the registers. If it is a charity, add its number above for a stronger check.');card.append(reg);
+card.append(mk('p',j.listed?'In our directory as '+j.listed.name+'.':'Not in our directory yet.','meta'));
+card.append(mk('p','Checked just now. One check can be caught out by a website having a bad day; the directory below is checked over a week.','hint'));
+checkOut.replaceChildren(card);}
+catch(err){checkOut.replaceChildren(mk('p',err.message,'note'));}finally{go.disabled=false;}});
 // Button finder: three questions, buttons only. It sets the same filters as the controls below.
 const chat=document.getElementById('chat'),choices=document.getElementById('choices');
 const CONDS=${JSON.stringify(condButtons.map(([c]) => c))};

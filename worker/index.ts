@@ -5,8 +5,10 @@ import { applyReview, MAX_PER_ADD, parseLines, validateNew, type NewOrgInput, ty
 import type { Summary } from '../src/types.ts';
 import {
   audit, consumeLink, currentAdmin, endSession, nonce, passkeyRegister, passkeyRegistrationOptions, passkeySignIn,
-  passkeySignInOptions, requestLink, SafeError, startSession, type Admin, type Env,
+  allow, passkeySignInOptions, requestLink, SafeError, startSession, type Admin, type Env,
 } from './auth.ts';
+import { checkOne } from './checker.ts';
+import { sha256Hex } from './crypto.ts';
 import { readFile, readFileIfAny, startCheck, updateJson, updateOrgs } from './github.ts';
 import { adminPage, candidatesPage, linkPage, messagePage, passkeySetupPage, signInPage } from './pages.ts';
 
@@ -225,6 +227,23 @@ async function handle(req: Request, env: Env): Promise<Response> {
   const method = req.method;
 
   if (method === 'GET' && path === '/') return directory(env, n);
+  if ((method === 'GET' || method === 'HEAD') && path === '/api/check') {
+    if (method === 'HEAD') return new Response(null, { status: 200 });
+    const target = url.searchParams.get('url') ?? '';
+    const number = url.searchParams.get('number') ?? '';
+    const cacheKey = new Request(`https://cache.internal/check?u=${encodeURIComponent(target.trim().toLowerCase())}&n=${encodeURIComponent(number.trim())}`);
+    const cached = await caches.default.match(cacheKey);
+    if (cached) return cached;
+    const ip = req.headers.get('cf-connecting-ip') ?? '';
+    if (!(await allow(env, `check:${(await sha256Hex(`nsc:${ip}`)).slice(0, 32)}`, 30, 3600))) {
+      return json({ error: 'That is a lot of checks in one hour. Please try again a little later.' }, 429);
+    }
+    const report = await checkOne(env, target, number);
+    if ('error' in report) return json(report, 400);
+    const res = json(report, 200, { 'cache-control': 'public, max-age=1800' });
+    await caches.default.put(cacheKey, res.clone());
+    return res;
+  }
   if ((method === 'GET' || method === 'HEAD') && path === '/api/postcode') {
     if (method === 'HEAD') return new Response(null, { status: 200 });
     const point = await lookupPostcode(url.searchParams.get('pc') ?? '');

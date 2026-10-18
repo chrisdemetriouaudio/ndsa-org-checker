@@ -9,7 +9,7 @@
     {
       "binding": "DB",
       "database_name": "neuro-support-checker-db",
-      "database_id": "469fd2c8-31c1-4ad9-ba85-e7bb859bc03b",
+      "database_id": "07ce5d6c-0d69-42e1-b558-d68b545f3ab6",
       "migrations_dir": "migrations"
     }
   ],
