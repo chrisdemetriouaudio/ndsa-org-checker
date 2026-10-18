@@ -56,3 +56,20 @@ export function matchConditions(name: string, description: string): Match | null
   const snippet = `${from > 0 ? '…' : ''}${first.text.slice(from, to).replace(/\s+/g, ' ').trim()}${to < first.text.length ? '…' : ''}`;
   return { conditions, inName, snippet };
 }
+
+/** How far into a description a condition must appear to count as what the organisation is for. */
+export const LEAD_CHARACTERS = 120;
+
+/**
+ * The conditions an organisation is mainly for, not every one its description mentions in passing
+ * ("…autistic adults, with or without a learning disability" is an autism group, not a learning-disability one).
+ * Conditions in the name always count; from the description, only those near the start. If neither names one,
+ * everything the description mentions counts (it was found because of them).
+ */
+export function primaryConditions(name: string, description: string): string[] {
+  const found = (text: string, upTo = Infinity) => CONDITIONS.filter((c) => { const m = c.re.exec(text); return !!m && m.index < upTo; }).map((c) => c.label);
+  const lead = found(description, LEAD_CHARACTERS);
+  const named = found(name);
+  if (named.length || lead.length) return CONDITIONS.map((c) => c.label).filter((l) => named.includes(l) || lead.includes(l));
+  return found(description);
+}
