@@ -6,7 +6,7 @@ updated: 2026-10-18
 # 🔎 Candidates
 
 > [!info] At a glance
-> **Found:** 516 possible organisations on 18 Oct 2026, from the charity registers of all 4 nations.
+> **Found:** 515 possible organisations on 18 Oct 2026, from the charity registers of all 4 nations.
 > **Named for a condition:** 144. The rest mention one in their description.
 > **Decided automatically every morning:** clear ones added (website checked), misfits turned away, anything unclear after 7 days parked. Nobody has to review them.
 > This page rewrites itself each time discovery runs (every morning).
@@ -14,10 +14,9 @@ updated: 2026-10-18
 ## 🆕 New on 18 Oct 2026
 
 **Added to the directory automatically (1):** named for a condition, with a working website.
-- ✅ THE KISHARON CHARITABLE TRUST (England): learning disability
+- ✅ STEPPING STONE 2TO (England): learning disability
 
-**New and still settling (1):** decided within 7 days. You can look at them in Admin → Review candidates, but you do not have to.
-- ⏳ AVENUES SOUTH EAST (England): autism, learning disability, brain injury
+- No new ones still settling.
 
 ## 🗺️ By nation and condition
 
@@ -33,10 +32,10 @@ updated: 2026-10-18
 | dyscalculia | 2 | 1 | 0 | 0 |
 | dyslexia | 24 | 6 | 2 | 0 |
 | dyspraxia (DCD) | 1 | 1 | 0 | 0 |
-| learning disability | 211 | 29 | 50 | 36 |
+| learning disability | 210 | 29 | 50 | 36 |
 | neurodiversity | 8 | 6 | 5 | 3 |
 | sensory processing | 1 | 0 | 0 | 0 |
-| **All** | **362** | **66** | **82** | **58** |
+| **All** | **361** | **66** | **82** | **58** |
 
 An organisation can count under more than one condition and more than one nation.
 

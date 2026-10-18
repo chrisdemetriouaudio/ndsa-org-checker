@@ -9292,5 +9292,11 @@
     "by": "automatic triage",
     "date": "2026-10-18",
     "reason": "the condition is what its description is about; offers support, advice, groups or activities"
+  },
+  "ccew:1168937": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition comes early in what it does; offers support, advice, groups or activities; the register says it gives advice, advocacy or information; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to steppingstone2to.blogspot.com; the new address is used"
   }
 }
