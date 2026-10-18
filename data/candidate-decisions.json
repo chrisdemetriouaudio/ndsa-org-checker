@@ -9112,5 +9112,179 @@
     "by": "automatic triage",
     "date": "2026-10-18",
     "reason": "the condition is what its description is about; offers support, advice, groups or activities"
+  },
+  "ccew:1130445": {
+    "decision": "rejected",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "offers support, advice, groups or activities; turned down after reading the description (Claude (read the description), 18 Oct 2026): specialist social care provider"
+  },
+  "oscr:SC001514": {
+    "decision": "rejected",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "offers support, advice, groups or activities; turned down after reading the description (Claude (read the description), 18 Oct 2026): health and social care provider"
+  },
+  "ccew:264166": {
+    "decision": "rejected",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; turned down after reading the description (Claude (read the description), 18 Oct 2026): residential communities (a care provider, not a signposting service)"
+  },
+  "ccew:1142743": {
+    "decision": "rejected",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; turned down after reading the description (Claude (read the description), 18 Oct 2026): supported housing provider"
+  },
+  "ccew:285575": {
+    "decision": "rejected",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition comes early in what it does; offers support, advice, groups or activities; the register says it gives advice, advocacy or information; turned down after reading the description (Claude (read the description), 18 Oct 2026): umbrella body for care providers, not a service for people or families"
+  },
+  "ccew:1091461": {
+    "decision": "rejected",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for ADHD; the condition is what its description is about; offers support, advice, groups or activities; website says \"has permanently closed\""
+  },
+  "ccew:504184": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for dyslexia; the condition is what its description is about; offers support, advice, groups or activities; website moved to cnwda.uk; the new address is used"
+  },
+  "ccew:1055087": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for Down syndrome; the condition comes early in what it does; offers support, advice, groups or activities; website moved to downsyndrome.digital; the new address is used"
+  },
+  "ccew:289094": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for dyslexia; the condition is what its description is about; offers support, advice, groups or activities; website moved to ealingdyslexia.org; the new address is used"
+  },
+  "ccew:1089171": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for brain injury; the condition is what its description is about; offers support, advice, groups or activities; website moved to headwayblackcountry.org; the new address is used"
+  },
+  "ccew:1075338": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for brain injury; the condition is what its description is about; offers support, advice, groups or activities; website moved to headwaysuffolkandnorfolk.org.uk; the new address is used"
+  },
+  "ccew:1154844": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for autism; the condition is what its description is about; offers support, advice, groups or activities; website moved to roots2branches.co.uk; the new address is used"
+  },
+  "ccew:265949": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for dyslexia; the condition is what its description is about; offers support, advice, groups or activities; gives grants rather than support; website moved to glosdyslexia.org; the new address is used"
+  },
+  "ccew:801965": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "named for autism; the condition is what its description is about; offers support, advice, groups or activities; website moved to kentautistictrust.org; the new address is used"
+  },
+  "ccew:1194112": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to artinmotion.org.uk; the new address is used"
+  },
+  "ccew:1035252": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "a known neurodivergence or learning-disability organisation; the condition comes early in what it does; offers support, advice, groups or activities; runs care or housing (a provider, not a signposting service); kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to harpendenmencap.com; the new address is used"
+  },
+  "ccew:1208161": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to lancashiretaag.co.uk; the new address is used"
+  },
+  "ccew:1070948": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "a known neurodivergence or learning-disability organisation; the condition is what its description is about; offers support, advice, groups or activities; website moved to lewishammencaporguk.wordpress.com; the new address is used"
+  },
+  "ccew:1192687": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to medwaypuzzles.wordpress.com; the new address is used"
+  },
+  "ccew:1209105": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition comes early in what it does; the register says it gives advice, advocacy or information; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to nobiglight.my.canva.site; the new address is used"
+  },
+  "ccew:1159184": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "a known neurodivergence or learning-disability organisation; the condition is what its description is about; offers support, advice, groups or activities"
+  },
+  "ccew:1182917": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition comes early in what it does; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to potentialkids.org.uk; the new address is used"
+  },
+  "ccew:1183166": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to raisingtwenty1.org.uk; the new address is used"
+  },
+  "ccew:1099555": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to rowanhumberstone.org.uk; the new address is used"
+  },
+  "ccew:1087907": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition comes early in what it does; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to sunflowergroup.uk; the new address is used"
+  },
+  "ccew:1203348": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; the register says it gives advice, advocacy or information; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to thehidden.charity; the new address is used"
+  },
+  "ccew:1126111": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; offers support, advice, groups or activities; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to upondowns.com; the new address is used"
+  },
+  "ccew:1190354": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "the condition is what its description is about; the register says it gives advice, advocacy or information; kept after reading the description (Claude (read the description), 18 Oct 2026); website moved to wave-for-change.org.uk; the new address is used"
+  },
+  "ccew:1153742": {
+    "decision": "added",
+    "by": "automatic triage",
+    "date": "2026-10-18",
+    "reason": "a known neurodivergence or learning-disability organisation; the condition is what its description is about; offers support, advice, groups or activities; website moved to wirralmencap.org.uk; the new address is used"
   }
 }
