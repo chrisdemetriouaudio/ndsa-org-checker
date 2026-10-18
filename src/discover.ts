@@ -16,7 +16,7 @@ import { inferAudiences } from './audience.ts';
 import { triage, type Verdict } from './triage.ts';
 import { addMapPoints } from './geo.ts';
 import { ccewCoverage, ccniCoverage, oscrCoverage, postcodeIn, ukPostcode, type Coverage } from './place.ts';
-import { candidateToInput, NATIONS, planActions, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
+import { candidateToInput, NATIONS, planActions, siteOutcome, type Candidate, type Decision, type Nation, type SiteVerdict } from './candidates.ts';
 import { checkSite } from './check.ts';
 import { matchConditions } from './conditions.ts';
 import { dateWords } from './dates.ts';
@@ -366,11 +366,22 @@ export async function discover(): Promise<string[]> {
   const orgs = [...listed];
   const taken = new Set(orgs.map((o) => o.id));
   for (const c of check) {
-    const site = verdicts.get(c.key);
-    if (!site?.ok) {
-      // The website did not pass today: a person looks, rather than adding a dead link.
-      c.triage = { ...c.triage!, verdict: 'review', reasons: [...c.triage!.reasons, `website check: ${site?.why ?? 'not checked'}`] };
+    const r = siteResults.get(c.key);
+    const o = r ? siteOutcome(c, r, previous.get(c.key)?.siteFails ?? 0) : { action: 'review' as const, why: 'not checked', fails: 0 };
+    c.siteFails = o.fails || undefined;
+    if (o.action === 'reject') {
+      decided[c.key] = { decision: 'rejected', by: 'automatic triage', date: today, reason: [...c.triage!.reasons, o.why].join('; ') };
+      reject.push(c);
       continue;
+    }
+    if (o.action === 'park' || o.action === 'review') {
+      c.triage = { ...c.triage!, verdict: o.action === 'park' ? 'no-website' : 'review', reasons: [...c.triage!.reasons, `website check: ${o.why}`] };
+      continue;
+    }
+    if (o.action === 'add-moved') {
+      c.website = o.newUrl!;
+      r!.movedTo = null; // the new address is now its own address
+      c.triage = { ...c.triage!, reasons: [...c.triage!.reasons, o.why] };
     }
     const v = validateNew(candidateToInput(c), orgs, taken);
     if (v.org) { orgs.push(v.org); added.push(c); addedIds.push(v.org.id); firstChecks.set(v.org.id, siteResults.get(c.key)!); decided[c.key] = { decision: 'added', by: 'automatic triage', date: today, reason: c.triage!.reasons.join('; ') }; }

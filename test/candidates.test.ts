@@ -35,3 +35,33 @@ test('a candidate becomes a tidy directory entry', () => {
   assert.equal(scottish.area, 'Scotland');
   assert.match(scottish.registerNote!, /Scottish charity/);
 });
+
+import { relatedMove, siteOutcome } from '../src/candidates.ts';
+import type { CheckResult } from '../src/types.ts';
+
+const visit = (extra: Partial<CheckResult> = {}): CheckResult => ({
+  date: '2026-10-18', reachable: true, httpStatus: 200, finalUrl: 'https://x.org.uk/', ms: 100, error: null,
+  robotsBlocked: false, closedPhrases: [], parkedPhrases: [], movedTo: null, title: null, ...extra,
+});
+const org = { name: 'Headway Black Country', website: 'https://www.headwayblackcountry.co.uk' };
+
+test('a move to a related new address is followed; an unrelated one waits for a person', () => {
+  assert.equal(relatedMove('Headway Black Country', 'https://www.headwayblackcountry.co.uk', 'headwayblackcountry.org'), true);
+  assert.equal(relatedMove('Lewisham Mencap', 'https://lewishammencap.org.uk', 'lewishammencaporguk.wordpress.com'), true);
+  assert.equal(relatedMove('Bolton Smiley Faces', 'https://boltonsmileyfaces.org', 'google.com'), false);
+  assert.equal(relatedMove('Bolton Smiley Faces', 'https://boltonsmileyfaces.org', 'some-other-charity.org'), false);
+  const moved = siteOutcome(org, visit({ movedTo: 'headwayblackcountry.org' }), 0);
+  assert.equal(moved.action, 'add-moved');
+  assert.equal(moved.newUrl, 'https://headwayblackcountry.org');
+});
+
+test('gone addresses are parked; temporary failures retry, then park on the third day', () => {
+  assert.equal(siteOutcome(org, visit({ reachable: false, httpStatus: null, error: 'DNS' }), 0).action, 'park');
+  assert.equal(siteOutcome(org, visit({ reachable: false, httpStatus: 404 }), 0).action, 'park');
+  const blip = visit({ reachable: false, httpStatus: null, error: 'Timeout' });
+  assert.equal(siteOutcome(org, blip, 0).action, 'review');
+  assert.equal(siteOutcome(org, blip, 1).action, 'review');
+  assert.equal(siteOutcome(org, blip, 2).action, 'park');
+  assert.equal(siteOutcome(org, visit({ closedPhrases: ['has permanently closed'] }), 0).action, 'reject');
+  assert.equal(siteOutcome(org, visit(), 0).action, 'add');
+});

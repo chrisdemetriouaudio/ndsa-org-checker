@@ -5,6 +5,7 @@
 import { cleanAudiences, type Audience } from './audience.ts';
 import type { Coverage, Nation } from './place.ts';
 import type { Triage } from './triage.ts';
+import type { CheckResult } from './types.ts';
 import { tidyName, type NewOrgInput } from './neworg.ts';
 
 export { NATIONS, type Nation } from './place.ts';
@@ -28,6 +29,7 @@ export interface Candidate {
   about?: string; // the start of the register's description (400 characters), for rules and people
   triage?: Triage;
   firstSeen?: string; // date discovery first found it
+  siteFails?: number; // days in a row its website check has failed
 }
 
 export interface Decision { decision: 'added' | 'rejected'; by: string; date: string; reason?: string }
@@ -78,3 +80,41 @@ export function planActions(candidates: Candidate[], freshKeys: Set<string>): { 
 }
 
 export interface SiteVerdict { ok: boolean; why: string }
+
+/** Hosts that are never an organisation's own website. */
+const NOT_A_SITE = /(^|\.)(google\.com|accounts\.google\.com|facebook\.com|godaddy\.com|wix\.com|squarespace\.com|sedo\.com)$/i;
+const STOP = new Set(['the', 'and', 'for', 'with', 'group', 'trust', 'charity', 'limited', 'ltd', 'association', 'society', 'support', 'project', 'centre', 'center', 'foundation', 'company', 'community', 'org', 'www', 'co', 'uk', 'com', 'net', 'cio', 'scio']);
+const words = (s: string) => s.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length >= 4 && !STOP.has(w));
+
+/** A redirect to a new address counts as the same organisation when the new address shares a word with its name or old address. */
+export function relatedMove(name: string, oldUrl: string, newHost: string): boolean {
+  if (NOT_A_SITE.test(newHost)) return false;
+  const host = newHost.toLowerCase();
+  const own = [...words(name), ...words(new URL(oldUrl).hostname)];
+  return own.some((w) => host.includes(w));
+}
+
+export const PARK_AFTER_FAILS = 3;
+
+/**
+ * What to do with a candidate that qualified for adding, after one visit to its website:
+ *  add          – the website answered cleanly
+ *  add-moved    – it moved to a related new address: follow the move and keep the new address
+ *  reject       – the website says it has closed
+ *  park         – the address is gone (no such domain, 404/410), or it failed 3 days running
+ *  review       – an unrelated move, or a temporary failure: try again tomorrow / a person looks
+ */
+export function siteOutcome(c: Pick<Candidate, 'name' | 'website'>, r: CheckResult, prevFails: number):
+  { action: 'add' | 'add-moved' | 'reject' | 'park' | 'review'; why: string; fails: number; newUrl?: string } {
+  if (r.closedPhrases.length) return { action: 'reject', why: `website says "${r.closedPhrases[0]}"`, fails: 0 };
+  if (r.parkedPhrases.length) return { action: 'park', why: 'website looks parked or for sale', fails: prevFails + 1 };
+  if (r.reachable && !r.movedTo) return { action: 'add', why: 'website answered cleanly', fails: 0 };
+  if (r.reachable && r.movedTo) {
+    if (relatedMove(c.name, c.website!, r.movedTo)) return { action: 'add-moved', why: `website moved to ${r.movedTo}; the new address is used`, fails: 0, newUrl: `https://${r.movedTo}` };
+    return { action: 'review', why: `website now goes to ${r.movedTo}, which may be a different organisation`, fails: 0 };
+  }
+  if (r.error === 'DNS' || r.httpStatus === 404 || r.httpStatus === 410) return { action: 'park', why: 'the web address no longer works', fails: prevFails + 1 };
+  const fails = prevFails + 1;
+  const what = `website did not answer (${r.error ?? r.httpStatus})`;
+  return fails >= PARK_AFTER_FAILS ? { action: 'park', why: `${what} on ${fails} days running`, fails } : { action: 'review', why: `${what}; trying again tomorrow`, fails };
+}
