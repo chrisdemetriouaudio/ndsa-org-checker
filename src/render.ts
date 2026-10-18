@@ -445,6 +445,7 @@ background:radial-gradient(closest-side,var(--card) calc(100% - 7px),transparent
 .site-foot .tagline{margin-top:var(--sp-3);color:var(--hero-ink);font-weight:700}
 .foot-base{margin-top:var(--sp-6);padding-top:var(--sp-4);border-top:1px solid color-mix(in srgb,var(--hero-ink) 25%,var(--hero));display:flex;justify-content:space-between;gap:var(--sp-3);flex-wrap:wrap;color:var(--hero-quiet)}
 .foot-base a{display:inline-flex;align-items:center;gap:var(--sp-2);min-height:44px}
+.credit{margin:var(--sp-3) 0 0;color:var(--hero-quiet);font-size:.9375rem}.credit a{color:var(--hero-ink);font-weight:700;display:inline-flex;align-items:center;min-height:44px}
 @media (min-width:860px){.foot-grid{grid-template-columns:1.2fr 1fr 1.6fr;gap:var(--sp-7)}}
 /* ---------- Desktop: sticky left column ---------- */
 @media (min-width:1024px){
@@ -607,6 +608,7 @@ ${wave('up')}
 <div><h2>Sources</h2><p>Sources include the Charity Commission for England and Wales, the Charity Commission for Northern Ireland and the Scottish Charity Register: © Crown Copyright and database right ${new Date().getFullYear()}. Contains information from the Scottish Charity Register supplied by the Office of the Scottish Charity Regulator and licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>.</p></div>
 </div>
 <div class="foot-base"><span>Checked every 1 to 3 days. Last check: ${dateWords(state.updated)}.</span><a href="#top"><span class="ic ic-up" aria-hidden="true"></span>Back to top</a></div>
+<p class="credit">© ${new Date().getFullYear()} · Designed and built by <a href="https://chrisdemetriou.com" rel="author">Chris Demetriou</a></p>
 </div>
 </footer>
 <script>
