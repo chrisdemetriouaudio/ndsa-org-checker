@@ -123,23 +123,33 @@ export async function checkOne(env: Env, rawUrl: string, rawNumber: string): Pro
   const [result, charity, listed] = await Promise.all([
     visit(url, today),
     findCharity(env, host, number),
-    getJson<Record<string, string>>(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/data/listed.json`, 600),
+    getJson<Record<string, [string, string]>>(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/data/listed.json`, 600),
   ]);
-  // If the site moved, the register may list the new address instead.
-  const moved = !charity && result.movedTo ? await findCharity(env, result.movedTo, null) : null;
-  const entry = charity ?? moved;
+  // Not matched by website? Our directory may know its number; or, if the site moved, the register may list the new address.
+  const listedHere = listed?.[hostKey(host)] ?? (result.movedTo ? listed?.[hostKey(result.movedTo)] : undefined);
+  const viaDirectory = !charity && listedHere?.[1] ? await findCharity(env, host, listedHere[1]) : null;
+  const moved = !charity && !viaDirectory && result.movedTo ? await findCharity(env, result.movedTo, null) : null;
+  const entry = charity ?? viaDirectory ?? moved;
 
   const org: Org = { id: 'check', name: entry?.[2] ?? host, url, area: '', kind: '', focus: [], charityNumber: entry?.[1] ?? null };
   const register = entry ? { extractDate: today, entries: { [entry[1]]: toRegisterEntry(entry) } } : undefined;
   const d = decideStatus(org, [result], today, register);
   const amber = d.signals.some((x) => x.kind === 'evidence' && x.level === 'amber');
-  const verdict: CheckReport['verdict'] = d.status === 'Likely closed' || d.status === 'Closed' ? 'closed' : d.status === 'Needs a check' || amber ? 'check' : 'running';
-  const headline = verdict === 'closed' ? (d.proven ? 'Closed: the charity register says so' : 'Likely closed')
-    : verdict === 'check' ? 'Worth checking before you signpost anyone' : 'Looks like it is still running';
-  const listedName = listed?.[hostKey(host)] ?? (result.movedTo ? listed?.[hostKey(result.movedTo)] : undefined);
+  // One visit is enough to know an address does not exist at all, or that the site says it has closed.
+  const gone = result.error === 'DNS';
+  const says = result.closedPhrases[0];
+  const verdict: CheckReport['verdict'] = gone || says || d.status === 'Likely closed' || d.status === 'Closed' ? 'closed' : d.status === 'Needs a check' || amber ? 'check' : 'running';
+  const headline = d.proven ? 'Closed: the charity register says so'
+    : gone ? 'This web address does not exist (any more)'
+      : says ? `The website says "${says}"`
+        : verdict === 'closed' ? 'Likely closed'
+          : !result.reachable ? 'The website did not answer just now: worth checking'
+            : verdict === 'check' ? 'Worth checking before you signpost anyone' : 'Looks like it is still running';
+  const finalScore = gone || says ? Math.min(d.score ?? 0, 20) : d.score;
+  const listedName = listedHere?.[0];
 
   return {
-    url, finalUrl: result.finalUrl, title: result.title, verdict, headline, score: d.score, reasons: d.reasons,
+    url, finalUrl: result.finalUrl, title: result.title, verdict, headline, score: finalScore, reasons: d.reasons,
     signals: d.signals.map((x) => ({ label: x.label, level: x.level, detail: x.detail })),
     charity: entry ? { register: SOURCE_NAME[entry[0]], number: entry[1], name: entry[2], link: registerLink(entry), status: entry[3] === 'X' ? 'Removed' : 'Registered' } : null,
     listed: listedName ? { name: listedName } : null,
