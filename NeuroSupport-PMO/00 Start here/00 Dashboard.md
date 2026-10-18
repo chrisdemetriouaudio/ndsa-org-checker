@@ -21,7 +21,7 @@ updated: 2026-10-18
 
 <!-- candidates:start -->
 > [!info] New organisations (decided automatically every morning)
-> **18 Oct 2026:** added 1 · turned away 0 · parked 0.
+> **18 Oct 2026:** added 0 · turned away 0 · parked 0.
 > **Still settling:** 93 (websites being retried, or found in the last 7 days) · **Parked in total:** 104. Nothing here needs you.
 <!-- candidates:end -->
 

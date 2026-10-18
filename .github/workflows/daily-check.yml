@@ -42,6 +42,8 @@ jobs:
           git add data "NeuroSupport-PMO/30 Live" "NeuroSupport-PMO/00 Start here/00 Dashboard.md" site
           if ! git diff --cached --quiet; then
             git commit -m "chore(check): daily run $(date -u +%F)"
+            # Anything else the run touched (not ours to save) must not stop the save.
+            if ! git diff --quiet; then git status --short; git checkout -- .; fi
             git pull --rebase
             git push
           fi
