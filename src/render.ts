@@ -242,6 +242,9 @@ export function renderSite(orgs: Org[], state: State): string {
 main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;margin:0 0 4px}
 .masthead{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:4px}.masthead h1{margin:0}
 .admin-link{font-size:.95rem;white-space:nowrap;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:4px 14px;text-decoration:none}.admin-link:hover,.admin-link:focus-visible{background:var(--accent);color:var(--bg)}.mast-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.active{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0;padding:10px 12px;background:var(--card);border:2px solid var(--accent);border-radius:12px}.active[hidden]{display:none}.active-label{font-weight:700}.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip-x{font:inherit;font-size:.95rem;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:4px 12px;border-radius:999px;border:1px solid var(--accent);background:var(--bg);color:var(--ink);cursor:pointer}.chip-x span{font-weight:700;color:var(--accent)}.chip-x:hover,.chip-x:focus-visible{background:var(--accent);color:var(--bg)}.chip-x:hover span,.chip-x:focus-visible span{color:var(--bg)}
+.clear-all{font:inherit;font-weight:700;min-height:40px;padding:4px 16px;border-radius:999px;border:0;background:var(--accent);color:var(--bg);cursor:pointer;margin-left:auto}
 ${displayCss('fonts/')}
 .lead{color:var(--quiet);margin:0 0 24px}ul{list-style:none;padding:0;margin:0}#list{display:grid;gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
@@ -317,6 +320,7 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <button type="button" data-a="" aria-pressed="true">Everyone</button>
 ${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false">${AUDIENCE_LABEL[a]}</button>`).join('\n')}
 </div>
+<div id="active" class="active" hidden aria-live="polite"><span class="active-label">Showing:</span><span id="chips" class="chips"></span><button type="button" id="clear-all" class="clear-all">Clear all</button></div>
 <ul id="list">
 ${cards}
 </ul>
@@ -351,7 +355,7 @@ for(const [g,label] of GROUPS)heads[g].textContent=label()+' · '+groups[g].leng
 list.replaceChildren(...GROUPS.flatMap(([g])=>groups[g].length?[heads[g],...groups[g]]:[]),...order.filter(li=>li.hidden));
 nearMsg.hidden=false;nearMsg.textContent=groups.serving.length+' serve '+here.district+', '+groups.wide.length+' work across '+here.country+', '+groups.unknown.length+' have no recorded area, and '+groups.other.length+' list other areas.';}
 else if(Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
-more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
+chipsUpdate(t);more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
 const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
 fetch('/api/postcode?pc=SW1A',{method:'HEAD'}).then(r=>{if(r.ok)near.hidden=false;}).catch(()=>{});
@@ -388,8 +392,18 @@ catch(err){checkOut.replaceChildren(mk('p',err.message,'note'));}finally{go.disa
 // Button finder: three questions, buttons only. It sets the same filters as the controls below.
 const chat=document.getElementById('chat'),choices=document.getElementById('choices');
 const CONDS=${JSON.stringify(condButtons.map(([c]) => c))};
+const AUD_LABEL=${JSON.stringify(AUDIENCE_LABEL)};
+// Every active filter shows as a chip with ✕ above the results, plus "Clear all": nobody gets stuck in a filter.
+function chipsUpdate(t){const box=document.getElementById('active'),chips=document.getElementById('chips');const list=[];
+if(cond)list.push(['Support with: '+cond.charAt(0).toUpperCase()+cond.slice(1),()=>{cond='';apply();}]);
+if(aud)list.push(['For: '+(AUD_LABEL[aud]||aud),()=>setAud('')]);
+if(here)list.push(['Near: '+here.label,()=>clear.click()]);
+if(t)list.push(['Search: "'+q.value.trim()+'"',()=>{q.value='';apply();}]);
+chips.replaceChildren(...list.map(([label,fn])=>{const b=document.createElement('button');b.type='button';b.className='chip-x';b.setAttribute('aria-label','Remove filter: '+label);b.append(label+' ');const x=document.createElement('span');x.setAttribute('aria-hidden','true');x.textContent='✕';b.append(x);b.onclick=fn;return b;}));
+box.hidden=!list.length;}
+document.getElementById('clear-all').addEventListener('click',()=>{q.value='';start();});
 const say=(who,text)=>{const p=document.createElement('p');p.className='bubble '+who;p.textContent=text;chat.append(p);};
-const ask=(question,options)=>{say('bot',question);choices.replaceChildren(...options.map(([label,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
+const ask=(question,options)=>{say('bot',question);if(chat.children.length>2)options=[...options,['Start again',()=>start()]];choices.replaceChildren(...options.map(([label,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
 const setAud=(a)=>{aud=a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x.dataset.a===a));apply();};
 const show=()=>{apply();const n=items.filter(li=>!li.hidden).length;
 say('bot',n?'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.':'Nothing matches all of that yet. Try a wider distance, or "Anyone".');

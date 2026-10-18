@@ -10,7 +10,12 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · Display settings (as in Genesis) · live
+> [!success]+ 🚀 18 Oct 2026 · Filters you can always undo · live
+> - **"Showing:" bar** above the results: every active filter (condition, who for, near, search) as a chip with ✕, plus **Clear all**. It stays in view as you scroll.
+> - **"Start again"** at every step of the finder, not just the end.
+> - **Fixed:** after tapping a condition there was no way to see or undo it.
+
+> [!success]- 🚀 18 Oct 2026 · Display settings (as in Genesis) · live
 > - **"Aa Display"** at the top of the directory and every admin page: theme, text size, dyslexia-friendly font (OpenDyslexic), wider spacing, high contrast, reading mask.
 > - **Same tools and wording as the Genesis app.** Saved on this device only. Escape closes it; focus returns to the button.
 > - **Text size re-wraps** instead of zooming, so nothing runs off a phone screen.
