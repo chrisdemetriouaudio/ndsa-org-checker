@@ -13,7 +13,7 @@ const apiHeaders = (env: Env) => {
   return {
     authorization: `Bearer ${env.GITHUB_TOKEN}`,
     accept: 'application/vnd.github+json',
-    'user-agent': 'ndsa-org-checker',
+    'user-agent': 'neuro-support-checker',
     'x-github-api-version': '2022-11-28',
   };
 };

@@ -8,7 +8,7 @@ updated: 2026-10-17
 > [!info] At a glance
 > **What:** daily checks that UK neurodivergent (ND) support organisations are still running.
 > **Status:** 🛠️ Prototype. 44 organisations checked every morning, free tools only.
-> **Admin page:** add, remove and review organisations at ndsa.labs.chrisdemetriou.com/admin (passkey).
+> **Admin page:** add, remove and review organisations at neurosupport.labs.chrisdemetriou.com/admin (passkey).
 > **Rule:** checks suggest a status. A person decides every closure.
 > New here? Read [[How this vault works]] (1 minute).
 
@@ -54,7 +54,7 @@ More ideas: [[Backlog & Parked]].
 > - [x] **Discovery stage 1:** 2,052 candidates from all 4 nations' charity registers (17 Oct 2026).
 > - [x] **Keys added and first passkey sign-in done** (17 Oct 2026).
 > - [x] **Approved admin list set up:** Chris, and Wade (never e-mailed) (17 Oct 2026).
-> - [x] **Admin front door built and live** at ndsa.labs.chrisdemetriou.com (17 Oct 2026).
+> - [x] **Admin front door built and live** at neurosupport.labs.chrisdemetriou.com (17 Oct 2026).
 > - [x] **Score colours follow the score** like a temperature (17 Oct 2026).
 > - [x] **Closed Autism Alliance UK and Dyslexia Action:** both removed from the register (17 Oct 2026).
 > - [x] **Charity register connected:** free daily download, no API key (17 Oct 2026).
@@ -77,9 +77,9 @@ More ideas: [[Backlog & Parked]].
 ## 🔗 Links
 
 - **Live status (updates itself):** [[Live status]]
-- **Public directory:** https://ndsa.labs.chrisdemetriou.com (also https://chrisdemetriouaudio.github.io/ndsa-org-checker/)
-- **Admin page:** https://ndsa.labs.chrisdemetriou.com/admin
-- **Code:** https://github.com/chrisdemetriouaudio/ndsa-org-checker (local: `/Volumes/01 PROJECTS/Claude/ndsa-org-checker`)
-- **Daily check runs:** https://github.com/chrisdemetriouaudio/ndsa-org-checker/actions
+- **Public directory:** https://neurosupport.labs.chrisdemetriou.com (also https://chrisdemetriouaudio.github.io/neuro-support-checker/)
+- **Admin page:** https://neurosupport.labs.chrisdemetriou.com/admin
+- **Code:** https://github.com/chrisdemetriouaudio/neuro-support-checker (local: `/Volumes/01 PROJECTS/Claude/neuro-support-checker`)
+- **Daily check runs:** https://github.com/chrisdemetriouaudio/neuro-support-checker/actions
 - **Flag alerts:** the "Services to review" issue on GitHub. Watch the repo to get them by e-mail.
 - **The plan (for Wade):** https://claude.ai/code/artifact/a0dabc1c-61f8-4bcc-8709-2938182b35ec

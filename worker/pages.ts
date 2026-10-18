@@ -177,7 +177,7 @@ export function adminPage(n: string, admin: Admin, orgs: Org[], state: Summary):
   const header = state.labels;
 
   const body = `
-<div class="top"><div><h1>Admin</h1><p class="quiet" style="margin:0">ND Support Directory · signed in as ${esc(admin.name)}</p></div>
+<div class="top"><div><h1>Admin</h1><p class="quiet" style="margin:0">Neuro Support Checker · signed in as ${esc(admin.name)}</p></div>
 <div><a href="/">Directory</a> &nbsp; <button class="plain" id="out">Sign out</button></div></div>
 
 <div class="card"><strong>At a glance:</strong> ${live.length} listed · ${flagged.length} to review · ${pending.length} being checked · ${closed.length} removed · average score ${avg ?? '—'}. Last daily check: ${dateWords(state.updated)}.</div>
@@ -232,7 +232,7 @@ ${live.map((o) => {
 ${closed.length ? closed.map((o) => `<div class="card"><strong>${esc(o.name)}</strong>: ${esc(o.review?.note ?? '')} <span class="quiet">(${esc(o.review?.by)}, ${dateWords(o.review?.date ?? null)})</span>
 <form data-api="/admin/api/review" class="inline"><input type="hidden" name="id" value="${esc(o.id)}"><input type="hidden" name="action" value="restore"><button class="plain">Restore</button></form></div>`).join('') : '<p>None.</p>'}`;
 
-  return layout('Admin · ND Support Directory', body, n, `${POST_JS}
+  return layout('Admin · Neuro Support Checker', body, n, `${POST_JS}
 document.getElementById('out').onclick = async () => { await post('/auth/signout'); location.href = '/admin'; };
 for (const form of document.querySelectorAll('form[data-api]')) {
   form.onsubmit = async (ev) => {
@@ -280,7 +280,7 @@ export function candidatesPage(n: string, admin: Admin, decided: string[], repo:
 <div class="table-wrap"><table><thead><tr><th></th><th>Organisation</th><th>Nation</th><th>Conditions</th><th>What it does, and why it is here</th></tr></thead><tbody id="rows"></tbody></table></div>
 <div class="inline" style="margin-top:12px"><button id="prev" class="plain">Previous</button><span id="page" class="quiet" style="align-self:center"></span><button id="next" class="plain">Next</button></div>`;
 
-  return layout('Candidates · ND Support Directory', body, n, `${POST_JS}
+  return layout('Candidates · Neuro Support Checker', body, n, `${POST_JS}
 const DECIDED = new Set(${JSON.stringify(decided)});
 const PER_PAGE = 50, MAX = ${MAX_PER_ADD};
 const REGISTER = {

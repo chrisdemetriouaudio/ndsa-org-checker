@@ -16,7 +16,7 @@ const email = rawEmail.toLowerCase();
 const isEmail = (s) => /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,}$/i.test(s);
 const sql = (s) => `'${String(s).replace(/'/g, "''")}'`;
 const d1 = (command) =>
-  execFileSync('npx', ['wrangler', 'd1', 'execute', 'ndsa-admin-db', '--remote', '--json', '--command', command], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  execFileSync('npx', ['wrangler', 'd1', 'execute', 'neuro-support-checker-db', '--remote', '--json', '--command', command], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 const rows = (out) => JSON.parse(out)[0]?.results ?? [];
 const fail = (msg) => { console.error(msg); process.exit(1); };
 const exists = () => rows(d1(`SELECT 1 FROM admins WHERE email = ${sql(email)}`)).length > 0;
@@ -50,7 +50,7 @@ if (cmd === 'list') {
   d1(`INSERT INTO login_links (token_hash, email, created_at, expires_at) VALUES (${sql(hash)}, ${sql(email)}, unixepoch(), unixepoch() + ${LINK_HOURS * 3600})`);
   d1(`INSERT INTO audit (at, email, action, detail) VALUES (unixepoch(), ${sql(email)}, 'link-made-by-hand', 'printed for hand delivery; not e-mailed')`);
   console.log(`Single-use sign-in link for ${email} (works once, for ${LINK_HOURS} hours). Nothing has been sent; give it to them yourself:\n`);
-  console.log(`https://ndsa.labs.chrisdemetriou.com/auth/link?t=${token}\n`);
+  console.log(`https://neurosupport.labs.chrisdemetriou.com/auth/link?t=${token}\n`);
 } else if (cmd === 'remove') {
   if (!exists()) fail(`${email} is not on the list.`);
   d1(`DELETE FROM sessions WHERE email = ${sql(email)}; DELETE FROM passkeys WHERE email = ${sql(email)}; DELETE FROM login_links WHERE email = ${sql(email)}; DELETE FROM admins WHERE email = ${sql(email)}`);

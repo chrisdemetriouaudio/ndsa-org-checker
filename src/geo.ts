@@ -13,7 +13,7 @@ type Point = { lat: number; lon: number; council?: string };
 async function lookupBatch(postcodes: string[]): Promise<Map<string, Point>> {
   const res = await fetch(`${API}/postcodes`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', 'user-agent': 'ndsa-org-checker/0.1 (+https://github.com/chrisdemetriouaudio/ndsa-org-checker)' },
+    headers: { 'content-type': 'application/json', 'user-agent': 'neuro-support-checker/0.1 (+https://github.com/chrisdemetriouaudio/neuro-support-checker)' },
     body: JSON.stringify({ postcodes }),
   });
   if (!res.ok) throw new Error(`postcodes.io: HTTP ${res.status}`);
@@ -50,7 +50,7 @@ export async function addMapPoints(orgs: Org[]): Promise<number> {
     if (p && o.lat == null) {
       o.lat = p.lat; o.lon = p.lon;
       // A local organisation with no service areas on its register serves at least its own council.
-      if (!o.serves?.length && o.coverage !== 'national' && p.council) o.serves = [p.council];
+      if (!o.serves?.length && o.coverage !== 'national' && p.council) { o.serves = [p.council]; o.servesFrom = 'office'; }
       filled++;
     }
   }

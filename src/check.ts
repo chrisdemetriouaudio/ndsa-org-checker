@@ -2,7 +2,7 @@ import { lookup, resolve4 } from 'node:dns/promises';
 import type { CheckResult } from './types.ts';
 
 export const USER_AGENT =
-  'ndsa-org-checker/0.1 (+https://github.com/chrisdemetriouaudio/ndsa-org-checker)';
+  'neuro-support-checker/0.1 (+https://github.com/chrisdemetriouaudio/neuro-support-checker)';
 
 const PAGE_TIMEOUT_MS = 20_000;
 const ROBOTS_TIMEOUT_MS = 10_000;
@@ -82,7 +82,7 @@ export function isMarketplace(host: string): boolean {
 }
 
 /** True when robots.txt asks every robot (or this one) to stay off the whole site. */
-export function robotsDisallowsAll(robots: string, agent = 'ndsa-org-checker'): boolean {
+export function robotsDisallowsAll(robots: string, agent = 'neuro-support-checker'): boolean {
   let applies = false;
   let inAgents = false;
   for (const raw of robots.split(/\r?\n/)) {

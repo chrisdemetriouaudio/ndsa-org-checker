@@ -28,6 +28,7 @@ export interface Org {
   coverage?: Coverage; // works locally, or across a whole nation
   nations?: Nation[]; // which nations it covers
   serves?: string[]; // council areas or regions it serves, in the register's words
+  servesFrom?: 'register' | 'office'; // declared on the charity register, or just its office's council
   notes?: string;
   review?: Review;
 }

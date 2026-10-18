@@ -1,23 +1,23 @@
 {
   // The front door: public directory at /, passkey-protected admin at /admin. Free tier only.
-  "name": "ndsa-org-checker",
+  "name": "neuro-support-checker",
   "main": "worker/index.ts",
   "compatibility_date": "2026-08-01",
   "workers_dev": false,
-  "routes": [{ "pattern": "ndsa.labs.chrisdemetriou.com", "custom_domain": true }],
+  "routes": [{ "pattern": "neurosupport.labs.chrisdemetriou.com", "custom_domain": true }],
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "ndsa-admin-db",
+      "database_name": "neuro-support-checker-db",
       "database_id": "469fd2c8-31c1-4ad9-ba85-e7bb859bc03b",
       "migrations_dir": "migrations"
     }
   ],
   "vars": {
-    "ORIGIN": "https://ndsa.labs.chrisdemetriou.com",
-    "RP_ID": "ndsa.labs.chrisdemetriou.com",
-    "EMAIL_FROM": "ND Support Directory <no-reply@chrisdemetriou.com>",
-    "GITHUB_REPO": "chrisdemetriouaudio/ndsa-org-checker"
+    "ORIGIN": "https://neurosupport.labs.chrisdemetriou.com",
+    "RP_ID": "neurosupport.labs.chrisdemetriou.com",
+    "EMAIL_FROM": "Neuro Support Checker <no-reply@chrisdemetriou.com>",
+    "GITHUB_REPO": "chrisdemetriouaudio/neuro-support-checker"
   },
   // Secrets (set with `npx wrangler secret put NAME`): RESEND_API_KEY, GITHUB_TOKEN
   "observability": { "enabled": true }

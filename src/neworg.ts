@@ -93,7 +93,7 @@ export function validateNew(input: NewOrgInput, existing: Org[], takenIds: Set<s
   const nations = NATIONS.filter((n) => (input.nations ?? []).includes(n));
   if (nations.length) org.nations = nations;
   const serves = (input.serves ?? []).map((s) => clean(s, 60)).filter(Boolean).slice(0, 30);
-  if (serves.length) org.serves = serves;
+  if (serves.length) { org.serves = serves; org.servesFrom = 'register'; }
   const audiences = cleanAudiences(input.audiences);
   if (audiences.length) org.audiences = audiences;
   const note = clean(input.registerNote, 120);

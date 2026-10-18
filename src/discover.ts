@@ -7,7 +7,7 @@
  *  - Scotland: OSCR Scottish Charity Register download (attribution required; no direct marketing)
  *  - Northern Ireland: Charity Commission for Northern Ireland register export
  *
- * Writes data/candidates.json (one candidate per line) and ndsa-PMO/30 Live/Candidates.md.
+ * Writes data/candidates.json (one candidate per line) and NeuroSupport-PMO/30 Live/Candidates.md.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -278,7 +278,7 @@ function alertText(today: string, added: Candidate[], review: Candidate[], verdi
       const why = c.triage?.reasons.at(-1) ?? 'needs a look';
       return `- 👉 **${c.name}** (${c.nations.join(', ')}): ${why}.`;
     }), ...(review.length > 40 ? [`- …and ${review.length - 40} more.`] : []), ''] : []),
-    'Review: https://ndsa.labs.chrisdemetriou.com/admin/candidates',
+    'Review: https://neurosupport.labs.chrisdemetriou.com/admin/candidates',
   ].join('\n');
 }
 
@@ -323,7 +323,8 @@ export async function discover(): Promise<string[]> {
     if (!org.postcode && info.postcode) org.postcode = info.postcode;
     if (!org.coverage && info.coverage) org.coverage = info.coverage;
     if (!org.nations?.length && info.nations?.length) org.nations = info.nations;
-    if (!org.serves?.length && info.serves?.length) org.serves = info.serves;
+    if (!org.serves?.length && info.serves?.length) { org.serves = info.serves; org.servesFrom = 'register'; }
+    if (org.serves?.length && !org.servesFrom) org.servesFrom = org.charityNumber || /Scottish/.test(org.registerNote ?? '') ? 'register' : 'office';
     if (JSON.stringify(org) !== before) filled++;
   }
   try {
@@ -401,7 +402,7 @@ export async function discover(): Promise<string[]> {
   const reviewLeft = candidates.filter((c) => freshKeys.has(c.key) && c.triage?.verdict === 'review');
 
   await writeFile(path('data/candidates.json'), `{"updated":"${today}","baseline":"${baseline}","candidates":[\n${candidates.map((c) => JSON.stringify(c)).join(',\n')}\n]}\n`);
-  await writeFile(path('ndsa-PMO/30 Live/Candidates.md'), summary(candidates, failed, today, added, reviewLeft, note));
+  await writeFile(path('NeuroSupport-PMO/30 Live/Candidates.md'), summary(candidates, failed, today, added, reviewLeft, note));
   if (added.length || reviewLeft.length || note) {
     await mkdir(path('out'), { recursive: true });
     await writeFile(path('out/discover-alert.md'), alertText(today, added, reviewLeft, verdicts, note));

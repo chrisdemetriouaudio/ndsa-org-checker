@@ -7,7 +7,7 @@ import type { Level, Signal } from './signals.ts';
 export { dateWords };
 import { FLAGGED, type Org, type OrgState, type State, type Status } from './types.ts';
 
-const REPO = 'https://github.com/chrisdemetriouaudio/ndsa-org-checker';
+const REPO = 'https://github.com/chrisdemetriouaudio/neuro-support-checker';
 
 const ICON: Record<Status, string> = {
   Confirmed: '✅',
@@ -118,7 +118,7 @@ export function renderLivePage(orgs: Org[], state: State): string {
     for (const { org, s } of flagged) {
       out.push(`| [${cell(org.name)}](${org.url}) | ${scoreText(s)} | ${ticks(s)} | ${cell(s.reasons.join('. '))} |`);
     }
-    out.push('', 'To decide: use the **admin page** (https://ndsa.labs.chrisdemetriou.com/admin): "It is still running" or "Remove".');
+    out.push('', 'To decide: use the **admin page** (https://neurosupport.labs.chrisdemetriou.com/admin): "It is still running" or "Remove".');
   }
 
   out.push('', '## ✅ Fine', '', `> [!success]- ${fine.length} services look fine (lowest score first)`);
@@ -211,7 +211,7 @@ export function renderSite(orgs: Org[], state: State): string {
     const freshness = s.status === 'Confirmed' ? `Confirmed by the organisation` : `Last checked ${dateWords(s.lastChecked)}`;
     const hue = s.score === null ? null : scoreHue(s.score);
     const who = org.audiences?.length ? org.audiences.map((a) => AUDIENCE_LABEL[a]).join(' · ') : 'Ages not stated';
-    const place = `${org.lat != null ? ` data-lat="${org.lat}" data-lon="${org.lon}"` : ''} data-serves="${esc((org.serves ?? []).map(areaKey).join('|'))}"`;
+    const place = `${org.lat != null ? ` data-lat="${org.lat}" data-lon="${org.lon}"` : ''} data-serves="${esc((org.serves ?? []).map(areaKey).join('|'))}" data-from="${org.servesFrom ?? ''}"`;
     const cs = conditionsOf(org);
     return `<li class="card" data-cond="${esc(cs.labels.join('|'))}" data-general="${cs.general ? 1 : ''}" data-aud="${esc((org.audiences ?? []).join(' '))}" data-cov="${org.coverage ?? 'national'}" data-nations="${esc((org.nations ?? []).join('|'))}"${place}>
   <div class="top"><h2><a href="${esc(org.url)}">${esc(org.name)}</a></h2><span class="score" ${hue === null ? '' : `style="--h:${hue}"`} title="How sure we are it is still running">${s.score ?? '—'}<small>/100</small></span></div>
@@ -230,7 +230,7 @@ export function renderSite(orgs: Org[], state: State): string {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ND Support Directory</title>
+<title>Neuro Support Checker</title>
 <meta name="description" content="Neurodivergent support organisations in the UK, checked every few days.">
 <style>
 :root{--bg:#fbfaf7;--card:#fff;--ink:#1d1d1b;--quiet:#5c5b57;--line:#e3e0d8;--accent:#2f5d8a;--note:#fff4d6;--green:#2e7d4f;--amber:#a86a00;--red:#b3261e;--green-bg:#e6f4ea;--amber-bg:#fff4d6;--red-bg:#fde7e5}
@@ -269,7 +269,7 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 </head>
 <body>
 <main>
-<h1>ND Support Directory</h1>
+<h1>Neuro Support Checker</h1>
 <p class="lead">${shown.length} UK organisations supporting neurodivergent people. Websites are checked every 1 to 3 days, and daily if anything looks wrong. Last check: ${dateWords(state.updated)}. The score (out of 100) shows how sure we are each one is still running.</p>
 <label for="q" class="lead">Search by name, area or need</label>
 <input id="q" type="search" placeholder="For example: ADHD, Scotland, dyslexia">
@@ -282,9 +282,8 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 <form id="near" class="near" hidden>
 <label for="pc">Near you</label>
 <div class="nearrow"><input id="pc" autocomplete="postal-code" placeholder="Postcode, like SO23 9AA or SO23" maxlength="9">
-<select id="miles" aria-label="Distance">${[5, 10, 20, 30, 50, 100].map((m) => `<option value="${m}"${m === 20 ? ' selected' : ''}>within ${m} miles</option>`).join('')}</select>
 <button>Search</button><button type="button" id="clear" class="linkish" hidden>Clear</button></div>
-<p class="hint">Your postcode is only used to find your council area and work out distances. It is not stored. First come organisations that serve your council area, then ones based nearby, then nationwide ones.</p>
+<p class="hint">Your postcode is only used to find your council area and work out distances. It is not stored. Nothing is hidden: organisations are sorted by how sure we are they serve your area.</p>
 <p id="near-msg" class="hint" hidden></p>
 </form>
 <div class="aud" role="group" aria-label="Who is it for?"><span>Who is it for?</span>
@@ -304,25 +303,27 @@ let aud='',cond='',showUnstated=false;
 const more=document.getElementById('more');
 let here=null;
 const list=document.getElementById('list');const order=[...items];
-const heading=()=>{const h=document.createElement('li');h.className='group';return h;};const headServe=heading(),headNear=heading(),headWide=heading();
+const heading=()=>{const h=document.createElement('li');h.className='group';return h;};
 const miles=(a,b)=>{const r=(d)=>d*Math.PI/180,h=Math.sin(r(b.lat-a.lat)/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(r(b.lon-a.lon)/2)**2;return 3958.8*2*Math.asin(Math.sqrt(h));};
-const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;
-const limit=+document.getElementById('miles').value;const serving=[],near=[],wide=[];
+const GROUPS=[['serving',()=>'Serves your area ('+here.district+')'],['wide',()=>'Works across '+here.country],['unknown',()=>'Area not recorded – may still serve you (nearest first)'],['other',()=>'Lists other areas – may not serve you (nearest first)']];
+const heads=Object.fromEntries(GROUPS.map(([g])=>[g,heading()]));
+const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;const groups={serving:[],wide:[],unknown:[],other:[]};
 for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
-const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);const condOk=!cond||li.dataset.general||li.dataset.cond.split('|').includes(cond);if(aud&&!a&&textOk&&!showUnstated)unstated++;
-let placeOk=true,group=null;const d=li.querySelector('.dist');d.hidden=true;
+const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;const condOk=!cond||li.dataset.general||li.dataset.cond.split('|').includes(cond);
+const d=li.querySelector('.dist');d.hidden=true;let group=null;
 if(here){const sv=(li.dataset.serves||'').split('|').filter(Boolean);const m=li.dataset.lat?miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon}):Infinity;li.dataset.m=m;
 const far=m===Infinity?'':(m<1?'based less than 1 mile away':'based about '+Math.round(m)+(Math.round(m)===1?' mile':' miles')+' away');
-if(li.dataset.cov==='local'){const serves=sv.some(k=>k===here.keys.district||(here.keys.county&&k===here.keys.county));
-if(serves){group='serving';d.textContent='Serves your area ('+here.district+')'+(far?', '+far:'');d.hidden=false;}
-else if(m<=limit){group='near';d.textContent=far.charAt(0).toUpperCase()+far.slice(1);d.hidden=false;}else placeOk=false;}
-else{const n=li.dataset.nations;placeOk=!n||n.split('|').includes(here.country);group='wide';}}
-li.hidden=!(textOk&&audOk&&placeOk&&condOk);if(here&&!li.hidden)({serving,near,wide})[group].push(li);}
-if(here){near.sort((x,y)=>x.dataset.m-y.dataset.m);serving.sort((x,y)=>x.dataset.m-y.dataset.m);
-headServe.textContent='Serving '+here.district;headNear.textContent='Based within '+limit+' miles';headWide.textContent='Across '+here.country;
-list.replaceChildren(...(serving.length?[headServe,...serving]:[]),...(near.length?[headNear,...near]:[]),...(wide.length?[headWide,...wide]:[]),...order.filter(li=>li.hidden));
-nearMsg.hidden=false;nearMsg.textContent=serving.length+' serve '+here.district+', '+near.length+' more are based within '+limit+' miles, and '+wide.length+' work across '+here.country+'.';}
-else if(headServe.isConnected||headNear.isConnected||headWide.isConnected){list.replaceChildren(...order);}
+if(li.dataset.cov!=='local'){const n=li.dataset.nations;group=!n||n.split('|').includes(here.country)?'wide':'other';}
+else if(sv.some(k=>k===here.keys.district||(here.keys.county&&k===here.keys.county))){group='serving';d.textContent=(li.dataset.from==='office'?'Based in your area':'Serves your area, says the charity register')+(far?' · '+far:'');}
+else if(!sv.length||li.dataset.from==='office'){group='unknown';d.textContent='Area not recorded'+(far?' · '+far:'');}
+else{group='other';d.textContent='Lists other areas'+(far?' · '+far:'');}
+d.hidden=group==='wide';}
+li.hidden=!(textOk&&audOk&&condOk);if(here&&!li.hidden)groups[group].push(li);}
+if(here){for(const g of ['serving','unknown','other'])groups[g].sort((x,y)=>x.dataset.m-y.dataset.m);
+for(const [g,label] of GROUPS)heads[g].textContent=label()+' · '+groups[g].length;
+list.replaceChildren(...GROUPS.flatMap(([g])=>groups[g].length?[heads[g],...groups[g]]:[]),...order.filter(li=>li.hidden));
+nearMsg.hidden=false;nearMsg.textContent=groups.serving.length+' serve '+here.district+', '+groups.wide.length+' work across '+here.country+', '+groups.unknown.length+' have no recorded area, and '+groups.other.length+' list other areas.';}
+else if(Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
 more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
 const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
@@ -331,7 +332,6 @@ near.addEventListener('submit',async(e)=>{e.preventDefault();const pc=document.g
 nearMsg.hidden=false;nearMsg.textContent='Finding '+pc+'…';
 try{const r=await fetch('/api/postcode?pc='+encodeURIComponent(pc));const j=await r.json();if(!r.ok)throw new Error(j.error||'Postcode not found');here=j;clear.hidden=false;apply();}
 catch(err){here=null;nearMsg.textContent=err.message;apply();}});
-document.getElementById('miles').addEventListener('change',()=>{if(here)apply();});
 clear.addEventListener('click',()=>{here=null;clear.hidden=true;nearMsg.hidden=true;document.getElementById('pc').value='';apply();});
 // Button finder: three questions, buttons only. It sets the same filters as the controls below.
 const chat=document.getElementById('chat'),choices=document.getElementById('choices');
@@ -343,7 +343,7 @@ const show=()=>{apply();const n=items.filter(li=>!li.hidden).length;
 say('bot',n?'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.':'Nothing matches all of that yet. Try a wider distance, or "Anyone".');
 const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);
 if(n)document.getElementById('list').scrollIntoView({behavior:'smooth',block:'start'});};
-const where=()=>ask('Where should it be?',[['Near a postcode',()=>{say('bot','Type your postcode in the "Near you" box below, choose how far, then press Search.');near.hidden=false;document.getElementById('pc').focus();const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);apply();}],['Anywhere in the UK',()=>{here=null;show();}]]);
+const where=()=>ask('Where should it be?',[['Near a postcode',()=>{say('bot','Type your postcode in the "Near you" box below, then press Search. Nothing is hidden: the ones that serve your area come first.');near.hidden=false;document.getElementById('pc').focus();const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);apply();}],['Anywhere in the UK',()=>{here=null;show();}]]);
 const forWho=()=>ask('Who is the support for?',[['A child or young person',()=>{setAud('children');where();}],['An adult',()=>{setAud('adults');where();}],['My family, or me as a carer',()=>{setAud('families');where();}],['Anyone',()=>{setAud('');where();}]]);
 const start=()=>{chat.replaceChildren();cond='';setAud('');here=null;clear.hidden=true;nearMsg.hidden=true;apply();
 ask('What would you like support with?',[...CONDS.map(c=>[c.charAt(0).toUpperCase()+c.slice(1),()=>{cond=c;apply();forWho();}]),['Not sure, or anything neurodivergent',()=>{cond='';apply();forWho();}]]);};

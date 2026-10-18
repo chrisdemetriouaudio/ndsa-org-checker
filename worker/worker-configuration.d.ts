@@ -3,10 +3,10 @@
 // Runtime types generated with workerd@1.20261012.1 2026-08-01
 interface __BaseEnv_Env {
 	DB: D1Database;
-	ORIGIN: "https://ndsa.labs.chrisdemetriou.com";
-	RP_ID: "ndsa.labs.chrisdemetriou.com";
-	EMAIL_FROM: "ND Support Directory <no-reply@chrisdemetriou.com>";
-	GITHUB_REPO: "chrisdemetriouaudio/ndsa-org-checker";
+	ORIGIN: "https://neurosupport.labs.chrisdemetriou.com";
+	RP_ID: "neurosupport.labs.chrisdemetriou.com";
+	EMAIL_FROM: "Neuro Support Checker <no-reply@chrisdemetriou.com>";
+	GITHUB_REPO: "chrisdemetriouaudio/neuro-support-checker";
 }
 declare namespace Cloudflare {
 	interface GlobalProps {

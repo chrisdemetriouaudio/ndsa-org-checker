@@ -45,8 +45,8 @@ updated: 2026-10-17
 > - **Hand-delivered links:** `npm run admin -- link` makes a single-use link for you to pass on yourself.
 
 > [!success]- 🚀 17 Oct 2026 · Admin front door · live
-> - **Directory:** now also at ndsa.labs.chrisdemetriou.com (public).
-> - **Admin page:** ndsa.labs.chrisdemetriou.com/admin. E-mail on the admin list, then a passkey.
+> - **Directory:** now also at neurosupport.labs.chrisdemetriou.com (public).
+> - **Admin page:** neurosupport.labs.chrisdemetriou.com/admin. E-mail on the admin list, then a passkey.
 > - **Admins can:** add one or several organisations, remove (archive), restore, and clear flags.
 > - **Instant check:** new entries are checked straight away, not the next morning.
 > - **Also:** score colours follow the score like a temperature.
@@ -78,8 +78,8 @@ updated: 2026-10-17
 > - **Result:** 0 to review. All 44 look fine. The "Services to review" issue is closed.
 
 > [!success]- 🚀 17 Oct 2026 · Prototype live · daily checks of 44 organisations
-> - **Repo:** github.com/chrisdemetriouaudio/ndsa-org-checker (public).
+> - **Repo:** github.com/chrisdemetriouaudio/neuro-support-checker (public).
 > - **Daily check:** GitHub Actions, about 7am, free. Rewrites [[Live status]] and the Dashboard's Live box.
-> - **Public directory:** chrisdemetriouaudio.github.io/ndsa-org-checker (GitHub Pages, free).
+> - **Public directory:** chrisdemetriouaudio.github.io/neuro-support-checker (GitHub Pages, free).
 > - **Alerts:** new flags are posted to the "Services to review" GitHub issue.
 > - **First run:** 40 look active, 4 need a check (moved or renamed).

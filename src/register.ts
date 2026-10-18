@@ -50,9 +50,9 @@ export function downloadOnce(url: string): Promise<string> {
   let file = downloads.get(url);
   if (!file) {
     file = (async () => {
-      tmp ??= mkdtempSync(join(tmpdir(), 'ndsa-'));
+      tmp ??= mkdtempSync(join(tmpdir(), 'nsc-'));
       const path = join(tmp, `file-${downloads.size}`);
-      const res = await fetch(url, { headers: { 'user-agent': 'ndsa-org-checker/0.1 (+https://github.com/chrisdemetriouaudio/ndsa-org-checker)' } });
+      const res = await fetch(url, { headers: { 'user-agent': 'neuro-support-checker/0.1 (+https://github.com/chrisdemetriouaudio/neuro-support-checker)' } });
       if (!res.ok || !res.body) throw new Error(`Download failed (${url}): HTTP ${res.status}`);
       await pipeline(Readable.fromWeb(res.body as never), createWriteStream(path));
       return path;

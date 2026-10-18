@@ -8,7 +8,7 @@ updated: 2026-10-17
 
 > [!info] At a glance
 > **What:** a passkey-protected admin page to add, remove and review organisations. The directory stays public.
-> **Where:** https://ndsa.labs.chrisdemetriou.com/admin (directory at https://ndsa.labs.chrisdemetriou.com).
+> **Where:** https://neurosupport.labs.chrisdemetriou.com/admin (directory at https://neurosupport.labs.chrisdemetriou.com).
 > **Status:** ✅ Live (17 Oct 2026). Keys added; Chris signed in with a passkey.
 > **Back to:** [[00 Dashboard]]
 

@@ -1,6 +1,6 @@
-/* NDSA PMO — easier reading (Autism / ADHD / dyslexia friendly).
+/* Neuro Support Checker PMO — easier reading (Autism / ADHD / dyslexia friendly).
    Calm spacing, bigger text and targets, clear separation of open vs done.
-   Switch off: Settings → Appearance → CSS snippets → ndsa-readable. */
+   Switch off: Settings → Appearance → CSS snippets → neurosupport-readable. */
 
 body {
   --font-text-size: 17px;

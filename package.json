@@ -1,5 +1,5 @@
 {
-  "name": "ndsa-org-checker",
+  "name": "neuro-support-checker",
   "private": true,
   "type": "module",
   "description": "Daily checks that neurodivergent support organisations are still active.",
@@ -15,7 +15,7 @@
     "check": "npm run typecheck && npm test",
     "worker:types": "wrangler types worker/worker-configuration.d.ts",
     "worker:dev": "wrangler dev",
-    "worker:deploy": "CI=true wrangler d1 migrations apply ndsa-admin-db --remote && wrangler deploy",
+    "worker:deploy": "CI=true wrangler d1 migrations apply neuro-support-checker-db --remote && wrangler deploy",
     "admin": "node scripts/admin.mjs",
     "discover": "node src/discover.ts",
     "daily": "node src/daily.ts"

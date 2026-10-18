@@ -98,10 +98,10 @@ export async function runChecks({ renderOnly = false, only }: RunOptions = {}) {
     }])),
   };
   await write(path('data/summary.json'), `${JSON.stringify(summary)}\n`);
-  await write(path('ndsa-PMO/30 Live/Live status.md'), renderLivePage(orgs, state));
+  await write(path('NeuroSupport-PMO/30 Live/Live status.md'), renderLivePage(orgs, state));
   await write(path('site/index.html'), renderSite(orgs, state));
 
-  const dashboardFile = path('ndsa-PMO/00 Start here/00 Dashboard.md');
+  const dashboardFile = path('NeuroSupport-PMO/00 Start here/00 Dashboard.md');
   const dashboard = await readFile(dashboardFile, 'utf8').catch(() => null);
   if (dashboard) await write(dashboardFile, replaceBetweenMarkers(dashboard, renderDashboardBlock(orgs, state)));
 

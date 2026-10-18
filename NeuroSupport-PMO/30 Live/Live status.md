@@ -48,7 +48,7 @@ updated: 2026-10-18
 | [Exeter and District Mencap Society](http://www.exetermencap.org.uk) | 🟢 94 | ✅ | ✅ | ✅ | ✅ | 🔴 | ✅ | ⚪ | Website now goes to google.com |
 | [Pulp Friction Smoothie Bar CIO](https://www.pulpfrictioncic.org.uk) | 🟢 94 | ✅ | ✅ | ✅ | ✅ | 🔴 | ✅ | ⚪ | Website now goes to pulpfrictioncio.org.uk |
 
-To decide: use the **admin page** (https://ndsa.labs.chrisdemetriou.com/admin): "It is still running" or "Remove".
+To decide: use the **admin page** (https://neurosupport.labs.chrisdemetriou.com/admin): "It is still running" or "Remove".
 
 ## ✅ Fine
 

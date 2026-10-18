@@ -29,14 +29,14 @@ export class SafeError extends Error {}
 
 export interface Admin { email: string; name: string; level: 'link' | 'passkey' }
 
-const COOKIE = '__Host-ndsa';
+const COOKIE = '__Host-nsc';
 const LINK_TTL = 15 * 60;
 const LINK_SESSION_TTL = 30 * 60;
 const SESSION_TTL = 12 * 60 * 60;
 const CHALLENGE_TTL = 5 * 60;
 const now = () => Math.floor(Date.now() / 1000);
 
-export const rp = (env: Env): RelyingParty => ({ rpID: env.RP_ID, rpName: 'ND Support Directory', origin: env.ORIGIN });
+export const rp = (env: Env): RelyingParty => ({ rpID: env.RP_ID, rpName: 'Neuro Support Checker', origin: env.ORIGIN });
 export const isEmail = (s: string) => /^[^\s@<>"]{1,64}@[^\s@<>"]{1,190}\.[a-z]{2,}$/i.test(s);
 
 export async function audit(env: Env, email: string | null, action: string, detail = '') {
@@ -59,7 +59,7 @@ async function allow(env: Env, key: string, limit: number, windowSeconds: number
 // ---- Sessions ----
 
 function readCookie(req: Request): string | null {
-  const m = /(?:^|;\s*)__Host-ndsa=([A-Za-z0-9_-]{20,100})/.exec(req.headers.get('cookie') ?? '');
+  const m = /(?:^|;\s*)__Host-nsc=([A-Za-z0-9_-]{20,100})/.exec(req.headers.get('cookie') ?? '');
   return m ? m[1] : null;
 }
 
@@ -94,7 +94,7 @@ export async function endSession(req: Request, env: Env): Promise<string> {
 export async function requestLink(env: Env, rawEmail: string, ip: string): Promise<void> {
   const email = rawEmail.trim().toLowerCase();
   if (!isEmail(email)) return;
-  const ipKey = `ip:${(await sha256Hex(`ndsa:${ip}`)).slice(0, 32)}`;
+  const ipKey = `ip:${(await sha256Hex(`nsc:${ip}`)).slice(0, 32)}`;
   if (!(await allow(env, ipKey, 10, 3600))) return;
   if (!(await allow(env, `email:${email}`, 3, 15 * 60))) return;
   const admin = await env.DB.prepare('SELECT email, name, email_ok FROM admins WHERE email = ?').bind(email).first<{ email: string; name: string; email_ok: number }>();
@@ -111,10 +111,10 @@ export async function requestLink(env: Env, rawEmail: string, ip: string): Promi
   await env.DB.prepare('INSERT INTO login_links (token_hash, email, created_at, expires_at) VALUES (?, ?, ?, ?)')
     .bind(await sha256Hex(token), email, now(), now() + LINK_TTL).run();
   const link = `${env.ORIGIN}/auth/link?t=${token}`;
-  await sendEmail(env, email, 'Your sign-in link for the ND Support Directory', [
+  await sendEmail(env, email, 'Your sign-in link for the Neuro Support Checker', [
     `Hello ${admin.name},`,
     '',
-    'Here is your sign-in link for the ND Support Directory admin area.',
+    'Here is your sign-in link for the Neuro Support Checker admin area.',
     'It works once, for 15 minutes:',
     '',
     link,

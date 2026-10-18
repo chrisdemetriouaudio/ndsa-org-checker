@@ -57,4 +57,4 @@ On [[Live status]] only:
 
 ## 🎨 Easier reading
 
-The vault turns on a reading style: bigger text, more space, bigger checkboxes. It lives in `.obsidian/snippets/ndsa-readable.css`. To switch it off: Settings → Appearance → CSS snippets.
+The vault turns on a reading style: bigger text, more space, bigger checkboxes. It lives in `.obsidian/snippets/neurosupport-readable.css`. To switch it off: Settings → Appearance → CSS snippets.
