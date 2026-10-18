@@ -6,9 +6,9 @@ updated: 2026-10-18
 # 📡 Live status
 
 > [!info] At a glance
-> **Last check:** 18 Oct 2026, 903 services.
+> **Last check:** 18 Oct 2026, 904 services.
 > **To review:** 7 (6 likely closed, 1 need a check).
-> **Fine:** 894 look active, 0 confirmed. **Closed:** 2.
+> **Fine:** 895 look active, 0 confirmed. **Closed:** 2.
 > This page rewrites itself after every daily check. Edits made here are lost.
 
 > [!info]- How to read the ticks and the score (tap to open)
@@ -50,7 +50,7 @@ To decide: use the **admin page** (https://neurosupport.labs.chrisdemetriou.com/
 
 ## ✅ Fine
 
-> [!success]- 894 services look fine (lowest score first)
+> [!success]- 895 services look fine (lowest score first)
 > | Service | Score | Web address | Website answers | No closing notice | Not for sale | Same address | Charity register | Confirmed by them | Last checked |
 > | --- | ---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 > | [Autism Rocks](https://www.autism.rocks) | 🟡 78 | ✅ | 🟡 | ✅ | ✅ | ✅ | 🟡 | ⚪ | 18 Oct 2026 |
@@ -850,6 +850,7 @@ To decide: use the **admin page** (https://neurosupport.labs.chrisdemetriou.com/
 > | [The International Pre-Autistic Network](https://www.preautism.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 > | [The Join Project](https://www.joinproject.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 > | [The Kent Autistic Trust](https://kentautistictrust.org) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
+> | [The Kisharon Charitable Trust](https://kisharonlangdon.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 > | [The Knightly Trust](https://www.theknightlytrust.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 > | [The Maldon Pioneers Association](https://www.themaldonpioneers.com) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |
 > | [The Mersea Island Festival Trust](https://www.merseafestival.org.uk) | 🟢 100 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚪ | 18 Oct 2026 |

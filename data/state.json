@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18T19:24:46.591Z",
+  "updated": "2026-10-18T19:35:15.135Z",
   "orgs": {
     "ambitious-about-autism": {
       "status": "Looks active",
@@ -94586,6 +94586,96 @@
           "parkedPhrases": [],
           "movedTo": null,
           "title": "Wirral Mencap | Community. Opportunity. Equality.",
+          "etag": null,
+          "lastModified": null
+        }
+      ]
+    },
+    "the-kisharon-charitable-trust": {
+      "status": "Looks active",
+      "reasons": [],
+      "since": "2026-10-18",
+      "lastChecked": "2026-10-18",
+      "proven": false,
+      "score": 100,
+      "signals": [
+        {
+          "key": "address",
+          "label": "Web address",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Web address exists",
+          "kind": "evidence"
+        },
+        {
+          "key": "answers",
+          "label": "Website answers",
+          "weight": 15,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website answered at every check",
+          "kind": "evidence"
+        },
+        {
+          "key": "notice",
+          "label": "No closing notice",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "No closing wording on the homepage",
+          "kind": "evidence"
+        },
+        {
+          "key": "parked",
+          "label": "Not for sale",
+          "weight": 15,
+          "strength": "strong",
+          "level": "green",
+          "detail": "Domain is not parked or for sale",
+          "kind": "evidence"
+        },
+        {
+          "key": "moved",
+          "label": "Same address",
+          "weight": 5,
+          "strength": "weak",
+          "level": "green",
+          "detail": "Website stays at its own address",
+          "kind": "evidence"
+        },
+        {
+          "key": "register",
+          "label": "Charity register",
+          "weight": 25,
+          "level": "green",
+          "detail": "Registered charity 278369, last accounts to 31 Aug 2025",
+          "kind": "proof",
+          "strength": "strong"
+        },
+        {
+          "key": "confirmed",
+          "label": "Confirmed by them",
+          "weight": 25,
+          "level": "none",
+          "detail": "Not asked yet (verification e-mails come in phase 4)",
+          "kind": "proof",
+          "strength": "strong"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-18",
+          "reachable": true,
+          "httpStatus": 200,
+          "finalUrl": "https://kisharonlangdon.org.uk/",
+          "ms": 4060,
+          "error": null,
+          "robotsBlocked": false,
+          "closedPhrases": [],
+          "parkedPhrases": [],
+          "movedTo": null,
+          "title": "Kisharon Langdon — Jewish Charity Supporting People with Learning Disabilities",
           "etag": null,
           "lastModified": null
         }

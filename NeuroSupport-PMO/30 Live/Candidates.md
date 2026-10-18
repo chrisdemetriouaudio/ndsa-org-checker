@@ -6,40 +6,18 @@ updated: 2026-10-18
 # 🔎 Candidates
 
 > [!info] At a glance
-> **Found:** 515 possible organisations on 18 Oct 2026, from the charity registers of all 4 nations.
+> **Found:** 516 possible organisations on 18 Oct 2026, from the charity registers of all 4 nations.
 > **Named for a condition:** 144. The rest mention one in their description.
 > **Decided automatically every morning:** clear ones added (website checked), misfits turned away, anything unclear after 7 days parked. Nobody has to review them.
-> 🔴 **Could not read:** Northern Ireland. Those nations may be missing.
 > This page rewrites itself each time discovery runs (every morning).
 
 ## 🆕 New on 18 Oct 2026
 
-**Added to the directory automatically (23):** named for a condition, with a working website.
-- ✅ Cheshire ,North Wales & Wirrel Dyslexia Associaton (England, Wales): dyslexia
-- ✅ DOWNS SYNDROME DIAMOND FOUNDATION LIMITED (England, Wales): Down syndrome
-- ✅ EALING DYSLEXIA ASSOCIATION (England): dyslexia
-- ✅ HEADWAY BLACK COUNTRY (England): brain injury
-- ✅ Headway Suffolk and Norfolk LTD (England): brain injury
-- ✅ ROOTS TO BRANCHES AUTISM NETWORK (England): autism
-- ✅ THE GLOUCESTERSHIRE DYSLEXIA ASSOCIATION (England): dyslexia
-- ✅ THE KENT AUTISTIC TRUST (England): autism
-- ✅ ART IN MOTION CHARITABLE TRUST (England): learning disability
-- ✅ HARPENDEN MENCAP (England): learning disability
-- ✅ LANCASHIRE TAAG (England): autism, ADHD, sensory processing, neurodiversity
-- ✅ LEWISHAM MENCAP (England): learning disability
-- ✅ MEDWAY PUZZLES (England): autism
-- ✅ NO BIG LIGHT (England): neurodiversity
-- ✅ NORTH SOMERSET PEOPLE FIRST (England): autism, learning disability
-- ✅ POTENTIAL KIDS LIMITED (England): autism, ADHD, neurodiversity
-- ✅ Raising Twenty1 (England): Down syndrome
-- ✅ ROWAN HUMBERSTONE LIMITED (England): learning disability
-- ✅ The Epping Forest Sunflower Group (England): learning disability
-- ✅ The Hidden (England, Wales): neurodiversity
-- ✅ UP ON DOWNS ( HERTFORDSHIRE) (England): Down syndrome
-- ✅ WAVE FOR CHANGE (England, Wales): learning disability
-- ✅ WIRRAL MENCAP (England): learning disability
+**Added to the directory automatically (1):** named for a condition, with a working website.
+- ✅ THE KISHARON CHARITABLE TRUST (England): learning disability
 
-- No new ones still settling.
+**New and still settling (1):** decided within 7 days. You can look at them in Admin → Review candidates, but you do not have to.
+- ⏳ AVENUES SOUTH EAST (England): autism, learning disability, brain injury
 
 ## 🗺️ By nation and condition
 
@@ -50,15 +28,15 @@ updated: 2026-10-18
 | OCD | 1 | 1 | 0 | 0 |
 | Tourette syndrome | 0 | 0 | 0 | 2 |
 | Williams syndrome | 0 | 0 | 0 | 1 |
-| autism | 103 | 22 | 20 | 11 |
-| brain injury | 15 | 2 | 7 | 1 |
+| autism | 104 | 22 | 20 | 11 |
+| brain injury | 16 | 2 | 7 | 1 |
 | dyscalculia | 2 | 1 | 0 | 0 |
 | dyslexia | 24 | 6 | 2 | 0 |
 | dyspraxia (DCD) | 1 | 1 | 0 | 0 |
-| learning disability | 210 | 29 | 50 | 36 |
+| learning disability | 211 | 29 | 50 | 36 |
 | neurodiversity | 8 | 6 | 5 | 3 |
 | sensory processing | 1 | 0 | 0 | 0 |
-| **All** | **361** | **66** | **82** | **58** |
+| **All** | **362** | **66** | **82** | **58** |
 
 An organisation can count under more than one condition and more than one nation.
 
