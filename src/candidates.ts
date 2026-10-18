@@ -7,6 +7,7 @@ import type { Coverage, Nation } from './place.ts';
 import type { Triage } from './triage.ts';
 import type { CheckResult } from './types.ts';
 import { tidyName, type NewOrgInput } from './neworg.ts';
+import { primaryConditions } from './conditions.ts';
 
 export { NATIONS, type Nation } from './place.ts';
 
@@ -38,13 +39,15 @@ export interface Decision { decision: 'added' | 'rejected'; by: string; date: st
 
 
 /** The directory entry a candidate becomes (still checked by validateNew before saving). */
-export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name' | 'website' | 'area' | 'nations' | 'conditions'> & { audiences?: unknown; postcode?: unknown; coverage?: unknown; serves?: unknown }): NewOrgInput {
+export function candidateToInput(c: Pick<Candidate, 'source' | 'number' | 'name' | 'website' | 'area' | 'nations' | 'conditions'> & { audiences?: unknown; postcode?: unknown; coverage?: unknown; serves?: unknown; about?: unknown }): NewOrgInput {
+  const all = Array.isArray(c.conditions) ? c.conditions.map(String) : [];
+  const main = typeof c.about === 'string' && c.about ? primaryConditions(String(c.name ?? ''), c.about) : [];
   return {
     name: tidyName(String(c.name ?? '')),
     url: String(c.website ?? ''),
     area: String(c.area ?? '') || (Array.isArray(c.nations) ? c.nations.join(', ') : ''),
     kind: 'Registered charity',
-    focus: Array.isArray(c.conditions) ? c.conditions.map(String) : [],
+    focus: main.length ? main : all, // what it is mainly for, not every condition its description mentions
     charityNumber: c.source === 'ccni' ? `NIC${String(c.number ?? '')}` : String(c.number ?? ''),
     audiences: cleanAudiences(c.audiences),
     postcode: String(c.postcode ?? ''),

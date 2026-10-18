@@ -321,6 +321,7 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 ${AUDIENCES.map((a) => `<button type="button" data-a="${a}" aria-pressed="false">${AUDIENCE_LABEL[a]}</button>`).join('\n')}
 </div>
 <div id="active" class="active" hidden aria-live="polite"><span class="active-label">Showing:</span><span id="chips" class="chips"></span><button type="button" id="clear-all" class="clear-all">Clear all</button></div>
+<p id="more-general" class="lead" hidden><span></span> <button type="button" class="linkish"></button></p>
 <ul id="list">
 ${cards}
 </ul>
@@ -330,7 +331,7 @@ Sources include the Charity Commission for England and Wales, the Charity Commis
 </main>
 <script>
 const q=document.getElementById('q');const items=[...document.querySelectorAll('#list .card')];
-let aud='',cond='',showUnstated=false;
+let aud='',cond='',showUnstated=false,generalFor='';
 const more=document.getElementById('more');
 let here=null;
 const list=document.getElementById('list');const order=[...items];
@@ -338,9 +339,12 @@ const heading=()=>{const h=document.createElement('li');h.className='group';retu
 const miles=(a,b)=>{const r=(d)=>d*Math.PI/180,h=Math.sin(r(b.lat-a.lat)/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(r(b.lon-a.lon)/2)**2;return 3958.8*2*Math.asin(Math.sqrt(h));};
 const GROUPS=[['serving',()=>'Serves your area ('+here.district+')'],['wide',()=>'Works across '+here.country],['unknown',()=>'Area not recorded – may still serve you (nearest first)'],['other',()=>'Lists other areas – may not serve you (nearest first)']];
 const heads=Object.fromEntries(GROUPS.map(([g])=>[g,heading()]));
-const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0;const groups={serving:[],wide:[],unknown:[],other:[]};
+// With a condition chosen: organisations for that condition first, then those for any neurodivergent condition, each under a heading.
+const specHead=heading(),genHead=heading();const condName=()=>cond.charAt(0).toUpperCase()+cond.slice(1);
+const specOf=(li)=>cond&&li.dataset.cond.split('|').includes(cond)?1:0;
+const apply=()=>{const t=q.value.trim().toLowerCase();let unstated=0,generalHidden=0;const groups={serving:[],wide:[],unknown:[],other:[]};
 for(const li of items){const a=li.dataset.aud;const textOk=!t||li.textContent.toLowerCase().includes(t);
-const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;const condOk=!cond||li.dataset.general||li.dataset.cond.split('|').includes(cond);
+const audOk=!aud||(a?a.split(' ').includes(aud):showUnstated);if(aud&&!a&&textOk&&!showUnstated)unstated++;const isSpec=!cond||li.dataset.cond.split('|').includes(cond);const condOk=isSpec||(li.dataset.general&&generalFor===cond);if(cond&&!isSpec&&li.dataset.general&&generalFor!==cond&&textOk&&audOk)generalHidden++;
 const d=li.querySelector('.dist');d.hidden=true;let group=null;
 if(here){const sv=(li.dataset.serves||'').split('|').filter(Boolean);const m=li.dataset.lat?miles(here,{lat:+li.dataset.lat,lon:+li.dataset.lon}):Infinity;li.dataset.m=m;
 const far=m===Infinity?'':(m<1?'based less than 1 mile away':'based about '+Math.round(m)+(Math.round(m)===1?' mile':' miles')+' away');
@@ -350,13 +354,18 @@ else if(!sv.length||li.dataset.from==='office'){group='unknown';d.textContent='A
 else{group='other';d.textContent='Lists other areas'+(far?' · '+far:'');}
 d.hidden=group==='wide';}
 li.hidden=!(textOk&&audOk&&condOk);if(here&&!li.hidden)groups[group].push(li);}
-if(here){for(const g of ['serving','unknown','other'])groups[g].sort((x,y)=>x.dataset.m-y.dataset.m);
+if(here){for(const g of ['serving','unknown','other'])groups[g].sort((x,y)=>(specOf(y)-specOf(x))||(x.dataset.m-y.dataset.m));groups.wide.sort((x,y)=>specOf(y)-specOf(x));
 for(const [g,label] of GROUPS)heads[g].textContent=label()+' · '+groups[g].length;
 list.replaceChildren(...GROUPS.flatMap(([g])=>groups[g].length?[heads[g],...groups[g]]:[]),...order.filter(li=>li.hidden));
 nearMsg.hidden=false;nearMsg.textContent=groups.serving.length+' serve '+here.district+', '+groups.wide.length+' work across '+here.country+', '+groups.unknown.length+' have no recorded area, and '+groups.other.length+' list other areas.';}
-else if(Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
-chipsUpdate(t);more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
+else if(cond){const shownNow=order.filter(li=>!li.hidden),sp=shownNow.filter(specOf),ge=shownNow.filter(li=>!specOf(li));
+specHead.textContent=sp.length?'For '+cond+' · '+sp.length:'Nothing listed just for '+cond+' yet';
+genHead.textContent='For neurodivergent people in general (may help with '+cond+') · '+ge.length;
+list.replaceChildren(specHead,...sp,...(ge.length?[genHead,...ge]:[]),...order.filter(li=>li.hidden));}
+else if(specHead.isConnected||genHead.isConnected||Object.values(heads).some(h=>h.isConnected)){list.replaceChildren(...order);}
+chipsUpdate(t);const mg=document.getElementById('more-general');mg.hidden=!generalHidden;if(generalHidden){mg.querySelector('span').textContent='';mg.querySelector('button').textContent='Also show '+generalHidden+(generalHidden===1?' organisation':' organisations')+' for neurodivergent people in general';}more.hidden=!unstated;more.querySelector('span').textContent=unstated+' more '+(unstated===1?'organisation does':'organisations do')+' not say who '+(unstated===1?'it is':'they are')+' for.';};
 more.querySelector('button').addEventListener('click',()=>{showUnstated=true;apply();});
+document.querySelector('#more-general button').addEventListener('click',()=>{generalFor=cond;apply();});
 const near=document.getElementById('near'),nearMsg=document.getElementById('near-msg'),clear=document.getElementById('clear');
 fetch('/api/postcode?pc=SW1A',{method:'HEAD'}).then(r=>{if(r.ok)near.hidden=false;}).catch(()=>{});
 near.addEventListener('submit',async(e)=>{e.preventDefault();const pc=document.getElementById('pc').value.trim();if(!pc)return;
@@ -406,7 +415,8 @@ const say=(who,text)=>{const p=document.createElement('p');p.className='bubble '
 const ask=(question,options)=>{say('bot',question);if(chat.children.length>2)options=[...options,['Start again',()=>start()]];choices.replaceChildren(...options.map(([label,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{say('me',label);choices.replaceChildren();fn();};return b;}));};
 const setAud=(a)=>{aud=a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x.dataset.a===a));apply();};
 const show=()=>{apply();const n=items.filter(li=>!li.hidden).length;
-say('bot',n?'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.':'Nothing matches all of that yet. Try a wider distance, or "Anyone".');
+const sp=cond?items.filter(li=>!li.hidden&&specOf(li)).length:0;
+say('bot',!n&&!cond?'Nothing matches all of that yet. Try a wider distance, or "Anyone".':cond?(sp?'Here '+(sp===1?'is 1 organisation':'are '+sp+' organisations')+' for '+cond+'. They are listed below.':'Nothing is listed just for '+cond+' yet.')+' Organisations for neurodivergent people in general may also help: use the button above the list to show them.':'Here '+(n===1?'is 1 organisation':'are '+n+' organisations')+' that may help. They are listed below.');
 const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);
 if(n)document.getElementById('list').scrollIntoView({behavior:'smooth',block:'start'});};
 const where=()=>ask('Where should it be?',[['Near a postcode',()=>{say('bot','Type your postcode in the "Near you" box below, then press Search. Nothing is hidden: the ones that serve your area come first.');near.hidden=false;document.getElementById('pc').focus();const again=document.createElement('button');again.type='button';again.textContent='Start again';again.onclick=start;choices.replaceChildren(again);apply();}],['Anywhere in the UK',()=>{here=null;show();}]]);
