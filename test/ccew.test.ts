@@ -58,7 +58,8 @@ test('all-details extras: how it helps, where it works, other names', () => {
     who_what_where: [
       { classification_code: 105, classification_type: 'What', classification_desc: 'Disability' },
       { classification_code: 306, classification_type: 'How', classification_desc: 'Provides services' },
-      { classification_code: 307, classification_type: 'How', classification_desc: 'Provides advocacy / advice / information' },
+      { classification_code: 307, classification_type: 'How', classification_desc: 'Provides Advocacy/advice/information' },
+      { classification_code: 310, classification_type: 'How', classification_desc: 'Other Charitable Activities' },
       { classification_code: 310, classification_type: 'How', classification_desc: 'Other charitable activities' },
     ],
     CharityAoOLocalAuthority: [{ local_authority: 'Bury', metropolitan_county: 'Greater Manchester', welsh_ind: false }, { local_authority: 'Bolton', metropolitan_county: 'Greater Manchester', welsh_ind: false }],

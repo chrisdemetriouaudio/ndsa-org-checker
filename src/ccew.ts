@@ -48,6 +48,8 @@ export interface CcewExtra {
 }
 
 const day = (s: string | null | undefined) => (s ? s.slice(0, 10) : '');
+/** "Provides Advocacy/advice/information" -> "Provides advocacy / advice / information". */
+const sentence = (s: string) => { const t = s.trim().toLowerCase().replace(/\s*\/\s*/g, ' / '); return t.charAt(0).toUpperCase() + t.slice(1); };
 
 /** The live details in the same shape as the morning's lookup files, so the scoring rules treat both alike. */
 export function detailsToEntry(d: CcewDetails): LookupEntry {
@@ -62,7 +64,7 @@ export function detailsExtra(d: CcewDetails, grantMaker: boolean | null): CcewEx
     removalReason: d.removal_reason?.trim() || null,
     interimManager: d.interim_manager_ind ? day(d.date_of_interim_manager_appt) : null,
     grantMaker,
-    does: (d.who_what_where ?? []).filter((c) => c.classification_type === 'How' && c.classification_code !== 310).map((c) => c.classification_desc.trim()),
+    does: (d.who_what_where ?? []).filter((c) => /^how$/i.test(c.classification_type) && Number(c.classification_code) !== 310 && !/^other charitable/i.test(c.classification_desc)).map((c) => sentence(c.classification_desc)),
     where: whereItWorks(d),
     otherNames: [...new Set((d.other_names ?? []).map((n) => n.other_name.replace(/\s+/g, ' ').trim()).filter(Boolean))].slice(0, 5),
   };
