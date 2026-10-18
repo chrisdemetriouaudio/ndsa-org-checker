@@ -3,6 +3,7 @@ import { AREAS, FOCUS, KINDS, MAX_PER_ADD } from '../src/neworg.ts';
 import { dateWords, scoreHue, TICK } from '../src/render.ts';
 import { FLAGGED, type Org, type Summary } from '../src/types.ts';
 import type { Admin } from './auth.ts';
+import { DISPLAY_HEAD_JS, DISPLAY_JS, DISPLAY_PANEL, DISPLAY_TOGGLE, displayCss } from '../src/display.ts';
 
 export const esc = (t: unknown) => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -28,13 +29,15 @@ details>summary{cursor:pointer;color:var(--accent)}.inline{display:flex;gap:8px;
 .table-wrap td.for{min-width:170px}
 .table-wrap thead th{position:sticky;top:0;z-index:2;background:var(--card);box-shadow:inset 0 -2px 0 var(--line)}
 .table-wrap th.tick{font-size:.75rem;font-weight:600;line-height:1.2;text-align:center;min-width:64px}.table-wrap td.tick{text-align:center}
-.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--bg);min-width:180px}.table-wrap thead th:first-child{z-index:3;background:var(--card)}`;
+.table-wrap td:first-child,.table-wrap th:first-child{position:sticky;left:0;background:var(--bg);min-width:180px}.table-wrap thead th:first-child{z-index:3;background:var(--card)}
+.displaybar{display:flex;justify-content:flex-end;margin:-12px 0 8px}
+${displayCss('/fonts/')}`;
 
 /** Every page: same shell, strict headers are added by the router. Scripts carry the request's nonce. */
 export function layout(title: string, body: string, nonceValue: string, script = ''): string {
   return `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>${esc(title)}</title><style>${STYLE}</style></head>
-<body><main>${body}</main>${script ? `<script nonce="${nonceValue}">${script}</script>` : ''}</body></html>`;
+<meta name="robots" content="noindex"><title>${esc(title)}</title><script nonce="${nonceValue}">${DISPLAY_HEAD_JS}</script><style>${STYLE}</style></head>
+<body><main><div class="displaybar">${DISPLAY_TOGGLE}</div>${body}</main>${DISPLAY_PANEL}<script nonce="${nonceValue}">${DISPLAY_JS}${script ? `\n${script}` : ''}</script></body></html>`;
 }
 
 const POST_JS = `

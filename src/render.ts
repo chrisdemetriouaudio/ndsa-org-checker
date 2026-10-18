@@ -6,6 +6,7 @@ import type { Level, Signal } from './signals.ts';
 
 export { dateWords };
 import { FLAGGED, type Org, type OrgState, type State, type Status } from './types.ts';
+import { DISPLAY_HEAD_JS, DISPLAY_JS, DISPLAY_PANEL, DISPLAY_TOGGLE, displayCss } from './display.ts';
 
 const REPO = 'https://github.com/chrisdemetriouaudio/neuro-support-checker';
 
@@ -233,13 +234,15 @@ export function renderSite(orgs: Org[], state: State): string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neuro Support Checker</title>
 <meta name="description" content="UK support organisations for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and related conditions, checked every few days.">
+<script>${DISPLAY_HEAD_JS}</script>
 <style>
 :root{--bg:#fbfaf7;--card:#fff;--ink:#1d1d1b;--quiet:#5c5b57;--line:#e3e0d8;--accent:#2f5d8a;--note:#fff4d6;--green:#2e7d4f;--amber:#a86a00;--red:#b3261e;--green-bg:#e6f4ea;--amber-bg:#fff4d6;--red-bg:#fde7e5}
 @media (prefers-color-scheme:dark){:root{--bg:#161615;--card:#1f1f1d;--ink:#eeece6;--quiet:#a9a69e;--line:#34332f;--accent:#8db8e3;--note:#3a3120;--green:#7fd19b;--amber:#f2c25b;--red:#f28b82;--green-bg:#1d3324;--amber-bg:#3a3120;--red-bg:#3d2220}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em}
 main{max-width:860px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.8rem;margin:0 0 4px}
 .masthead{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:4px}.masthead h1{margin:0}
-.admin-link{font-size:.95rem;white-space:nowrap;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:4px 14px;text-decoration:none}.admin-link:hover,.admin-link:focus-visible{background:var(--accent);color:var(--bg)}
+.admin-link{font-size:.95rem;white-space:nowrap;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:4px 14px;text-decoration:none}.admin-link:hover,.admin-link:focus-visible{background:var(--accent);color:var(--bg)}.mast-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+${displayCss('fonts/')}
 .lead{color:var(--quiet);margin:0 0 24px}ul{list-style:none;padding:0;margin:0}#list{display:grid;gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -279,7 +282,7 @@ footer{color:var(--quiet);font-size:.85rem;margin-top:32px}
 </head>
 <body>
 <main>
-<header class="masthead"><h1>Neuro Support Checker</h1><span id="admin-slot"></span></header>
+<header class="masthead"><h1>Neuro Support Checker</h1><span class="mast-tools"><span id="admin-slot"></span>${DISPLAY_TOGGLE}</span></header>
 <p class="lead">Support for autism, ADHD, dyslexia, learning disability, Down syndrome, brain injury and more, across the UK.</p>
 <section id="checker" class="checker" hidden aria-labelledby="checker-title">
 <h2 id="checker-title">Is it still running?</h2>
@@ -400,6 +403,8 @@ start();
 q.addEventListener('input',apply);
 for(const b of document.querySelectorAll('.aud button'))b.addEventListener('click',()=>{aud=b.dataset.a;showUnstated=false;for(const x of document.querySelectorAll('.aud button'))x.setAttribute('aria-pressed',String(x===b));apply();});
 </script>
+${DISPLAY_PANEL}
+<script>${DISPLAY_JS}</script>
 </body>
 </html>
 `;

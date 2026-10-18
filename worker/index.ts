@@ -16,7 +16,7 @@ const MAX_BODY = 64 * 1024;
 
 function headers(n: string, extra: Record<string, string> = {}): Headers {
   return new Headers({
-    'content-security-policy': `default-src 'none'; script-src 'nonce-${n}'; style-src 'unsafe-inline'; connect-src 'self' https://raw.githubusercontent.com; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`,
+    'content-security-policy': `default-src 'none'; script-src 'nonce-${n}'; style-src 'unsafe-inline'; font-src 'self'; connect-src 'self' https://raw.githubusercontent.com; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`,
     'x-content-type-options': 'nosniff',
     'referrer-policy': 'same-origin', // never sent to other sites; same-site posts keep a real Origin
     'permissions-policy': 'camera=(), microphone=(), geolocation=()',
@@ -57,7 +57,7 @@ async function directory(env: Env, n: string): Promise<Response> {
   const res = await fetch(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/site/index.html`, { cf: { cacheTtl: 60 } } as RequestInit);
   if (!res.ok) throw new Error(`Could not read the directory page: HTTP ${res.status}`);
   const page = (await res.text())
-    .replace('<script>', `<script nonce="${n}">`)
+    .replaceAll('<script>', `<script nonce="${n}">`)
     .replace('<span id="admin-slot"></span>', '<a class="admin-link" href="/admin">Admin sign in</a>');
   return html(page, n, { 'cache-control': 'public, max-age=60' });
 }
@@ -250,6 +250,13 @@ async function handle(req: Request, env: Env): Promise<Response> {
     const res = json(report, 200, { 'cache-control': 'public, max-age=1800' });
     await caches.default.put(cacheKey, res.clone());
     return res;
+  }
+  // The dyslexia-friendly font for the Display settings (OpenDyslexic, Bitstream Vera licence: site/fonts/).
+  const font = /^\/fonts\/(OpenDyslexic-(?:Regular|Bold)\.otf)$/.exec(path);
+  if (method === 'GET' && font) {
+    const res = await fetch(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/main/site/fonts/${font[1]}`, { cf: { cacheTtl: 86400 } } as RequestInit);
+    if (!res.ok) return new Response('Not found', { status: 404 });
+    return new Response(res.body, { headers: { 'content-type': 'font/otf', 'cache-control': 'public, max-age=604800', 'x-content-type-options': 'nosniff' } });
   }
   if ((method === 'GET' || method === 'HEAD') && path === '/api/postcode') {
     if (method === 'HEAD') return new Response(null, { status: 200 });

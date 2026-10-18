@@ -10,7 +10,14 @@ updated: 2026-10-18
 > **How to read:** tap a date to open it. Only the newest is open.
 > **Back to:** [[00 Dashboard]]
 
-> [!success]+ 🚀 18 Oct 2026 · All three registers in the score; tidy-up · live
+> [!success]+ 🚀 18 Oct 2026 · Display settings (as in Genesis) · live
+> - **"Aa Display"** at the top of the directory and every admin page: theme, text size, dyslexia-friendly font (OpenDyslexic), wider spacing, high contrast, reading mask.
+> - **Same tools and wording as the Genesis app.** Saved on this device only. Escape closes it; focus returns to the button.
+> - **Text size re-wraps** instead of zooming, so nothing runs off a phone screen.
+> - **Admin sign in** moved to the top, as a visible button (it was default blue on dark).
+> - **Admin page without the GitHub key** shows the list read-only with a plain note, instead of an error.
+
+> [!success]- 🚀 18 Oct 2026 · All three registers in the score; tidy-up · live
 > - **Scotland and Northern Ireland** now feed the "Charity register" tick: 104 organisations got their numbers (101 green, 3 overdue accounts).
 > - **Fixed:** three runs in one day counted as three days of a website not answering. 82 candidates put back.
 > - **Old address bridged:** ndsa.labs runs today's code with its own keys until the keys move.
