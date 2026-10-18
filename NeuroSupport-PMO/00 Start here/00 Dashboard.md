@@ -27,10 +27,8 @@ updated: 2026-10-18
 
 ## 👉 Your actions
 
-- [ ] **Try the button finder, "Near you" and "Who is it for?"** on the directory. See [[Phase 8 — Finding Support Easily]].
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
-- [ ] **Watch the repo on GitHub** (Watch → All activity) to get flag alerts by e-mail.
 - [ ] **Decide ADHD Foundation and Dyspraxia Foundation** on the admin page when ready.
 
 ## 🛠️ For Claude
@@ -50,6 +48,8 @@ More ideas: [[Backlog & Parked]].
 ## ✅ Done
 
 > [!success]- Finished (tap to open)
+> - [x] **Tried the button finder, "Near you" and "Who is it for?"** (you, 18 Oct 2026).
+> - [x] **Watching the repo on GitHub** for flag alerts (you, 18 Oct 2026).
 > - [x] **Unclear candidates decided automatically:** register tie-breaker, parked after 7 days. Nothing waits on you (18 Oct 2026).
 > - [x] **Checker reads the live Charity Commission register** (key added and tested, 18 Oct 2026).
 > - [x] **Scottish and Northern Ireland registers** used by the checker and the daily search (18 Oct 2026).
