@@ -1,7 +1,7 @@
 /**
  * Admin sign-in: an e-mail on the admin list, then a passkey.
  *
- *  - An e-mailed link (single use, 15 minutes) only proves the address. It gives a short "link"
+ *  - An e-mailed link (single use, 24 hours) only proves the address. It gives a short "link"
  *    session that can do one thing: add a passkey. Admin work always needs a "passkey" session.
  *  - Passkey sign-in is username-less (discoverable credentials, user verification required).
  *  - Sign-in requests answer the same whether or not the address is on the list.
@@ -33,7 +33,7 @@ export class SafeError extends Error {}
 export interface Admin { email: string; name: string; level: 'link' | 'passkey' }
 
 const COOKIE = '__Host-nsc';
-const LINK_TTL = 15 * 60;
+const LINK_TTL = 24 * 3600; // single use, so a day is safe enough and kinder to a busy inbox
 const LINK_SESSION_TTL = 30 * 60;
 const SESSION_TTL = 12 * 60 * 60;
 const CHALLENGE_TTL = 5 * 60;
@@ -114,18 +114,24 @@ export async function requestLink(env: Env, rawEmail: string, ip: string): Promi
   await env.DB.prepare('INSERT INTO login_links (token_hash, email, created_at, expires_at) VALUES (?, ?, ?, ?)')
     .bind(await sha256Hex(token), email, now(), now() + LINK_TTL).run();
   const link = `${env.ORIGIN}/auth/link?t=${token}`;
-  await sendEmail(env, email, 'Your sign-in link for the Neuro Support Checker', [
+  try {
+    await sendEmail(env, email, 'Your sign-in link for the Neuro Support Checker', [
     `Hello ${admin.name},`,
     '',
     'Here is your sign-in link for the Neuro Support Checker admin area.',
-    'It works once, for 15 minutes:',
+    'It works once, within 24 hours:',
     '',
     link,
     '',
     'After signing in you will add a passkey, so next time you can sign in with your face, fingerprint or device PIN.',
     '',
     'If you did not ask for this, you can ignore this e-mail.',
-  ].join('\n'));
+    ].join('\n'));
+  } catch (e) {
+    // The page answers the same either way (so the admin list stays private); the log says what went wrong.
+    await audit(env, email, 'link-failed', String((e as Error).message).slice(0, 120));
+    throw e;
+  }
   await audit(env, email, 'link-sent');
 }
 

@@ -78,7 +78,7 @@ document.getElementById('pk').onclick = async () => {
 document.getElementById('link').onsubmit = async (ev) => {
   ev.preventDefault();
   const m = document.getElementById('link-msg');
-  try { await post('/auth/email', { email: document.getElementById('email').value }); say(m, 'If that address is on the admin list, a link is on its way. It works once, for 15 minutes.', true); }
+  try { await post('/auth/email', { email: document.getElementById('email').value }); say(m, 'If that address is on the admin list, a link is on its way. It works once, within 24 hours.', true); }
   catch (e) { say(m, e.message, false); }
 };`);
 }
