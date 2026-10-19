@@ -10,6 +10,11 @@ updated: 2026-10-18
 > **How to read:** each box title is the decision. Tap it to see why.
 > **Back to:** [[00 Dashboard]]
 
+> [!question]- 19 Oct 2026 · Footer asks organisations if they want a tool like this
+> - **Decided by Chris:** the footer opens with "Need a tool like this for your organisation?".
+> - **Decided:** "Designed and built by Chris Demetriou" stays, linking to chrisdemetriou.com; "See what else I've built" links to labs.chrisdemetriou.com.
+> - **Why:** the directory is the best proof of what Chris builds.
+
 > [!question]- 18 Oct 2026 · Look and feel: warm, phone-first, spacious, deep green
 > - **Decided by Chris:** warm and friendly; designed for families and carers on phones; spacious cards; keep the deep green.
 > - **Decided:** no endless scroll (12 at a time); a condition filter shows only organisations for that condition.
