@@ -46,13 +46,13 @@ details>summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:32
 .glance{background:var(--tint);border-color:transparent}
 :root[data-contrast="high"] .bar{border-bottom:3px solid var(--ink)}:root[data-contrast="high"] .msg{border:2px solid var(--ink)}
 ${displayCss('/fonts/')}
-.credit{margin:48px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--quiet);font-size:.9375rem}.credit a{font-weight:700}`;
+.credit{margin:48px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--quiet);font-size:.9375rem}.credit a{font-weight:700}.credit-ask{display:block;color:var(--ink);font-weight:700}`;
 
 /** Every page: same shell, strict headers are added by the router. Scripts carry the request's nonce. */
 export function layout(title: string, body: string, nonceValue: string, script = ''): string {
   return `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>${esc(title)}</title><script nonce="${nonceValue}">${DISPLAY_HEAD_JS}</script><style>${STYLE}</style></head>
-<body><header class="bar"><div class="bar-in"><a class="brand" href="/">${LOGO}<span>Neuro Support Checker</span></a>${DISPLAY_TOGGLE}</div></header><main>${body}<p class="credit">© ${new Date().getFullYear()} · Designed and built by <a href="https://chrisdemetriou.com" rel="author">Chris Demetriou</a></p></main>${DISPLAY_PANEL}<script nonce="${nonceValue}">${DISPLAY_JS}${script ? `\n${script}` : ''}</script></body></html>`;
+<body><header class="bar"><div class="bar-in"><a class="brand" href="/">${LOGO}<span>Neuro Support Checker</span></a>${DISPLAY_TOGGLE}</div></header><main>${body}<p class="credit"><span class="credit-ask">Need a tool like this for your organisation?</span>© ${new Date().getFullYear()} · Designed and built by <a href="https://chrisdemetriou.com" rel="author">Chris Demetriou</a>. <a href="https://labs.chrisdemetriou.com/">See what else I've built<span aria-hidden="true">&nbsp;→</span></a></p></main>${DISPLAY_PANEL}<script nonce="${nonceValue}">${DISPLAY_JS}${script ? `\n${script}` : ''}</script></body></html>`;
 }
 
 const POST_JS = `

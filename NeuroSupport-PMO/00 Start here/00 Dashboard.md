@@ -27,6 +27,7 @@ updated: 2026-10-18
 
 ## 👉 Your actions
 
+- [ ] **Deploy the Worker** so admin pages show the new footer: `npm run worker:deploy`.
 - [ ] **Move 2 keys to the new site** (about 10 minutes). Steps: [[Phase 6 — Admin Front Door]].
 - [ ] **Give Wade his sign-in link yourself** when ready: `npm run admin -- link` with his address. The system never e-mails him.
 - [ ] **Share the plan with Wade:** Share menu on the plan doc (link below).
