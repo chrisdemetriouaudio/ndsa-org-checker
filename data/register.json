@@ -1,5 +1,5 @@
 {
-  "extractDate": "2026-10-19",
+  "extractDate": "2026-10-20",
   "entries": {
     "205244": {
       "number": "205244",
@@ -3097,6 +3097,18 @@
       "dissolved": false,
       "web": "www.bexleydownssyndrome.co.uk"
     },
+    "1097322": {
+      "number": "1097322",
+      "name": "BEAMSTAFFS",
+      "status": "Registered",
+      "removedOn": null,
+      "reporting": "Submission Received",
+      "lastAccounts": "2025-03-31",
+      "insolvent": false,
+      "inAdministration": false,
+      "dissolved": false,
+      "web": "www.beamstaffs.org"
+    },
     "1097407": {
       "number": "1097407",
       "name": "HEADWAY SOMERSET",
@@ -3883,7 +3895,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2025-03-31",
+      "lastAccounts": "2026-03-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -5107,7 +5119,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2024-12-31",
+      "lastAccounts": "2025-12-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -6582,8 +6594,8 @@
       "name": "ASD RAINBOWS",
       "status": "Registered",
       "removedOn": null,
-      "reporting": "Submission Received Late",
-      "lastAccounts": "2025-03-31",
+      "reporting": "Submission Received",
+      "lastAccounts": "2026-03-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,

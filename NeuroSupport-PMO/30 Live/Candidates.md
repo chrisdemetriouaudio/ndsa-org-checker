@@ -1,19 +1,20 @@
 ---
 title: Candidates
-updated: 2026-10-19
+updated: 2026-10-20
 ---
 
 # 🔎 Candidates
 
 > [!info] At a glance
-> **Found:** 515 possible organisations on 19 Oct 2026, from the charity registers of all 4 nations.
+> **Found:** 514 possible organisations on 20 Oct 2026, from the charity registers of all 4 nations.
 > **Named for a condition:** 144. The rest mention one in their description.
 > **Decided automatically every morning:** clear ones added (website checked), misfits turned away, anything unclear after 7 days parked. Nobody has to review them.
 > This page rewrites itself each time discovery runs (every morning).
 
-## 🆕 New on 19 Oct 2026
+## 🆕 New on 20 Oct 2026
 
-- Nothing was added automatically.
+**Added to the directory automatically (1):** named for a condition, with a working website.
+- ✅ BEAMSTAFFS (England): learning disability
 
 - No new ones still settling.
 
@@ -31,10 +32,10 @@ updated: 2026-10-19
 | dyscalculia | 2 | 1 | 0 | 0 |
 | dyslexia | 24 | 6 | 2 | 0 |
 | dyspraxia (DCD) | 1 | 1 | 0 | 0 |
-| learning disability | 210 | 29 | 50 | 36 |
+| learning disability | 209 | 29 | 50 | 36 |
 | neurodiversity | 8 | 6 | 5 | 3 |
 | sensory processing | 1 | 0 | 0 | 0 |
-| **All** | **361** | **66** | **82** | **58** |
+| **All** | **360** | **66** | **82** | **58** |
 
 An organisation can count under more than one condition and more than one nation.
 
