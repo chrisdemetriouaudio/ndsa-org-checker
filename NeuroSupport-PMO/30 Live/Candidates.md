@@ -1,19 +1,21 @@
 ---
 title: Candidates
-updated: 2026-10-21
+updated: 2026-10-22
 ---
 
 # 🔎 Candidates
 
 > [!info] At a glance
-> **Found:** 514 possible organisations on 21 Oct 2026, from the charity registers of all 4 nations.
+> **Found:** 511 possible organisations on 22 Oct 2026, from the charity registers of all 4 nations.
 > **Named for a condition:** 144. The rest mention one in their description.
 > **Decided automatically every morning:** clear ones added (website checked), misfits turned away, anything unclear after 7 days parked. Nobody has to review them.
 > This page rewrites itself each time discovery runs (every morning).
 
-## 🆕 New on 21 Oct 2026
+## 🆕 New on 22 Oct 2026
 
-- Nothing was added automatically.
+**Added to the directory automatically (2):** named for a condition, with a working website.
+- ✅ BRIDGING THE GAP SOUTH EAST (England): autism
+- ✅ KYLE'S GOAL (Wales): brain injury
 
 - No new ones still settling.
 
@@ -26,15 +28,15 @@ updated: 2026-10-21
 | OCD | 1 | 1 | 0 | 0 |
 | Tourette syndrome | 0 | 0 | 0 | 2 |
 | Williams syndrome | 0 | 0 | 0 | 1 |
-| autism | 104 | 22 | 20 | 11 |
-| brain injury | 16 | 2 | 7 | 1 |
+| autism | 103 | 22 | 19 | 11 |
+| brain injury | 16 | 1 | 7 | 1 |
 | dyscalculia | 2 | 1 | 0 | 0 |
 | dyslexia | 24 | 6 | 2 | 0 |
 | dyspraxia (DCD) | 1 | 1 | 0 | 0 |
 | learning disability | 209 | 29 | 50 | 36 |
 | neurodiversity | 8 | 6 | 5 | 3 |
 | sensory processing | 1 | 0 | 0 | 0 |
-| **All** | **360** | **66** | **82** | **58** |
+| **All** | **359** | **65** | **81** | **58** |
 
 An organisation can count under more than one condition and more than one nation.
 

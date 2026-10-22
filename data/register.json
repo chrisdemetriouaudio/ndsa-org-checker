@@ -1,5 +1,5 @@
 {
-  "extractDate": "2026-10-21",
+  "extractDate": "2026-10-22",
   "entries": {
     "205244": {
       "number": "205244",
@@ -1519,7 +1519,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2024-12-31",
+      "lastAccounts": "2025-12-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -1783,7 +1783,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2025-01-31",
+      "lastAccounts": "2026-01-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -3313,6 +3313,18 @@
       "dissolved": false,
       "web": "www.headwayshropshire.org.uk"
     },
+    "1100703": {
+      "number": "1100703",
+      "name": "BRIDGING THE GAP SOUTH EAST",
+      "status": "Registered",
+      "removedOn": null,
+      "reporting": "Submission Double Default",
+      "lastAccounts": "2020-03-31",
+      "insolvent": false,
+      "inAdministration": false,
+      "dissolved": false,
+      "web": "www.btgse.co.uk"
+    },
     "1100722": {
       "number": "1100722",
       "name": "AUTISM BEDFORDSHIRE",
@@ -3835,7 +3847,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2024-12-31",
+      "lastAccounts": "2025-12-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -5887,7 +5899,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2025-07-31",
+      "lastAccounts": "2026-07-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -5911,7 +5923,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2025-03-31",
+      "lastAccounts": "2026-03-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -6079,7 +6091,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2024-12-31",
+      "lastAccounts": "2025-12-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
@@ -6492,6 +6504,18 @@
       "inAdministration": false,
       "dissolved": false,
       "web": "www.missendenwalledgarden.org"
+    },
+    "1172095": {
+      "number": "1172095",
+      "name": "KYLE'S GOAL",
+      "status": "Registered",
+      "removedOn": null,
+      "reporting": "Submission Received",
+      "lastAccounts": "2025-06-30",
+      "insolvent": false,
+      "inAdministration": false,
+      "dissolved": false,
+      "web": "www.kylesgoal.org.uk"
     },
     "1172178": {
       "number": "1172178",
@@ -7027,7 +7051,7 @@
       "status": "Registered",
       "removedOn": null,
       "reporting": "Submission Received",
-      "lastAccounts": "2024-12-31",
+      "lastAccounts": "2025-12-31",
       "insolvent": false,
       "inAdministration": false,
       "dissolved": false,
